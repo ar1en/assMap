@@ -16,7 +16,7 @@ services:
     container_name: app_php
     build:
       context: ..
-      dockerfile: docker/php/Dockerfile`
+      dockerfile: docker/php/Dockerfile
     volumes:
       - ../:/var/www
     depends_on:
@@ -28,8 +28,10 @@ services:
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=assuranceMap
       - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+
     restart: always
     volumes:
       - ./db/data:/var/lib/postgresql/data

@@ -14,6 +14,9 @@ RUN apt-get update && apt-get install -y \
       apt-get clean && \
       rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
+    && docker-php-ext-install pgsql pdo_pgsql
+
 COPY ./docker/php/php.ini /usr/local/etc/php/conf.d/php.ini
 
 # Install composer
