@@ -17,11 +17,16 @@ class CreateCollegiateBodyProcessTable extends Migration
 
         Schema::create('collegiate_body_process', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('collegiateBody')->constrained('collegiate_bodies');
-            $table->uuid('process')->constrained('processes');
-            $table->uuid('author')->constrained('users');
-            $table->timestamp('createdAt');
-            $table->timestamp('updatedAt');
+            $table->uuid('collegiateBody');
+            $table->uuid('process');
+            $table->uuid('author');
+            $table->timestamps();
+            #$table->timestamp('createdAt');
+            #$table->timestamp('updatedAt');
+
+            $table->foreign('collegiateBody')->references('id')->on('collegiate_bodies');
+            $table->foreign('process')->references('id')->on('processes');
+            $table->foreign('author')->references('id')->on('users');
         });
 
         Schema::enableForeignKeyConstraints();

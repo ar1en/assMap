@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAutomatedMonitoringProcessTable extends Migration
+class CreateDocumentProcessesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,18 +15,19 @@ class CreateAutomatedMonitoringProcessTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('automated_monitoring_process', function (Blueprint $table) {
+        Schema::create('document_processes', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('automatedMonitoring');
+            $table->uuid('document');
             $table->uuid('process');
             $table->uuid('author');
             $table->timestamps();
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 
-            $table->foreign('automatedMonitoring')->references('id')->on('automated_monitoring');
+            $table->foreign('document')->references('id')->on('documents');
             $table->foreign('process')->references('id')->on('processes');
             $table->foreign('author')->references('id')->on('users');
+            $table->index(['document', 'process', 'author']);
         });
 
         Schema::enableForeignKeyConstraints();
@@ -39,6 +40,6 @@ class CreateAutomatedMonitoringProcessTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('automated_monitoring_process');
+        Schema::dropIfExists('document_processes');
     }
 }

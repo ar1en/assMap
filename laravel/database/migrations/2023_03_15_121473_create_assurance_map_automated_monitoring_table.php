@@ -17,11 +17,16 @@ class CreateAssuranceMapAutomatedMonitoringTable extends Migration
 
         Schema::create('assurance_map_automated_monitoring', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('assuranceMap')->constrained('assurance_maps');
-            $table->uuid('automatedMonitoring')->constrained('automated_monitoring');
-            $table->uuid('author')->constrained('users');
-            $table->timestamp('createdAt');
-            $table->timestamp('updatedAt');
+            $table->uuid('assuranceMap');
+            $table->uuid('automatedMonitoring');
+            $table->uuid('author');
+            $table->timestamps();
+            #$table->timestamp('createdAt');
+            #$table->timestamp('updatedAt');
+
+            $table->foreign('assuranceMap')->references('id')->on('assurance_maps');
+            $table->foreign('automatedMonitoring')->references('id')->on('automated_monitoring');
+            $table->foreign('author')->references('id')->on('users');
         });
 
         Schema::enableForeignKeyConstraints();

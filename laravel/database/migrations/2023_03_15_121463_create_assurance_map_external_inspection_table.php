@@ -17,11 +17,16 @@ class CreateAssuranceMapExternalInspectionTable extends Migration
 
         Schema::create('assurance_map_external_inspection', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('assuranceMap')->constrained('assurance_maps');
-            $table->uuid('externalInspection')->constrained('external_inspections');
-            $table->uuid('author')->constrained('users');
-            $table->timestamp('createdAt');
-            $table->timestamp('updatedAt');
+            $table->uuid('assuranceMap');
+            $table->uuid('externalInspection');
+            $table->uuid('author');
+            $table->timestamps();
+            #$table->timestamp('createdAt');
+            #$table->timestamp('updatedAt');
+
+            $table->foreign('assuranceMap')->references('id')->on('assurance_maps');
+            $table->foreign('externalInspection')->references('id')->on('external_inspections');
+            $table->foreign('author')->references('id')->on('users');
             $table->index(['assuranceMap', 'externalInspection', 'author']);
         });
 

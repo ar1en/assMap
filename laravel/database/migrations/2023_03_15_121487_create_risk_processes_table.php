@@ -17,11 +17,16 @@ class CreateRiskProcessesTable extends Migration
 
         Schema::create('risk_processes', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('process')->constrained('processes');
-            $table->uuid('risk')->constrained('risks');
-            $table->uuid('author')->constrained('users');
-            $table->timestamp('createdAt');
-            $table->timestamp('updatedAt');
+            $table->uuid('process');
+            $table->uuid('risk');
+            $table->uuid('author');
+            $table->timestamps();
+            #$table->timestamp('createdAt');
+            #$table->timestamp('updatedAt');
+
+            $table->foreign('process')->references('id')->on('processes');
+            $table->foreign('risk')->references('id')->on('risks');
+            $table->foreign('author')->references('id')->on('users');
             $table->index('author');
         });
 

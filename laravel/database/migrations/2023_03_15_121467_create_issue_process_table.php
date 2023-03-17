@@ -17,11 +17,16 @@ class CreateIssueProcessTable extends Migration
 
         Schema::create('issue_process', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('issue')->constrained('issues');
-            $table->uuid('process')->constrained('processes');
-            $table->uuid('author')->constrained('users');
-            $table->timestamp('createdAt');
-            $table->timestamp('updatedAt');
+            $table->uuid('issue');
+            $table->uuid('process');
+            $table->uuid('author');
+            $table->timestamps();
+            #$table->timestamp('createdAt');
+            #$table->timestamp('updatedAt');
+
+            $table->foreign('issue')->references('id')->on('issues');
+            $table->foreign('process')->references('id')->on('processes');
+            $table->foreign('author')->references('id')->on('users');
             $table->index(['issue', 'process', 'author']);
         });
 

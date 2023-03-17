@@ -17,15 +17,21 @@ class CreateExternalInspectionsTable extends Migration
 
         Schema::create('external_inspections', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('externalController');
-            $table->text('desc');
+            $table->uuid('externalControllerType');
+            $table->text('desc')->nullable();
             $table->uuid('object');
-            $table->uuid('sourceDepartment')->constrained('departments');
-            $table->uuid('status');
-            $table->timestamp('statusDate');
-            $table->uuid('author')->constrained('users');
-            $table->uuid('createdAt');
-            $table->uuid('updatedAt');
+            $table->uuid('sourceDepartment');
+            #$table->uuid('status');
+            #$table->timestamp('statusDate');
+            $table->uuid('author');
+            $table->timestamps();
+            #$table->uuid('createdAt');
+            #$table->uuid('updatedAt');
+
+            $table->foreign('externalControllerType')->references('id')->on('external_controller_types');
+            $table->foreign('object')->references('id')->on('objects');
+            $table->foreign('sourceDepartment')->references('id')->on('departments');
+            $table->foreign('author')->references('id')->on('users');
         });
 
         Schema::enableForeignKeyConstraints();

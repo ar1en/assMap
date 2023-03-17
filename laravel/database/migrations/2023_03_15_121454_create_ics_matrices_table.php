@@ -17,13 +17,19 @@ class CreateIcsMatricesTable extends Migration
 
         Schema::create('ics_matrices', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('object')->constrained('objects');
-            $table->uuid('process')->constrained('processes');
-            $table->text('desc');
+            $table->uuid('object');
+            $table->uuid('process');
+            $table->text('desc')->nullable();
             $table->boolean('ics');
             $table->boolean('impactOnRisk');
-            $table->integer('testingYaer');
-            $table->integer('updatingYear');
+            $table->integer('testingYear')->nullable();
+            $table->integer('updatingYear')->nullable();
+            $table->uuid('author');
+            $table->timestamps();
+
+            $table->foreign('object')->references('id')->on('objects');
+            $table->foreign('process')->references('id')->on('processes');
+            $table->foreign('author')->references('id')->on('users');
             $table->index(['object', 'process']);
         });
 

@@ -18,9 +18,14 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
-            $table->uuid('vacancy')->nullable()->constrained('vacancies', 'user');
-            $table->timestamp('createdAt');
-            $table->timestamp('updatedAt');
+            $table->uuid('vacancy')->nullable();
+            $table->uuid('author');
+            $table->timestamps();
+            #$table->timestamp('createdAt');
+            #$table->timestamp('updatedAt');
+
+            $table->foreign('vacancy')->references('id')->on('vacancies');
+            $table->foreign('author')->references('id')->on('users');
         });
 
         Schema::enableForeignKeyConstraints();

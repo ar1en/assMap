@@ -18,12 +18,16 @@ class CreateAutomatedMonitoringTable extends Migration
         Schema::create('automated_monitoring', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('department');
-            $table->text('desc');
-            $table->uuid('status');
-            $table->timestamp('statusDate');
-            $table->uuid('author')->constrained('users');
-            $table->timestamp('createdAt');
-            $table->timestamp('updatedAt');
+            $table->text('desc')->nullable();
+            #$table->uuid('status');
+            #$table->timestamp('statusDate');
+            $table->uuid('author');
+            $table->timestamps();
+            #$table->timestamp('createdAt');
+            #$table->timestamp('updatedAt');
+
+            $table->foreign('department')->references('id')->on('departments');
+            $table->foreign('author')->references('id')->on('users');
             $table->index(['department', 'author']);
         });
 

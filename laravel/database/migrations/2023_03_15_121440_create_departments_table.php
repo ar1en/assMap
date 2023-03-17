@@ -17,16 +17,20 @@ class CreateDepartmentsTable extends Migration
 
         Schema::create('departments', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('parentDepartment')->constrained('departments');
-            $table->uuid('bpmId');
-            $table->uuid('sasId');
+            $table->uuid('parentDepartment')->nullable();
+            $table->string('bpmId')->nullable();
+            $table->string('sasId')->nullable();
             $table->text('name');
             $table->integer('level');
             $table->longText('path');
-            $table->uuid('assuranceMap')->constrained('assurance_maps');
-            $table->uuid('author')->constrained('users');
-            $table->timestamp('createdAt');
-            $table->timestamp('updatedAt');
+            #$table->uuid('assuranceMap')->constrained('assurance_maps');
+            $table->uuid('author');
+            $table->timestamps();
+            #$table->timestamp('createdAt');
+            #$table->timestamp('updatedAt');
+
+            $table->foreign('parentDepartment')->references('id')->on('departments');
+            $table->foreign('author')->references('id')->on('users');
             $table->index(['parentDepartment', 'assuranceMap', 'author']);
         });
 

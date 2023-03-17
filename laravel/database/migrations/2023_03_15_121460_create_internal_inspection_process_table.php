@@ -17,11 +17,16 @@ class CreateInternalInspectionProcessTable extends Migration
 
         Schema::create('internal_inspection_process', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('inspection')->constrained('internal_inspection');
-            $table->uuid('process')->constrained('processes');
-            $table->uuid('author')->constrained('users');
-            $table->timestamp('createdAt');
-            $table->timestamp('updatedAt');
+            $table->uuid('inspection');
+            $table->uuid('process');
+            $table->uuid('author');
+            $table->timestamps();
+            #$table->timestamp('createdAt');
+            #$table->timestamp('updatedAt');
+
+            $table->foreign('inspection')->references('id')->on('internal_inspections');
+            $table->foreign('process')->references('id')->on('processes');
+            $table->foreign('author')->references('id')->on('users');
             $table->index(['inspection', 'process', 'author']);
         });
 

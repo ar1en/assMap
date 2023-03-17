@@ -17,12 +17,16 @@ class CreateFinesTable extends Migration
 
         Schema::create('fines', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('object')->nullable()->constrained('objects');
+            $table->uuid('object')->nullable();
             $table->double('sum');
-            $table->text('desc');
-            $table->uuid('author')->constrained('users');
-            $table->timestamp('createdAt');
-            $table->timestamp('updatedAt');
+            $table->text('desc')->nullable();
+            $table->uuid('author');
+            $table->timestamps();
+            #$table->timestamp('createdAt');
+            #$table->timestamp('updatedAt');
+
+            $table->foreign('objects')->references('id')->on('objects');
+            $table->foreign('author')->references('id')->on('users');
             $table->index(['object', 'author']);
         });
 

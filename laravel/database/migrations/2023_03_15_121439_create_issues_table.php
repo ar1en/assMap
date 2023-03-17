@@ -19,10 +19,14 @@ class CreateIssuesTable extends Migration
             $table->uuid('id')->primary();
             $table->string('sasId')->unique();
             $table->uuid('type');
-            $table->text('desk');
-            $table->uuid('author')->constrained('users');
-            $table->timestamp('createdAt');
-            $table->timestamp('updatedAt');
+            $table->text('desk')->nullable();
+            $table->uuid('author');
+            $table->timestamps();
+            #$table->timestamp('createdAt');
+            #$table->timestamp('updatedAt');
+
+            $table->foreign('type')->references('id')->on('issue_types');
+            $table->foreign('author')->references('id')->on('users');
             $table->index(['type', 'author']);
         });
 

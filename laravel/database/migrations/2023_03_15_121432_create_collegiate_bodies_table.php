@@ -17,14 +17,20 @@ class CreateCollegiateBodiesTable extends Migration
 
         Schema::create('collegiate_bodies', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('body');
-            $table->text('desc');
-            $table->uuid('sourceDepartment')->constrained('departments');
-            $table->uuid('status');
-            $table->time('statusDate');
+            $table->uuid('type');
+            $table->text('desc')->nullable();
+            $table->uuid('sourceDepartment');
+            #$table->uuid('status');
+            #$table->time('statusDate');
             $table->uuid('author');
-            $table->timestamp('createdAt');
-            $table->timestamp('updatedAt');
+            $table->timestamps();
+            #$table->timestamp('createdAt');
+            #$table->timestamp('updatedAt');
+
+            $table->foreign('type')->references('id')->on('collegiate_bodies_types');
+            $table->foreign('sourceDepartment')->references('id')->on('departments');
+            $table->foreign('sourceDepartment')->references('id')->on('departments');
+            $table->foreign('author')->references('id')->on('users');
             $table->index(['body', 'sourceDepartment', 'author']);
         });
 

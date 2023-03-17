@@ -17,11 +17,16 @@ class CreateExternalInspectionRiskTable extends Migration
 
         Schema::create('external_inspection_risk', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('externalInspection')->constrained('external_inspections');
-            $table->uuid('risk')->constrained('risks');
-            $table->uuid('author')->constrained('users');
-            $table->timestamp('createdAt');
-            $table->timestamp('updatedAt');
+            $table->uuid('externalInspection');
+            $table->uuid('risk');
+            $table->uuid('author');
+            $table->timestamps();
+            #$table->timestamp('createdAt');
+            #$table->timestamp('updatedAt');
+
+            $table->foreign('externalInspection')->references('id')->on('external_inspections');
+            $table->foreign('risk')->references('id')->on('risks');
+            $table->foreign('author')->references('id')->on('users');
             $table->index(['externalInspection', 'risk', 'author']);
         });
 

@@ -17,11 +17,16 @@ class CreateAuditProcessTable extends Migration
 
         Schema::create('audit_process', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('audit')->constrained('audits');
-            $table->uuid('process')->constrained('processes');
-            $table->uuid('author')->constrained('users');
-            $table->timestamp('createdAt');
-            $table->timestamp('updatedAt');
+            $table->uuid('audit');
+            $table->uuid('process');
+            $table->uuid('author');
+            $table->timestamps();
+            #$table->timestamp('createdAt');
+            #$table->timestamp('updatedAt');
+
+            $table->foreign('audit')->references('id')->on('audits');
+            $table->foreign('process')->references('id')->on('processes');
+            $table->foreign('author')->references('id')->on('users');
             $table->index(['audit', 'process', 'author']);
         });
 

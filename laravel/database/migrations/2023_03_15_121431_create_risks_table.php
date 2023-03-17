@@ -21,12 +21,16 @@ class CreateRisksTable extends Migration
             $table->string('bpmId')->unique();
             $table->text('name');
             $table->uuid('type');
-            $table->string('code');
+            $table->string('code')->nullable();
             $table->timestamp('validFrom');
             $table->timestamp('validUntil')->nullable();
-            $table->uuid('author')->constrained('users');
-            $table->timestamp('createdAt');
-            $table->timestamp('updatedAt');
+            $table->uuid('author');
+            $table->timestamps();
+            #$table->timestamp('createdAt');
+            #$table->timestamp('updatedAt');
+
+            $table->foreign('type')->references('id')->on('risk_types');
+            $table->foreign('author')->references('id')->on('users');
             $table->index(['type', 'author']);
         });
 

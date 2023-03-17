@@ -21,12 +21,13 @@ class CreatePeriodsTable extends Migration
             $table->date('start');
             $table->date('end');
             $table->text('desk');
-            $table->uuid('status');
-            $table->timestamp('statusDate');
+            #$table->uuid('status');
+            #$table->timestamp('statusDate');
             $table->uuid('author');
-            $table->timestamp('createdAt');
-            $table->timestamp('updatedAt');
-            
+            $table->timestamps();
+            #$table->timestamp('createdAt');
+            #$table->timestamp('updatedAt');
+
 			$table->foreign('author')->references('id')->on('users');
 			$table->index(['status', 'author']);
         });

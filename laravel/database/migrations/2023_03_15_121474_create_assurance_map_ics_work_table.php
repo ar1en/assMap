@@ -17,11 +17,16 @@ class CreateAssuranceMapIcsWorkTable extends Migration
 
         Schema::create('assurance_map_ics_work', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('assuranceMap')->constrained('assurance_maps');
-            $table->uuid('icsWork')->constrained('ics_works');
-            $table->uuid('author')->constrained('users');
-            $table->timestamp('createdAt');
-            $table->timestamp('updatedAt');
+            $table->uuid('assuranceMap');
+            $table->uuid('icsWork');
+            $table->uuid('author');
+            $table->timestamps();
+            #$table->timestamp('createdAt');
+            #$table->timestamp('updatedAt');
+
+            $table->foreign('assuranceMap')->references('id')->on('assurance_maps');
+            $table->foreign('icsWork')->references('id')->on('icsWorks');
+            $table->foreign('author')->references('id')->on('users');
             $table->index(['assuranceMap', 'icsWork', 'author']);
         });
 

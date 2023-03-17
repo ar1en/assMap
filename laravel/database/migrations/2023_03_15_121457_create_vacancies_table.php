@@ -17,14 +17,20 @@ class CreateVacanciesTable extends Migration
 
         Schema::create('vacancies', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name');
+            $table->uuid('type');
             $table->uuid('user');
-            $table->uuid('department')->constrained('departments');
+            $table->uuid('department');
             $table->timestamp('validFrom');
             $table->timestamp('validUntil')->nullable();
-            $table->uuid('author')->constrained('users');
-            $table->timestamp('createdAt');
-            $table->timestamp('updatedAt');
+            $table->uuid('author');
+            $table->timestamps();
+            #$table->timestamp('createdAt');
+            #$table->timestamp('updatedAt');
+
+            $table->foreign('type')->references('id')->on('vacancy_types');
+            $table->foreign('user')->references('id')->on('users');
+            $table->foreign('department')->references('id')->on('departments');
+            $table->foreign('author')->references('id')->on('users');
             $table->index(['user', 'department', 'author']);
         });
 

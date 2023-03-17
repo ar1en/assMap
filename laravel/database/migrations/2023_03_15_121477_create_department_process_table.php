@@ -17,15 +17,20 @@ class CreateDepartmentProcessTable extends Migration
 
         Schema::create('department_process', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('devision')->constrained('departments');
-            $table->uuid('process')->constrained('processes');
-            $table->text('desk');
+            $table->uuid('department');
+            $table->uuid('process');
+            $table->text('desk')->nullable();
             $table->boolean('controlFunction');
-            $table->text('result');
-            $table->uuid('author')->constrained('users');
-            $table->timestamp('createdAt');
-            $table->timestamp('updatedAt');
-            $table->index(['devision', 'process', 'desk', 'author']);
+            $table->text('result')->nullable();
+            $table->uuid('author');
+            $table->timestamps();
+            #$table->timestamp('createdAt');
+            #$table->timestamp('updatedAt');
+
+            $table->foreign('department')->references('id')->on('departments');
+            $table->foreign('process')->references('id')->on('processes');
+            $table->foreign('author')->references('id')->on('users');
+            $table->index(['department', 'process', 'desk', 'author']);
         });
 
         Schema::enableForeignKeyConstraints();

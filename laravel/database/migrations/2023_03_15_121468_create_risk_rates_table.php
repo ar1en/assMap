@@ -17,13 +17,19 @@ class CreateRiskRatesTable extends Migration
 
         Schema::create('risk_rates', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('risk')->constrained('risks');
-            $table->uuid('process')->constrained('processes');
-            $table->uuid('object')->constrained('objects');
+            $table->uuid('risk');
+            $table->uuid('process');
+            $table->uuid('object');
             $table->double('rate');
-            $table->uuid('author')->constrained('users');
-            $table->timestamp('createdAt');
-            $table->timestamp('updatedAt');
+            $table->uuid('author');
+            $table->timestamps();
+            #$table->timestamp('createdAt');
+            #$table->timestamp('updatedAt');
+
+            $table->foreign('risk')->references('id')->on('risks');
+            $table->foreign('process')->references('id')->on('processes');
+            $table->foreign('object')->references('id')->on('objects');
+            $table->foreign('author')->references('id')->on('users');
             $table->index(['risk', 'process', 'object', 'author']);
         });
 

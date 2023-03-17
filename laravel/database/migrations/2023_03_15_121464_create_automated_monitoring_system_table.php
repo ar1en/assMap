@@ -17,11 +17,16 @@ class CreateAutomatedMonitoringSystemTable extends Migration
 
         Schema::create('automated_monitoring_system', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('automatedMonitoring')->constrained('automated_monitoring');
-            $table->uuid('system')->constrained('systems');
-            $table->uuid('author')->constrained('users');
-            $table->timestamp('createdAt');
-            $table->timestamp('updatedAt');
+            $table->uuid('automatedMonitoring');
+            $table->uuid('system');
+            $table->uuid('author');
+            $table->timestamps();
+            #$table->timestamp('createdAt');
+            #$table->timestamp('updatedAt');
+
+            $table->foreign('automatedMonitoring')->references('id')->on('automated_monitoring');
+            $table->foreign('system')->references('id')->on('systems');
+            $table->foreign('author')->references('id')->on('users');
             $table->index(['automatedMonitoring', 'system', 'author']);
         });
 

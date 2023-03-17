@@ -17,11 +17,16 @@ class CreateAuditObjectTable extends Migration
 
         Schema::create('audit_object', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('audit')->constrained('audits');
-            $table->uuid('object')->constrained('objects');
-            $table->uuid('author')->constrained('users');
-            $table->timestamp('createdAt');
-            $table->timestamp('updatedAt');
+            $table->uuid('audit');
+            $table->uuid('object');
+            $table->uuid('author');
+            $table->timestamps();
+            #$table->timestamp('createdAt');
+            #$table->timestamp('updatedAt');
+
+            $table->foreign('audit')->references('id')->on('audits');
+            $table->foreign('object')->references('id')->on('objects');
+            $table->foreign('author')->references('id')->on('users');
             $table->index(['audit', 'object', 'author']);
         });
 

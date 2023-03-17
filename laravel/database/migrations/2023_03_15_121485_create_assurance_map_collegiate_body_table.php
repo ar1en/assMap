@@ -17,11 +17,16 @@ class CreateAssuranceMapCollegiateBodyTable extends Migration
 
         Schema::create('assurance_map_collegiate_body', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('assuranceMap')->constrained('assurance_maps');
-            $table->uuid('collegiateBody')->constrained('collegiate_bodies');
-            $table->uuid('author')->constrained('users');
-            $table->timestamp('createdAt');
-            $table->timestamp('updatedAt');
+            $table->uuid('assuranceMap');
+            $table->uuid('collegiateBody');
+            $table->uuid('author');
+            $table->timestamps();
+            #$table->timestamp('createdAt');
+            #$table->timestamp('updatedAt');
+
+            $table->foreign('assuranceMap')->references('id')->on('assurance_maps');
+            $table->foreign('collegiateBody')->references('id')->on('collegiate_bodies');
+            $table->foreign('author')->references('id')->on('users');
             $table->index(['assuranceMap', 'collegiateBody', 'author']);
         });
 

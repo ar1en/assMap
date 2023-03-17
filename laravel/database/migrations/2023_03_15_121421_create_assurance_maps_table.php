@@ -17,13 +17,17 @@ class CreateAssuranceMapsTable extends Migration
 
         Schema::create('assurance_maps', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('period')->constrained('periods');
+            $table->uuid('period');
             $table->string('name');
             $table->uuid('status');
             $table->timestamp('statusDate');
-            $table->uuid('author')->constrained('users');
-            $table->timestamp('createdAt');
-            $table->timestamp('updatedAt');
+            $table->uuid('author');
+            $table->timestamps();
+            #$table->timestamp('createdAt');
+            #$table->timestamp('updatedAt');
+
+            $table->foreign('period')->references('id')->on('periods');
+            $table->foreign('author')->references('id')->on('users');
             $table->index('author');
         });
 

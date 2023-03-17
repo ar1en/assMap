@@ -20,8 +20,13 @@ class CreateExternalInspectionProcessTable extends Migration
             $table->uuid('inspection')->constrained('external_inspections');
             $table->uuid('process')->constrained('processes');
             $table->uuid('author')->constrained('users');
-            $table->timestamp('createdAt');
-            $table->timestamp('updatedAt');
+            $table->timestamps();
+            #$table->timestamp('createdAt');
+            #$table->timestamp('updatedAt');
+
+            $table->foreign('inspection')->references('id')->on('external_inspections');
+            $table->foreign('process')->references('id')->on('processes');
+            $table->foreign('author')->references('id')->on('users');
             $table->index(['inspection', 'process', 'author']);
         });
 

@@ -17,11 +17,16 @@ class CreateExternalInspectionObjectTable extends Migration
 
         Schema::create('external_inspection_object', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('inspection')->constrained('external_inspections');
-            $table->uuid('object')->constrained('objects');
-            $table->uuid('author')->constrained('users');
-            $table->timestamp('createdAt');
-            $table->timestamp('updatedAt');
+            $table->uuid('inspection');
+            $table->uuid('object');
+            $table->uuid('author');
+            $table->timestamps();
+            #$table->timestamp('createdAt');
+            #$table->timestamp('updatedAt');
+
+            $table->foreign('inspection')->references('id')->on('external_inspections');
+            $table->foreign('object')->references('id')->on('objects');
+            $table->foreign('author')->references('id')->on('users');
             $table->index(['inspection', 'object', 'author']);
         });
 

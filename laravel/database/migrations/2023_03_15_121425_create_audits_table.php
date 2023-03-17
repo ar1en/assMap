@@ -20,9 +20,13 @@ class CreateAuditsTable extends Migration
             $table->string('sasId')->unique();
             $table->string('code');
             $table->text('name');
-            $table->uuid('author')->constrained('users');
-            $table->timestamp('createdAt');
-            $table->timestamp('updatedAt');
+            $table->text('desc');
+            $table->uuid('author');
+            $table->timestamps();
+            #$table->timestamp('createdAt');
+            #$table->timestamp('updatedAt');
+
+            $table->foreign('author')->references('id')->on('users');
             $table->index('author');
         });
 

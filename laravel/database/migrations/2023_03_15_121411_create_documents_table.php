@@ -18,11 +18,16 @@ class CreateDocumentsTable extends Migration
         Schema::create('documents', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->text('name');
+            $table->uuid('type');
             $table->timestamp('validFrom');
             $table->timestamp('validUntil')->nullable();
-            $table->uuid('author')->constrained('users');
-            $table->timestamp('createdAt');
-            $table->timestamp('updatedAt');
+            $table->uuid('author');
+            $table->timestamps();
+            #$table->timestamp('createdAt');
+            #$table->timestamp('updatedAt');
+
+            $table->foreign('type')->references('id')->on('document_types');
+            $table->foreign('author')->references('id')->on('users');
             $table->index('author');
         });
 

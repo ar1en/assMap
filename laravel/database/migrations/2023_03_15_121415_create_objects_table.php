@@ -17,18 +17,23 @@ class CreateObjectsTable extends Migration
 
         Schema::create('objects', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->text('sasid');
+            $table->text('sasId');
             $table->text('name');
             $table->text('code');
-            $table->uuid('supervisingDevision')->constrained('vacancies');
-            $table->uuid('superviser')->constrained('users');
+            $table->uuid('supervisingDivision');
+            $table->uuid('supervisor');
             $table->timestamp('validFrom');
             $table->timestamp('validUntil')->nullable();
-            $table->uuid('assuranceMap');
-            $table->uuid('author')->constrained('users');
-            $table->timestamp('createdAt');
-            $table->timestamp('updatedAt');
-            $table->index(['supervisingDevision', 'superviser', 'assuranceMap', 'author']);
+            #$table->uuid('assuranceMap');
+            $table->uuid('author');
+            $table->timestamps();
+            #$table->timestamp('createdAt');
+            #$table->timestamp('updatedAt');
+
+            $table->foreign('supervisingDivision')->references('id')->on('vacancies');
+            $table->foreign('supervisor')->references('id')->on('users');
+            $table->foreign('author')->references('id')->on('users');
+            $table->index(['supervisingDivision', 'supervisor', 'assuranceMap', 'author']);
         });
 
         Schema::enableForeignKeyConstraints();

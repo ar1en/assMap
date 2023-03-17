@@ -17,11 +17,16 @@ class CreateAuditIssueTable extends Migration
 
         Schema::create('audit_issue', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('audit')->constrained('audits');
-            $table->uuid('issue')->constrained('issues');
-            $table->uuid('author')->constrained('users');
-            $table->timestamp('createdAt');
-            $table->timestamp('updatedAt');
+            $table->uuid('audit');
+            $table->uuid('issue');
+            $table->uuid('author');
+            $table->timestamps();
+            #$table->timestamp('createdAt');
+            #$table->timestamp('updatedAt');
+
+            $table->foreign('audit')->references('id')->on('audits');
+            $table->foreign('issue')->references('id')->on('issues');
+            $table->foreign('author')->references('id')->on('users');
             $table->index(['audit', 'issue', 'author']);
         });
 

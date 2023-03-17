@@ -17,11 +17,16 @@ class CreateRiskRiskTable extends Migration
 
         Schema::create('risk_risk', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('risk1')->constrained('risks');
-            $table->uuid('risk2')->constrained('risks');
-            $table->uuid('author')->constrained('users');
-            $table->timestamp('createdAt');
-            $table->timestamp('updatedAt');
+            $table->uuid('risk1');
+            $table->uuid('risk2');
+            $table->uuid('author');
+            $table->timestamps();
+            #$table->timestamp('createdAt');
+            #$table->timestamp('updatedAt');
+
+            $table->foreign('risk1')->references('id')->on('risks');
+            $table->foreign('risk2')->references('id')->on('risks');
+            $table->foreign('author')->references('id')->on('users');
             $table->index(['risk2', 'risk1', 'author']);
         });
 

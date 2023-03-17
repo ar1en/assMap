@@ -17,11 +17,16 @@ class CreateCollegiateBodyDocumentTable extends Migration
 
         Schema::create('collegiate_body_document', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('collegiateBody')->constrained('collegiate_bodies');
-            $table->uuid('document')->constrained('documents');
-            $table->uuid('author')->constrained('users');
-            $table->timestamp('createdaAt');
-            $table->timestamp('updatedAt');
+            $table->uuid('collegiateBody');
+            $table->uuid('document');
+            $table->uuid('author');
+            $table->timestamps();
+            #$table->timestamp('createdaAt');
+            #$table->timestamp('updatedAt');
+
+            $table->foreign('collegiateBody')->references('id')->on('collegiate_bodies');
+            $table->foreign('document')->references('id')->on('documents');
+            $table->foreign('author')->references('id')->on('users');
             $table->index(['collegiateBody', 'document', 'author']);
         });
 

@@ -17,20 +17,26 @@ class CreateProcessesTable extends Migration
 
         Schema::create('processes', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('parentProcess')->constrained('processes');
+            $table->uuid('parentProcess')->nullable();
             $table->longText('path');
             $table->integer('level');
             $table->uuid('type');
-            $table->text('sasId')->unique();
+            $table->string('sasId')->unique();
             $table->string('bpmId')->unique();
             $table->text('name');
             $table->text('code');
-            $table->uuid('owner')->constrained('users');
+            $table->uuid('owner');
             $table->timestamp('validFrom');
-            $table->timestamp('validUntil');
-            $table->uuid('author')->constrained('users');
-            $table->timestamp('createdAt');
-            $table->timestamp('updatedAt');
+            $table->timestamp('validUntil')->nullable();
+            $table->uuid('author');
+            $table->timestamps();
+            #$table->timestamp('createdAt');
+            #$table->timestamp('updatedAt');
+
+            $table->foreign('parentProcess')->references('id')->on('processes');
+            $table->foreign('type')->references('id')->on('process_types');
+            $table->foreign('owner')->references('id')->on('vacancies');
+            $table->foreign('author')->references('id')->on('users');
             $table->index(['parentProcess', 'bpmId', 'owner', 'author']);
         });
 

@@ -15,13 +15,18 @@ class CreateInernalInspectionObjectTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('inernal_inspection_object', function (Blueprint $table) {
+        Schema::create('internal_inspection_object', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('object')->constrained('objects');
-            $table->uuid('inspection')->constrained('internal_inspection');
-            $table->uuid('author')->constrained('users');
-            $table->timestamp('createdAt');
-            $table->timestamp('updatedAt');
+            $table->uuid('object');
+            $table->uuid('inspection');
+            $table->uuid('author');
+            $table->timestamps();
+            #$table->timestamp('createdAt');
+            #$table->timestamp('updatedAt');
+
+            $table->foreign('object')->references('id')->on('objects');
+            $table->foreign('inspection')->references('id')->on('internal_inspections');
+            $table->foreign('author')->references('id')->on('users');
             $table->index(['object', 'inspection', 'author']);
         });
 
@@ -35,6 +40,6 @@ class CreateInernalInspectionObjectTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('inernal_inspection_object');
+        Schema::dropIfExists('internal_inspection_object');
     }
 }
