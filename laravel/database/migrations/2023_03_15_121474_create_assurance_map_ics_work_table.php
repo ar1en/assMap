@@ -21,11 +21,12 @@ class CreateAssuranceMapIcsWorkTable extends Migration
             $table->uuid('icsWork');
             $table->uuid('author');
             $table->timestamps();
+            $table->softDeletes();
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 
             $table->foreign('assuranceMap')->references('id')->on('assurance_maps');
-            $table->foreign('icsWork')->references('id')->on('icsWorks');
+            $table->foreign('icsWork')->references('id')->on('ics_works');
             $table->foreign('author')->references('id')->on('users');
             $table->index(['assuranceMap', 'icsWork', 'author']);
         });

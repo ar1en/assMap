@@ -21,6 +21,7 @@ class CreateCollegiateBodyDocumentTable extends Migration
             $table->uuid('document');
             $table->uuid('author');
             $table->timestamps();
+            $table->softDeletes();
             #$table->timestamp('createdaAt');
             #$table->timestamp('updatedAt');
 

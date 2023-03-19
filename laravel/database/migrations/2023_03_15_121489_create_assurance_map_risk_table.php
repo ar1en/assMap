@@ -21,6 +21,7 @@ class CreateAssuranceMapRiskTable extends Migration
             $table->uuid('risk');
             $table->uuid('author');
             $table->timestamps();
+            $table->softDeletes();
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 

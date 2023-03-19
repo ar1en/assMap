@@ -21,6 +21,7 @@ class CreateAssuranceMapAutomatedMonitoringTable extends Migration
             $table->uuid('automatedMonitoring');
             $table->uuid('author');
             $table->timestamps();
+            $table->softDeletes();
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 

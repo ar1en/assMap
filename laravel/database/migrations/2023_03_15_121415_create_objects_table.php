@@ -27,13 +27,14 @@ class CreateObjectsTable extends Migration
             #$table->uuid('assuranceMap');
             $table->uuid('author');
             $table->timestamps();
+            $table->softDeletes();
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 
-            $table->foreign('supervisingDivision')->references('id')->on('vacancies');
+            $table->foreign('supervisingDivision')->references('id')->on('departments');
             $table->foreign('supervisor')->references('id')->on('users');
             $table->foreign('author')->references('id')->on('users');
-            $table->index(['supervisingDivision', 'supervisor', 'assuranceMap', 'author']);
+            $table->index(['supervisingDivision', 'supervisor', 'author']);
         });
 
         Schema::enableForeignKeyConstraints();

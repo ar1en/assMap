@@ -22,10 +22,11 @@ class CreateFinesTable extends Migration
             $table->text('desc')->nullable();
             $table->uuid('author');
             $table->timestamps();
+            $table->softDeletes();
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 
-            $table->foreign('objects')->references('id')->on('objects');
+            $table->foreign('object')->references('id')->on('objects');
             $table->foreign('author')->references('id')->on('users');
             $table->index(['object', 'author']);
         });

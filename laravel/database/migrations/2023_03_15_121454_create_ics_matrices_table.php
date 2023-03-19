@@ -26,6 +26,7 @@ class CreateIcsMatricesTable extends Migration
             $table->integer('updatingYear')->nullable();
             $table->uuid('author');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('object')->references('id')->on('objects');
             $table->foreign('process')->references('id')->on('processes');

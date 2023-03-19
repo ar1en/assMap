@@ -21,6 +21,7 @@ class CreateExternalInspectionProcessTable extends Migration
             $table->uuid('process')->constrained('processes');
             $table->uuid('author')->constrained('users');
             $table->timestamps();
+            $table->softDeletes();
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 

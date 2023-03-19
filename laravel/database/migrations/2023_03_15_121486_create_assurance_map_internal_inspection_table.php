@@ -21,11 +21,12 @@ class CreateAssuranceMapInternalInspectionTable extends Migration
             $table->uuid('internalInspection');
             $table->uuid('author');
             $table->timestamps();
+            $table->softDeletes();
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 
             $table->foreign('assuranceMap')->references('id')->on('assurance_maps');
-            $table->foreign('internalInspection')->references('id')->on('internal_inspection');
+            $table->foreign('internalInspection')->references('id')->on('internal_inspections');
             $table->foreign('author')->references('id')->on('users');
             $table->index(['assuranceMap', 'internalInspection', 'author']);
         });

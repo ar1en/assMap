@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateInternalInspectionRiskTable extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -21,11 +20,12 @@ class CreateInternalInspectionRiskTable extends Migration
             $table->uuid('risk');
             $table->uuid('author');
             $table->timestamps();
+            $table->softDeletes();
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 
             $table->foreign('internalInspection')->references('id')->on('internal_inspections');
-            $table->foreign('risk')->references('id')-on('risks');
+            $table->foreign('risk')->references('id')->on('risks');
             $table->foreign('author')->references('id')->on('users');
             $table->index(['internalInspection', 'risk', 'author']);
         });
@@ -42,4 +42,4 @@ class CreateInternalInspectionRiskTable extends Migration
     {
         Schema::dropIfExists('internal_inspection_risk');
     }
-}
+};

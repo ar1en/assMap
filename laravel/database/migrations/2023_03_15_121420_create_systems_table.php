@@ -20,6 +20,7 @@ class CreateSystemsTable extends Migration
             $table->text('name')->nullable();
             $table->uuid('author');
             $table->timestamps();
+            $table->softDeletes();
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 

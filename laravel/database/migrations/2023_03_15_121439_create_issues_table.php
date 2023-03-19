@@ -22,10 +22,11 @@ class CreateIssuesTable extends Migration
             $table->text('desk')->nullable();
             $table->uuid('author');
             $table->timestamps();
+            $table->softDeletes();
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 
-            $table->foreign('type')->references('id')->on('issue_types');
+            $table->foreign('type')->references('id')->on('issues_types');
             $table->foreign('author')->references('id')->on('users');
             $table->index(['type', 'author']);
         });

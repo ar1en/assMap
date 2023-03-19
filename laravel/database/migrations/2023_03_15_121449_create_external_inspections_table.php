@@ -25,10 +25,11 @@ class CreateExternalInspectionsTable extends Migration
             #$table->timestamp('statusDate');
             $table->uuid('author');
             $table->timestamps();
+            $table->softDeletes();
             #$table->uuid('createdAt');
             #$table->uuid('updatedAt');
 
-            $table->foreign('externalControllerType')->references('id')->on('external_controller_types');
+            $table->foreign('externalControllerType')->references('id')->on('external_controllers_types');
             $table->foreign('object')->references('id')->on('objects');
             $table->foreign('sourceDepartment')->references('id')->on('departments');
             $table->foreign('author')->references('id')->on('users');

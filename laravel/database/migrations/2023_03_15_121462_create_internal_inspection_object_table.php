@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateInernalInspectionObjectTable extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -21,6 +20,7 @@ class CreateInernalInspectionObjectTable extends Migration
             $table->uuid('inspection');
             $table->uuid('author');
             $table->timestamps();
+            $table->softDeletes();
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 
@@ -42,4 +42,4 @@ class CreateInernalInspectionObjectTable extends Migration
     {
         Schema::dropIfExists('internal_inspection_object');
     }
-}
+};

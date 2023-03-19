@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateInternalInspectionTable extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -24,12 +23,13 @@ class CreateInternalInspectionTable extends Migration
             #$table->uuid('statusDate');
             $table->uuid('author');
             $table->timestamps();
+            $table->softDeletes();
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 
             $table->foreign('department')->references('id')->on('departments');
             $table->foreign('author')->references('id')->on('users');
-            $table->index(['department', 'object', 'status', 'author']);
+            $table->index(['department', 'object', 'author']);
         });
 
         Schema::enableForeignKeyConstraints();
@@ -44,4 +44,4 @@ class CreateInternalInspectionTable extends Migration
     {
         Schema::dropIfExists('internal_inspections');
     }
-}
+};

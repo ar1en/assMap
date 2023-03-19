@@ -21,6 +21,7 @@ class CreateAutomatedMonitoringProcessTable extends Migration
             $table->uuid('process');
             $table->uuid('author');
             $table->timestamps();
+            $table->softDeletes();
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 

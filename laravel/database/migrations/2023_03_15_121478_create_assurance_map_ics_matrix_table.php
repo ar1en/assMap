@@ -21,6 +21,7 @@ class CreateAssuranceMapIcsMatrixTable extends Migration
             $table->uuid('icsMatrix');
             $table->uuid('author');
             $table->timestamps();
+            $table->softDeletes();
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 

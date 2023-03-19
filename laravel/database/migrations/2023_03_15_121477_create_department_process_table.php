@@ -24,6 +24,7 @@ class CreateDepartmentProcessTable extends Migration
             $table->text('result')->nullable();
             $table->uuid('author');
             $table->timestamps();
+            $table->softDeletes();
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 

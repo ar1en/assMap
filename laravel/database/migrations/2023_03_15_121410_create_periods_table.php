@@ -25,11 +25,12 @@ class CreatePeriodsTable extends Migration
             #$table->timestamp('statusDate');
             $table->uuid('author');
             $table->timestamps();
+            $table->softDeletes();
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 
-			$table->foreign('author')->references('id')->on('users');
-			$table->index(['status', 'author']);
+            $table->foreign('author')->references('id')->on('users');
+            $table->index(['author']);
         });
 
         Schema::enableForeignKeyConstraints();

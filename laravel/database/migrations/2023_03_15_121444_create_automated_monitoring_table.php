@@ -23,6 +23,7 @@ class CreateAutomatedMonitoringTable extends Migration
             #$table->timestamp('statusDate');
             $table->uuid('author');
             $table->timestamps();
+            $table->softDeletes();
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 

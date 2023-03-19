@@ -21,6 +21,7 @@ class CreateAssuranceMapCollegiateBodyTable extends Migration
             $table->uuid('collegiateBody');
             $table->uuid('author');
             $table->timestamps();
+            $table->softDeletes();
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 

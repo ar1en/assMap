@@ -21,6 +21,7 @@ class CreateAssuranceMapIssueTable extends Migration
             $table->uuid('issue');
             $table->uuid('author');
             $table->timestamps();
+            $table->softDeletes();
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 

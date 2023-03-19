@@ -21,6 +21,7 @@ class CreateAssuranceMapExternalInspectionTable extends Migration
             $table->uuid('externalInspection');
             $table->uuid('author');
             $table->timestamps();
+            $table->softDeletes();
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 

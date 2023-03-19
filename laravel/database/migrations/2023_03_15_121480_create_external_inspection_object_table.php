@@ -21,6 +21,7 @@ class CreateExternalInspectionObjectTable extends Migration
             $table->uuid('object');
             $table->uuid('author');
             $table->timestamps();
+            $table->softDeletes();
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 
