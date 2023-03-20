@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class StoreController extends Controller
 {
@@ -17,10 +18,20 @@ class StoreController extends Controller
         foreach($users as $user) {
             $item = User::create([
                 'name'=> $user['name'],
-                #'vacancy'=> $user['vacancy'],
                 'author'=> $user['author'],
             ]);
-            $item->vacancies()->attach($user['vacancy']);
+
+            foreach ($user['vacancies'] as $vacancy)
+            {
+                $item->vacancies()->attach($vacancy,
+                    [
+                        'id' => Str::uuid(),
+                        'author' => $user['author'],
+                        'validFrom' => date("Y-m-d H:i:s", time()),
+                        'created_at' => date("Y-m-d H:i:s", time()),
+                        'updated_at' => date("Y-m-d H:i:s", time()),
+                    ]);
+            }
         }
         return response()->json(['message' => "ok"]);
     }
