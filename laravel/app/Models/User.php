@@ -4,13 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Traits\useUuid;
+use App\Models\Traits\UUID;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Model
 {
     use HasFactory;
-    use UseUuid;
+    use UUID;
     use SoftDeletes;
 
     protected $table = 'users';

@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Traits\UseUuid;
+use App\Models\Traits\UUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class VacanciesType extends Model
 {
     use HasFactory;
-    use UseUuid;
+    use UUID;
     use SoftDeletes;
 
     protected $table = 'vacancies_types';
