@@ -10,7 +10,9 @@ use Laravel\Sanctum\HasApiTokens;
 
 class UserLaravelNative extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, Notifiable;
+
+    protected $table = 'users_laravel_native';
 
     /**
      * The attributes that are mass assignable.
