@@ -1,0 +1,2 @@
+DB:
+psql -d assuranceMap < ./var/lib/postgresql/data/dumps/20230323_10-48.sql
