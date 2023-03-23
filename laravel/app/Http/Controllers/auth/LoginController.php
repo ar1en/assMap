@@ -4,8 +4,9 @@ namespace App\Http\Controllers\auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\UserLaravelNative;
+use App\Models\Login;
 use Illuminate\Support\Facades\Hash;
+
 class LoginController extends Controller
 {
     public function __invoke(Request $request){
@@ -13,12 +14,14 @@ class LoginController extends Controller
 
         // Validate the request
         $request->validate([
-            'email' => 'required|email',
+            'login' => 'required',
             'password' => 'required'
         ]);
 
+        //dd($request->login);
+
         // Find the user by email
-        $user = UserLaravelNative::where('email', $request->email)->first();
+        $user = Login::where('login', $request->login)->first();
         // Verify the password and generate the token
         if ($user && Hash::check($request->password, $user->password)) {
             $token = $user->createToken('auth_token')->plainTextToken;

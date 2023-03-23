@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInite45bfebc7c6f7c78b7132a56ace7385d
+class ComposerStaticInit7a8a2f551be6d25436b4d66248205af5
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -340,8 +340,8 @@ class ComposerStaticInite45bfebc7c6f7c78b7132a56ace7385d
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -508,6 +508,14 @@ class ComposerStaticInite45bfebc7c6f7c78b7132a56ace7385d
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
+        'App\\Http\\Controllers\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserController.php',
+        'App\\Http\\Controllers\\api\\v1\\User\\IndexController' => __DIR__ . '/../..' . '/app/Http/Controllers/api/v1/User/IndexController.php',
+        'App\\Http\\Controllers\\api\\v1\\User\\ShowController' => __DIR__ . '/../..' . '/app/Http/Controllers/api/v1/User/ShowController.php',
+        'App\\Http\\Controllers\\api\\v1\\User\\StoreController' => __DIR__ . '/../..' . '/app/Http/Controllers/api/v1/User/StoreController.php',
+        'App\\Http\\Controllers\\api\\v1\\Vacancy\\IndexController' => __DIR__ . '/../..' . '/app/Http/Controllers/api/v1/Vacancy/IndexController.php',
+        'App\\Http\\Controllers\\auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/auth/LoginController.php',
+        'App\\Http\\Controllers\\auth\\LogoutController' => __DIR__ . '/../..' . '/app/Http/Controllers/auth/LogoutController.php',
+        'App\\Http\\Controllers\\auth\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/auth/UserController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
         'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',
@@ -518,7 +526,12 @@ class ComposerStaticInite45bfebc7c6f7c78b7132a56ace7385d
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\ValidateSignature' => __DIR__ . '/../..' . '/app/Http/Middleware/ValidateSignature.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
+        'App\\Models\\Login' => __DIR__ . '/../..' . '/app/Models/Login.php',
+        'App\\Models\\Traits\\UUID' => __DIR__ . '/../..' . '/app/Models/Traits/UUID.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
+        'App\\Models\\UserLaravelNative' => __DIR__ . '/../..' . '/app/Models/UserLaravelNative.php',
+        'App\\Models\\VacanciesType' => __DIR__ . '/../..' . '/app/Models/VacanciesType.php',
+        'App\\Models\\Vacancy' => __DIR__ . '/../..' . '/app/Models/Vacancy.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
@@ -2427,6 +2440,7 @@ class ComposerStaticInite45bfebc7c6f7c78b7132a56ace7385d
         'Illuminate\\Routing\\Exceptions\\InvalidSignatureException' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Routing/Exceptions/InvalidSignatureException.php',
         'Illuminate\\Routing\\Exceptions\\StreamedResponseException' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Routing/Exceptions/StreamedResponseException.php',
         'Illuminate\\Routing\\Exceptions\\UrlGenerationException' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Routing/Exceptions/UrlGenerationException.php',
+        'Illuminate\\Routing\\FiltersControllerMiddleware' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Routing/FiltersControllerMiddleware.php',
         'Illuminate\\Routing\\ImplicitRouteBinding' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Routing/ImplicitRouteBinding.php',
         'Illuminate\\Routing\\Matching\\HostValidator' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Routing/Matching/HostValidator.php',
         'Illuminate\\Routing\\Matching\\MethodValidator' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Routing/Matching/MethodValidator.php',
@@ -2443,6 +2457,7 @@ class ComposerStaticInite45bfebc7c6f7c78b7132a56ace7385d
         'Illuminate\\Routing\\Pipeline' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Routing/Pipeline.php',
         'Illuminate\\Routing\\RedirectController' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Routing/RedirectController.php',
         'Illuminate\\Routing\\Redirector' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Routing/Redirector.php',
+        'Illuminate\\Routing\\ResolvesRouteDependencies' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Routing/ResolvesRouteDependencies.php',
         'Illuminate\\Routing\\ResourceRegistrar' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Routing/ResourceRegistrar.php',
         'Illuminate\\Routing\\ResponseFactory' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Routing/ResponseFactory.php',
         'Illuminate\\Routing\\Route' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Routing/Route.php',
@@ -6247,10 +6262,10 @@ class ComposerStaticInite45bfebc7c6f7c78b7132a56ace7385d
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInite45bfebc7c6f7c78b7132a56ace7385d::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInite45bfebc7c6f7c78b7132a56ace7385d::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInite45bfebc7c6f7c78b7132a56ace7385d::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInite45bfebc7c6f7c78b7132a56ace7385d::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit7a8a2f551be6d25436b4d66248205af5::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit7a8a2f551be6d25436b4d66248205af5::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit7a8a2f551be6d25436b4d66248205af5::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit7a8a2f551be6d25436b4d66248205af5::$classMap;
 
         }, null, ClassLoader::class);
     }

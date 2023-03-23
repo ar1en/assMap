@@ -7,17 +7,17 @@ RUN apt-get update && apt-get install -y \
       libzip-dev \
       zip unzip \
       git && \
-      docker-php-ext-install pdo_mysql && \
-      docker-php-ext-install bcmath && \
-      docker-php-ext-install gd && \
-      docker-php-ext-install zip && \
+      00. docker-php-ext-install pdo_mysql && \
+      00. docker-php-ext-install bcmath && \
+      00. docker-php-ext-install gd && \
+      00. docker-php-ext-install zip && \
       apt-get clean && \
       rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Install Postgre PDO
 RUN apt-get install -y libpq-dev \
-    && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
-    && docker-php-ext-install pdo pdo_pgsql pgsql
+    && 00. docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
+    && 00. docker-php-ext-install pdo pdo_pgsql pgsql
 
 #RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
 #    && docker-php-ext-install pgsql pdo_pgsql
@@ -30,4 +30,4 @@ RUN curl -sS https://getcomposer.org/installer | php -- \
     --filename=composer \
     --install-dir=/usr/local/bin
 
-WORKDIR /var/www/laravel/
+WORKDIR /var/www/backend/

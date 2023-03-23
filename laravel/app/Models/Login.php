@@ -3,15 +3,14 @@
 namespace App\Models;
 
 use App\Models\Traits\UUID;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+#use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
-class Login extends Model
+class Login extends Authenticatable
 {
-    use HasFactory;
-    use UUID;
-    use SoftDeletes;
+    use HasApiTokens, Notifiable, UUID, SoftDeletes;
 
     protected $table = 'logins';
 
@@ -22,5 +21,9 @@ class Login extends Model
         'author',
         'validFrom',
         'validUntil',
+    ];
+    protected $hidden = [
+        'password',
+        'remember_token',
     ];
 }
