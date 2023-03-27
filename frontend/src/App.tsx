@@ -1,5 +1,8 @@
 import React from 'react';
 import logo from './logo.svg';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import LoginPage from "./pages/LoginPage";
+import TestPage from "./pages/TestPage";
 import './App.css';
 
 function App() {
@@ -18,9 +21,18 @@ function App() {
         >
           Learn React
         </a>
+
+        <BrowserRouter>
+          <Routes>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/testpage" element = {<TestPage />} />
+          </Routes>
+        </BrowserRouter>
+
       </header>
     </div>
   );
 }
+
 
 export default App;
