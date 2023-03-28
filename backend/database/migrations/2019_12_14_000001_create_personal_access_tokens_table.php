@@ -11,7 +11,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('personal_access_tokens', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             #$table->uuid('tokenable_id');
             #$table->string('tokenable_type');
             #$table->morphs('tokenable');

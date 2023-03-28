@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers\auth;
 
+
 use App\Http\Controllers\Controller;
 use App\Models\Login;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 class LoginController extends Controller
 {
     public function __invoke(Request $request){
         //dd($request);
-
         // Validate the request
         $request->validate([
             'login' => 'required',

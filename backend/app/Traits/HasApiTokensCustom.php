@@ -17,7 +17,7 @@ trait HasApiTokensCustom
      * @param array $abilities
      * @return \Laravel\Sanctum\NewAccessToken
      */
-    public function createToken(string $name, array $abilities = ['*'], DateTimeInterface $expiresAt = null)
+    public function createToken(string $name, array $abilities = ['*'], DateTimeInterface $expiresAt = null): NewAccessToken
     {
         $token = $this->tokens()->create([
             #'id' => '66666',
