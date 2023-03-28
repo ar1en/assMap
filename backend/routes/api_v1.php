@@ -18,11 +18,6 @@ Route::group(['prefix' => 'auth', 'namespace' => 'App\Http\Controllers\auth'], f
     Route::get('/user', 'UserController')->middleware('auth:sanctum')->middleware('web');
 });
 
-
-/*Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});*/
-
 Route::group(['prefix' => 'users', 'namespace' => 'App\Http\Controllers\api\v1\User', 'middleware' => 'auth:sanctum'], function() {
    Route::get('/', 'IndexController')->name('user.index');
    Route::get('/{id}', 'ShowController')->name('user.show');

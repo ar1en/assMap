@@ -9,7 +9,4 @@ use app\Traits\UUID;
 class PersonalAccessToken extends SanctumPersonalAccessToken
 {
     use UUID;
-
-
-
 }
