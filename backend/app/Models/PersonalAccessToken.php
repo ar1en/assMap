@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
-
+use App\Traits\UUID;
 use Laravel\Sanctum\PersonalAccessToken as SanctumPersonalAccessToken;
-use app\Traits\UUID;
 
 class PersonalAccessToken extends SanctumPersonalAccessToken
 {
