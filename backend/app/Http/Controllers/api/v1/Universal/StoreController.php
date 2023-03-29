@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\api\v1\Universal;
 
-use App\Models\User;
-Use Illuminate\Http\JsonResponse;
+use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class StoreController extends Controller
@@ -34,36 +34,43 @@ class StoreController extends Controller
                             foreach ($value as $linkedValue) {
                                 //создание связи с другой сущностью
                                 if (class_exists("App\Models\\" . $field)) {
-                                    //$attachmentsArray = [[]];
-                                    /*$modelInstance->vacancies()->attach($linkedValue,*/
-                                    $attachmentsArray[] =
-                                    [
-                                        $linkedValue =>
+                                    $attachmentsArray[$linkedValue] =
                                         [
+                                            //'linkedId' => $linkedValue,
                                             'id' => Str::uuid(),
                                             'author' => '9b2a7d0a-573d-4dfd-98a4-9c0d8a7b1bac',     //- заглушка, добавить функцию поиска автора по токену
-                                            //validFrom' => date("Y-m-d H:i:s", time()),
+                                            'validFrom' => date("Y-m-d H:i:s", time()),
                                             'created_at' => date("Y-m-d H:i:s", time()),
                                             'updated_at' => date("Y-m-d H:i:s", time()),
-                                        ]
-                                    ];
+                                        ];
                                 }
                                 //return response()->json(['message' => sprintf('Model %s not found', $field)], 404);
                             }
                         }
                     }
                     $modelInstance->setAttribute('author', '9b2a7d0a-573d-4dfd-98a4-9c0d8a7b1bac');
-                    $modelInstance->save();
-                    foreach ($attachmentsArray as $attachmentId => $attachment) {
-                        dump($attachmentId);
+
+                    DB::beginTransaction();
+                    try {
+                        // Сохранение модели
+                        $modelInstance->save();
+
+                        // Сохранение связей
+                        foreach ($attachmentsArray as $attachmentId => $attachment) {
+                            if (Str::isUuid($attachmentId)){
+                                $modelInstance->vacancies()->attach($attachmentId, $attachment);
+                                //return response()->json(['message' => sprintf('Wrong uuid %s', $attachmentId)], 404);
+                            }
+                        }
+                        DB::commit();
+                    } catch (\Exception $e) {
+                        DB::rollback();
+                        return response()->json(['error' => $e->getMessage()], 500);
                     }
-                    //foreach($attachmentsArray as $attachmentId => $attachment){
-                    //    dump($attachment(0,0));
-                        //dump($attachmentId);
-                        //$modelInstance->vacancies()->attach($attachmentId, $attachment);
-                    //dump($attachmentsArray);
-                    //$modelInstance->vacancies()->attach($linkedValue
-                    //dump(is_array($object['vacancies']));
+
+                    unset($attachment);
+                    unset($attachmentsArray);
+                    unset($attachmentId);
                 }
                 return response()->json(['message' => 'ok'], 200);
             }
