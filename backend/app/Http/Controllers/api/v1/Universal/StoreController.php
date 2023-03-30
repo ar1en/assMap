@@ -5,8 +5,11 @@ namespace App\Http\Controllers\api\v1\Universal;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Schema;
 
 class StoreController extends Controller
 {
@@ -14,72 +17,79 @@ class StoreController extends Controller
     {
         $modelName = $model;
         $model = "App\Models\\" . $model;
+        $response = [];       //массив для записи хода создания и добавления сущности
 
         if (class_exists($model)) {
-            //$modelInstance = new $model();
-            //$fields = $modelInstance->getFillable();
             $data = $request->input($modelName);
-
             if ($data) {
-
                 foreach ($data as $object) {
-                    //создаем пустой инстанс заданной модели
-                    $modelInstance = new $model();
+                    $hasError = false;
+                    $attachmentsArray = [];             //массив  для связанных сущностей
+                    $modelInstance = new $model();      //создаем пустой инстанс заданной модели
+
                     foreach ($object as $field => $value) {
                         if (!is_array($value)) {
-                            //Добавить проверку на существания такого атрибута у модели!
-                            //перебираем все поля и по очереди добавляем их в инстанс
-                            $modelInstance->setAttribute($field, $value);
+                            //Проверка на существания такого атрибута в модели и добавление его в инстанс модели
+                            $columns = Schema::getColumnListing($modelInstance->getTable());
+                            if (in_array($field, $columns)) {
+                                $modelInstance->setAttribute($field, $value);
+                            } else {
+                                $response[] = ['error' => sprintf('Field %s does not exist in model %s.', $field, $modelName), 'code' => '415'];
+                                $hasError = true;
+                            }
                         } else {
                             foreach ($value as $linkedValue) {
                                 //создание связи с другой сущностью
                                 if (class_exists("App\Models\\" . $field)) {
-                                    $attachmentsArray[$linkedValue] =
-                                        [
-                                            //'linkedId' => $linkedValue,
-                                            'id' => Str::uuid(),
-                                            'author' => '9b2a7d0a-573d-4dfd-98a4-9c0d8a7b1bac',     //- заглушка, добавить функцию поиска автора по токену
-                                            'validFrom' => date("Y-m-d H:i:s", time()),
-                                            'created_at' => date("Y-m-d H:i:s", time()),
-                                            'updated_at' => date("Y-m-d H:i:s", time()),
-                                        ];
+                                    if (Str::isUuid($linkedValue)) {
+                                        $attachmentsArray[$linkedValue] =
+                                            [
+                                                'id' => Str::uuid(),
+                                                'author' => Auth::guard('sanctum')->user()['user'],
+                                                'validFrom' => date("Y-m-d H:i:s", time()),
+                                                'created_at' => date("Y-m-d H:i:s", time()),
+                                                'updated_at' => date("Y-m-d H:i:s", time()),
+                                            ];
+                                    } else {
+                                        $response[] = ['error' => sprintf('Cant add related entity %s', $linkedValue), 'code' => '415'];
+                                        $hasError = true;
+                                    }
+                                } else {
+                                    $response[] = ['error' => sprintf('Related model %s does not exist', $field), 'code' => '415'];
+                                    $hasError = true;
                                 }
-                                //return response()->json(['message' => sprintf('Model %s not found', $field)], 404);
                             }
                         }
                     }
                     $modelInstance->setAttribute('author', '9b2a7d0a-573d-4dfd-98a4-9c0d8a7b1bac');
 
-                    DB::beginTransaction();
-                    try {
-                        // Сохранение модели
-                        $modelInstance->save();
+                    if (!$hasError) {
+                        DB::beginTransaction();
+                        try {
+                            // Сохранение модели
+                            $modelInstance->save();
+                            $response[] = ['message' => sprintf('Entity %s with id %s has been added', $modelName, $modelInstance['id']), 'code' => '200'];
 
-                        // Сохранение связей
-                        foreach ($attachmentsArray as $attachmentId => $attachment) {
-                            if (Str::isUuid($attachmentId)){
+                            // Сохранение связей
+                            foreach ($attachmentsArray as $attachmentId => $attachment) {
                                 $modelInstance->vacancies()->attach($attachmentId, $attachment);
-                                //return response()->json(['message' => sprintf('Wrong uuid %s', $attachmentId)], 404);
+                                $response[] = ['message' => sprintf('Relationship %s with %s has been added', $modelInstance['id'], $attachmentId), 'code' => '200'];
                             }
+                            DB::commit();
+                        } catch (\Exception $e) {
+                            DB::rollback();
+                            $response[] = ['error' => $e->getMessage(), 'code' => '500'];
                         }
-                        DB::commit();
-                    } catch (\Exception $e) {
-                        DB::rollback();
-                        return response()->json(['error' => $e->getMessage()], 500);
                     }
 
                     unset($attachment);
                     unset($attachmentsArray);
                     unset($attachmentId);
+                    unset($hasError);
                 }
-                return response()->json(['message' => 'ok'], 200);
-            }
-            return response()->json(['message' => sprintf('No %s model data in request', $modelName)], 404);
-            //dd($data);
-            //return response()->json(['data' => $model::all()], 200);
-            //} else {
-            //    return response()->json(['message' => sprintf('Model %s not found', $model)], 404);
-            //}
-        }
+            } else $response[] = ['error' => sprintf('No %s model data in request', $modelName), 'code' => '400'];
+        } else $response[] = ['error' => sprintf('Model %s not found', $model), 'code' => '400'];
+
+        return response()->json($response, 200);
     }
 }

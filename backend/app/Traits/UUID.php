@@ -20,4 +20,5 @@ trait UUID
     {
         return 'string';
     }
+
 }
