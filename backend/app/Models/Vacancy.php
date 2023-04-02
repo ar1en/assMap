@@ -9,9 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Vacancy extends Model
 {
-    use HasFactory;
-    use UUID;
-    use SoftDeletes;
+    use HasFactory, UUID, SoftDeletes;
 
     protected $table = 'vacancies';
     protected $fillable = [
@@ -22,6 +20,17 @@ class Vacancy extends Model
         'validUntil',
         'author',
     ];
+
+    protected static array $validationRules = [
+        'name' => ['nullable','string'],
+        'type' => ['uuid','exists:vacancies_types,id','required'],
+        'department'=> ['uuid','exists:departments,id','required'],
+        //'validFrom' => 'data',
+        //'validUntil' => 'data',
+    ];
+    public function getValidationRules(): array {
+        return static::$validationRules;
+    }
 
     public function users(): object
     {

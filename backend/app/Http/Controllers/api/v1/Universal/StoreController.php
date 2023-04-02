@@ -10,11 +10,13 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
+use App\Models;
 
 class StoreController extends Controller
 {
     public function __invoke($model, Request $request): JsonResponse
     {
+        $modelInstance = new $model();
         $modelName = $model;
         $model = "App\Models\\" . $model;
         $response = [];       //массив для записи хода создания и добавления сущности
