@@ -14,8 +14,6 @@ class Vacancy extends Model
     protected $table = 'vacancies';
     protected $fillable = [
         'name',
-        'type',
-        'department',
         'validFrom',
         'validUntil',
         'author',
@@ -23,8 +21,8 @@ class Vacancy extends Model
 
     protected static array $validationRules = [
         'name' => ['nullable','string'],
-        'type' => ['uuid','exists:vacancies_types,id','required'],
-        'department'=> ['uuid','exists:departments,id','required'],
+        'VacancyType' => ['uuid','exists:vacancies_types,id','required'],
+        'Department'=> ['uuid','exists:departments,id'],
         //'validFrom' => 'data',
         //'validUntil' => 'data',
     ];
@@ -32,13 +30,15 @@ class Vacancy extends Model
         return static::$validationRules;
     }
 
-    public function users(): object
-    {
+    public function users(): object {
         return $this->belongsToMany(User::class, 'user_vacancy', 'vacancy', 'user');
     }
 
-    public function vacancyType(): object
-    {
-        return $this->belongsTo(VacanciesType::class, 'type','id');
+    public function VacancyType(): object {
+        return $this->belongsTo(VacancyType::class, 'type','id');
+    }
+
+    public function Department(): object {
+        return $this->belongsTo(Department::class, 'department', 'id');
     }
 }

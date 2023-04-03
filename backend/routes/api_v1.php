@@ -27,10 +27,10 @@ Route::group(['prefix' => 'auth', 'namespace' => 'App\Http\Controllers\auth'], f
 });*/
 
 /*Группа роутов универсальных контроллеров. Должна располгаться после всех остальных групп контроллеров*/
-Route::group(['prefix' => '', 'namespace' => 'App\Http\Controllers\api\v1', 'middleware' => 'auth:sanctum'], function() {
-   Route::get('/{model}', 'Universal\IndexController')->name('universal.index');
-   Route::get('{model}/{id}', 'Universal\ShowController')->name('universal.show');
-   Route::post('/{model}', 'Universal\StoreController2')->name('universal.store');
+Route::group(['prefix' => '', 'namespace' => 'App\Http\Controllers\api\v1\Universal', 'middleware' => 'auth:sanctum'], function() {
+   Route::get('/{model}', 'IndexController')->name('universal.index');
+   Route::get('{model}/{id}', 'ShowController')->name('universal.show');
+   Route::post('/{model}', 'StoreController2')->name('universal.store');
 });
 
 
