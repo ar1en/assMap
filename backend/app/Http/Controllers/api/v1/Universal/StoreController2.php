@@ -7,62 +7,64 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use App\Models;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class StoreController2 extends Controller
 {
-    //use Models;
     public function __invoke(String $modelName, Request $request): JsonResponse
     {
-        //dd(class_exists("App\Models\\{$modelName}"));
         if (class_exists("App\Models\\{$modelName}")) {
-            $model = new ("App\Models\\{$modelName}")();
-            $validatedData = $request->validate($model->getValidationRules());
+            $response = DB::transaction(function () use ($request, $modelName) {
+                $model = new ("App\Models\\{$modelName}")();
+                $validatedData = $request->validate($model->getValidationRules());
 
-            $model->fill($validatedData);
+                $model->fill(array_merge($validatedData, [
+                    'author' => Auth::guard('sanctum')->user()['user']
+                ]));
 
-            foreach ($validatedData as $key => $value) {
-                //dump($key);
-                //dump(method_exists($model, $key));
-                if (method_exists($model, $key)) {
-                    $relationship = $model->{$key}();
+                $model->save();
 
-                    switch (true) {
-                        case $relationship instanceof BelongsTo:
-                            //$relationship->associate($value);
-                            $model->{$key}()->associate($value);
-                            break;
-                        case $relationship instanceof BelongsToMany:
-                            $tmp2 = 1;
-                            break;
+                foreach ($validatedData as $key => $value) {
+                    if (method_exists($model, $key)) {
+                        $this->setRelationship($model, $key, $value);
                     }
-
-                    /*if ($relationship instanceof BelongsTo) {
-                        // Обработка связи "BelongsTo"
-                        $relatedModel = $relationship->getRelated();
-                        $relatedData = $value;
-                        $relatedModel->fill($relatedData);
-                        $relatedModel->save();
-                        $model->{$key}()->associate($relatedModel);
-                    } elseif ($relationship instanceof BelongsToMany) {
-                        // Обработка связи "BelongsToMany"
-                        $relatedModel = $relationship->getRelated();
-                        $relatedData = $value;
-                        foreach ($relatedData as $relatedValue) {
-                            $relatedModel->fill($relatedValue);
-                            $relatedModel->save();
-                            $model->{$key}()->attach($relatedModel->id);
-                        }
-                    }*/
                 }
-            }
-            $model->save();
-            return response()->json($model, 200);
-        } else {
-            //ошибка, если запрос к несуществующей модели
+
+                return $model;
+            });
+        } else $response = sprintf('%s model does not exist', $modelName);
+
+        return response()->json($response, 200);
+    }
+
+    private function setRelationship(&$model,$key, $value): void{
+        $relationship = $model->{$key}();
+        switch (true) {
+            case $relationship instanceof BelongsTo:
+                $model->{$key}()->associate($value);
+                break;
+            case $relationship instanceof BelongsToMany:
+                if (is_array($value)){
+                    foreach($value as $relatedValue){
+                        $this->attachRelatedEntity($model, $key, $relatedValue);
+                    }
+                } else $this->attachRelatedEntity($model, $key, $value);
+                break;
+            default:
+                break;
         }
-        return response()->json('ok', 200);
-        //dd($validatedData);
+    }
+
+    private function attachRelatedEntity(&$model, $key, $value): void{
+        $model->{$key}()->attach($value,
+            [
+                'id' => Str::uuid(),
+                'author' => Auth::guard('sanctum')->user()['user'],
+                'validFrom' => date("Y-m-d H:i:s", time()),
+                'created_at' => date("Y-m-d H:i:s", time()),
+                'updated_at' => date("Y-m-d H:i:s", time())
+            ]);
     }
 }

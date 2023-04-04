@@ -13,3 +13,4 @@ psql -d assuranceMap < ./var/lib/postgresql/data/dumps/{dump_file_name}      - �
 
 LARAVEL:
 php artisan cache:clear     - очистить весь кеш
+php artisan make:dbModels {table_prefix}        -  сгенерировать модели на основании БД

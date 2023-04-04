@@ -30,8 +30,8 @@ class Department extends Model
         //'validFrom' => 'data',
         //'validUntil' => 'data',
     ];
-    public function getValidationRules(): array {
+    public function getValidationRules(): array
+    {
         return static::$validationRules;
     }
-
 }

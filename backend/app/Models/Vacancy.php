@@ -22,7 +22,7 @@ class Vacancy extends Model
     protected static array $validationRules = [
         'name' => ['nullable','string'],
         'VacancyType' => ['uuid','exists:vacancies_types,id','required'],
-        'Department'=> ['uuid','exists:departments,id'],
+        'Departments'=> ['uuid','exists:departments,id'],
         //'validFrom' => 'data',
         //'validUntil' => 'data',
     ];
@@ -38,7 +38,7 @@ class Vacancy extends Model
         return $this->belongsTo(VacancyType::class, 'type','id');
     }
 
-    public function Department(): object {
+    public function Departments(): object {
         return $this->belongsTo(Department::class, 'department', 'id');
     }
 }

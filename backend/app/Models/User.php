@@ -43,7 +43,19 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function vacancies(): object
+    protected static array $validationRules = [
+        'name' => ['required','string'],
+        'Vacancy' => ['nullable'],
+        'Vacancy.*' => ['nullable','uuid','exists:vacancies,id', 'unique:user_vacancy,vacancy'],
+        //'Departments'=> ['uuid','exists:departments,id'],
+        //'validFrom' => 'data',
+        //'validUntil' => 'data',
+    ];
+    public function getValidationRules(): array {
+        return static::$validationRules;
+    }
+
+    public function Vacancy(): object
     {
         return $this->belongsToMany(Vacancy::class, 'user_vacancy', 'user', 'vacancy');
     }
