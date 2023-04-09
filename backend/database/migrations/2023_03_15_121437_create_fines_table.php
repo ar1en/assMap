@@ -15,7 +15,7 @@ class CreateFinesTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('fines', function (Blueprint $table) {
+        Schema::create('ent_fines', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('object')->nullable();
             $table->double('sum');
@@ -26,8 +26,8 @@ class CreateFinesTable extends Migration
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 
-            $table->foreign('object')->references('id')->on('objects');
-            $table->foreign('author')->references('id')->on('users');
+            $table->foreign('object')->references('id')->on('ent_objects');
+            $table->foreign('author')->references('id')->on('ent_users');
             $table->index(['object', 'author']);
         });
 
@@ -41,6 +41,6 @@ class CreateFinesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fines');
+        Schema::dropIfExists('ent_fines');
     }
 }

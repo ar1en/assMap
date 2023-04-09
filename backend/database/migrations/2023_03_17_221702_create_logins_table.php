@@ -15,13 +15,13 @@ class CreateLoginsTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('logins', function (Blueprint $table) {
+        Schema::create('ent_logins', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('user')->constrained('users');
+            $table->foreignUuid('user')->constrained('ent_users');
             $table->string('login');
             $table->string('password');
             $table->string('remember_token')->nullable();
-            $table->foreignUuid('author')->constrained('users');
+            $table->foreignUuid('author')->constrained('ent_users');
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
             $table->timestamp('validFrom');
@@ -42,6 +42,6 @@ class CreateLoginsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('logins');
+        Schema::dropIfExists('ent_logins');
     }
 }

@@ -15,7 +15,7 @@ class CreateAuditsTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('audits', function (Blueprint $table) {
+        Schema::create('ent_audits', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('sasId')->unique();
             $table->string('code');
@@ -27,7 +27,7 @@ class CreateAuditsTable extends Migration
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 
-            $table->foreign('author')->references('id')->on('users');
+            $table->foreign('author')->references('id')->on('ent_users');
             $table->index('author');
         });
 
@@ -41,6 +41,6 @@ class CreateAuditsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('audits');
+        Schema::dropIfExists('ent_audits');
     }
 }

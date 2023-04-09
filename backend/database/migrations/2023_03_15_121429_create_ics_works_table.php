@@ -15,7 +15,7 @@ class CreateIcsWorksTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('ics_works', function (Blueprint $table) {
+        Schema::create('ent_ics_works', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('type');
             $table->uuid('object');
@@ -32,10 +32,10 @@ class CreateIcsWorksTable extends Migration
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 
-            $table->foreign('type')->references('id')->on('ics_works_types');
-            $table->foreign('object')->references('id')->on('objects');
-            $table->foreign('process')->references('id')->on('processes');
-            $table->foreign('author')->references('id')->on('users');
+            $table->foreign('type')->references('id')->on('ent_ics_works_types');
+            $table->foreign('object')->references('id')->on('ent_objects');
+            $table->foreign('process')->references('id')->on('ent_processes');
+            $table->foreign('author')->references('id')->on('ent_users');
             $table->index(['type', 'object', 'process', 'author']);
         });
 
@@ -49,6 +49,6 @@ class CreateIcsWorksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ics_works');
+        Schema::dropIfExists('ent_ics_works');
     }
 }

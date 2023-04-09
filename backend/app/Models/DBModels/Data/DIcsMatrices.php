@@ -6,7 +6,7 @@ use App\Models\DBModels\Model\MIcsMatrices;
 
 /**
  * Class DIcsMatrices
- * Data class for db table ics_matrices.
+ * Data class for db table ent_ics_matrices.
  * @package App\Models\DBModels\Data
  */
 class DIcsMatrices extends MIcsMatrices {

@@ -15,7 +15,7 @@ class CreateAssuranceMapInternalInspectionTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('assurance_map_internal_inspection', function (Blueprint $table) {
+        Schema::create('rel_assurance_map_internal_inspection', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('assuranceMap');
             $table->uuid('internalInspection');
@@ -25,9 +25,9 @@ class CreateAssuranceMapInternalInspectionTable extends Migration
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 
-            $table->foreign('assuranceMap')->references('id')->on('assurance_maps');
-            $table->foreign('internalInspection')->references('id')->on('internal_inspections');
-            $table->foreign('author')->references('id')->on('users');
+            $table->foreign('assuranceMap')->references('id')->on('ent_assurance_maps');
+            $table->foreign('internalInspection')->references('id')->on('ent_internal_inspections');
+            $table->foreign('author')->references('id')->on('ent_users');
             $table->index(['assuranceMap', 'internalInspection', 'author']);
         });
 
@@ -41,6 +41,6 @@ class CreateAssuranceMapInternalInspectionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('assurance_map_internal_inspection');
+        Schema::dropIfExists('rel_assurance_map_internal_inspection');
     }
 }

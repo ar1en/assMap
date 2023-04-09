@@ -15,7 +15,7 @@ class CreateObjectsTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('objects', function (Blueprint $table) {
+        Schema::create('ent_objects', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->text('sasId');
             $table->text('name');
@@ -31,9 +31,9 @@ class CreateObjectsTable extends Migration
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 
-            $table->foreign('supervisingDivision')->references('id')->on('departments');
-            $table->foreign('supervisor')->references('id')->on('users');
-            $table->foreign('author')->references('id')->on('users');
+            $table->foreign('supervisingDivision')->references('id')->on('ent_departments');
+            $table->foreign('supervisor')->references('id')->on('ent_users');
+            $table->foreign('author')->references('id')->on('ent_users');
             $table->index(['supervisingDivision', 'supervisor', 'author']);
         });
 
@@ -47,6 +47,6 @@ class CreateObjectsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('objects');
+        Schema::dropIfExists('ent_objects');
     }
 }

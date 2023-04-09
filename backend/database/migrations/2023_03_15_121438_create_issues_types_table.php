@@ -10,14 +10,14 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('issues_types', function (Blueprint $table) {
+        Schema::create('ent_issues_types', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->text('name');
             $table->uuid('author');
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('author')->references('id')->on('users');
+            $table->foreign('author')->references('id')->on('ent_users');
         });
     }
 
@@ -26,6 +26,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('issues_types');
+        Schema::dropIfExists('ent_issues_types');
     }
 };

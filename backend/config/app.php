@@ -197,6 +197,7 @@ return [
 
         //Custom providers - assuranceMap
         App\Providers\SanctumServiceProvider::class,
+        App\Providers\ApiModelProvider::class,
     ],
 
     /*

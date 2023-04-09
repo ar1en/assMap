@@ -15,7 +15,7 @@ class CreateAssuranceMapAutomatedMonitoringTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('assurance_map_automated_monitoring', function (Blueprint $table) {
+        Schema::create('rel_assurance_map_automated_monitoring', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('assuranceMap');
             $table->uuid('automatedMonitoring');
@@ -25,9 +25,9 @@ class CreateAssuranceMapAutomatedMonitoringTable extends Migration
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 
-            $table->foreign('assuranceMap')->references('id')->on('assurance_maps');
-            $table->foreign('automatedMonitoring')->references('id')->on('automated_monitoring');
-            $table->foreign('author')->references('id')->on('users');
+            $table->foreign('assuranceMap')->references('id')->on('ent_assurance_maps');
+            $table->foreign('automatedMonitoring')->references('id')->on('ent_automated_monitoring');
+            $table->foreign('author')->references('id')->on('ent_users');
         });
 
         Schema::enableForeignKeyConstraints();
@@ -40,6 +40,6 @@ class CreateAssuranceMapAutomatedMonitoringTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('assurance_map_automated_monitoring');
+        Schema::dropIfExists('rel_assurance_map_automated_monitoring');
     }
 }

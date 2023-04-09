@@ -15,7 +15,7 @@ class CreateExternalInspectionFineTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('external_inspection_fine', function (Blueprint $table) {
+        Schema::create('rel_external_inspection_fine', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('inspection');
             $table->uuid('fine');
@@ -25,9 +25,9 @@ class CreateExternalInspectionFineTable extends Migration
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 
-            $table->foreign('inspection')->references('id')->on('external_inspections');
-            $table->foreign('fine')->references('id')->on('fines');
-            $table->foreign('author')->references('id')->on('users');
+            $table->foreign('inspection')->references('id')->on('ent_external_inspections');
+            $table->foreign('fine')->references('id')->on('ent_fines');
+            $table->foreign('author')->references('id')->on('ent_users');
             $table->index(['inspection', 'fine', 'author']);
         });
 
@@ -41,6 +41,6 @@ class CreateExternalInspectionFineTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('external_inspection_fine');
+        Schema::dropIfExists('rel_external_inspection_fine');
     }
 }

@@ -30,7 +30,7 @@ Route::group(['prefix' => 'auth', 'namespace' => 'App\Http\Controllers\auth'], f
 Route::group(['prefix' => '', 'namespace' => 'App\Http\Controllers\api\v1\Universal', 'middleware' => 'auth:sanctum'], function() {
    Route::get('/{model}', 'IndexController')->name('universal.index');
    Route::get('{model}/{id}', 'ShowController')->name('universal.show');
-   Route::post('/{model}', 'StoreController2')->name('universal.store');
+   Route::post('/{model}', 'StoreController')->name('universal.store');
 });
 
 

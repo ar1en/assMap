@@ -6,7 +6,7 @@ use App\Models\DBModels\Model\MVacanciesTypes;
 
 /**
  * Class DVacanciesTypes
- * Data class for db table vacancies_types.
+ * Data class for db table ent_vacancies_types.
  * @package App\Models\DBModels\Data
  */
 class DVacanciesTypes extends MVacanciesTypes {

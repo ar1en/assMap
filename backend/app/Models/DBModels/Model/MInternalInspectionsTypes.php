@@ -10,7 +10,7 @@ use  App\Models\DBModels\DBClass;
 
 /**
  * Class MInternalInspectionsTypes
- * Representation for db table internal_inspections_types.
+ * Representation for db table ent_internal_inspections_types.
 
  * @property  string    id         [1] type:uuid      !NULL PRIMARY 
  * @property  string    name       [2] type:text      !NULL         

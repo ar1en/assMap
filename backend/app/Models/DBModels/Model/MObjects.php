@@ -7,99 +7,87 @@ namespace App\Models\DBModels\Model;
 use  App\Models\DBModels\Data\DUsers;
 use  Illuminate\Database\Eloquent\Relations\BelongsTo;
 use  App\Models\DBModels\Data\DDepartments;
-use  App\Models\DBModels\Data\DAuditObject;
-use  Illuminate\Database\Eloquent\Relations\HasMany;
-use  App\Models\DBModels\Data\DExternalInspectionObject;
 use  App\Models\DBModels\Data\DExternalInspections;
+use  Illuminate\Database\Eloquent\Relations\HasMany;
 use  App\Models\DBModels\Data\DFines;
 use  App\Models\DBModels\Data\DIcsMatrices;
 use  App\Models\DBModels\Data\DIcsWorks;
-use  App\Models\DBModels\Data\DInternalInspectionObject;
-use  App\Models\DBModels\Data\DRiskRates;
 use  App\Models\DBModels\Data\DRoles;
 use  App\Models\DBModels\DBClass;
 
 /**
  * Class MObjects
- * Representation for db table objects.
+ * Representation for db table ent_objects.
 
- * @property  string                      id                                   [1]  type:uuid      !NULL PRIMARY 
- * @property  string                      sasId                                [2]  type:text      !NULL         
- * @property  string                      name                                 [3]  type:text      !NULL         
- * @property  string                      code                                 [4]  type:text      !NULL         
- * @property  string                      supervisingDivision                  [5]  type:uuid      !NULL         
- * @property  string                      supervisor                           [6]  type:uuid      !NULL         
- * @property  \DateTime                   validFrom                            [7]  type:timestamp !NULL         
- * @property  \DateTime                   validUntil                           [8]  type:timestamp               
- * @property  string                      author                               [9]  type:uuid      !NULL         
- * @property  \DateTime                   created_at                           [10] type:timestamp               
- * @property  \DateTime                   updated_at                           [11] type:timestamp               
- * @property  \DateTime                   deleted_at                           [12] type:timestamp               
- * @property  DUsers                      relAuthor                                                              
- * @property  DDepartments                relSupervisingDivision                                                 
- * @property  DUsers                      relSupervisor                                                          
- * @property  DAuditObject[]              relsAuditObjectByObject                                                
- * @property  DExternalInspectionObject[] relsExternalInspectionObjectByObject                                   
- * @property  DExternalInspections[]      relsExternalInspectionsByObject                                        
- * @property  DFines[]                    relsFinesByObject                                                      
- * @property  DIcsMatrices[]              relsIcsMatricesByObject                                                
- * @property  DIcsWorks[]                 relsIcsWorksByObject                                                   
- * @property  DInternalInspectionObject[] relsInternalInspectionObjectByObject                                   
- * @property  DRiskRates[]                relsRiskRatesByObject                                                  
- * @property  DRoles[]                    relsRolesByObject                                                      
+ * @property  string                 id                              [1]  type:uuid      !NULL PRIMARY 
+ * @property  string                 sasId                           [2]  type:text      !NULL         
+ * @property  string                 name                            [3]  type:text      !NULL         
+ * @property  string                 code                            [4]  type:text      !NULL         
+ * @property  string                 supervisingDivision             [5]  type:uuid      !NULL         
+ * @property  string                 supervisor                      [6]  type:uuid      !NULL         
+ * @property  \DateTime              validFrom                       [7]  type:timestamp !NULL         
+ * @property  \DateTime              validUntil                      [8]  type:timestamp               
+ * @property  string                 author                          [9]  type:uuid      !NULL         
+ * @property  \DateTime              created_at                      [10] type:timestamp               
+ * @property  \DateTime              updated_at                      [11] type:timestamp               
+ * @property  \DateTime              deleted_at                      [12] type:timestamp               
+ * @property  DUsers                 relAuthor                                                         
+ * @property  DDepartments           relSupervisingDivision                                            
+ * @property  DUsers                 relSupervisor                                                     
+ * @property  DExternalInspections[] relsExternalInspectionsByObject                                   
+ * @property  DFines[]               relsFinesByObject                                                 
+ * @property  DIcsMatrices[]         relsIcsMatricesByObject                                           
+ * @property  DIcsWorks[]            relsIcsWorksByObject                                              
+ * @property  DRoles[]               relsRolesByObject                                                 
  * @package App\Models\DBModels\Model
  */
 class MObjects extends DBClass {
 
 
-	const  FJ_AUTHOR                               = 'author';
-	const  FJ_CODE                                 = 'code';
-	const  FJ_CREATED_AT                           = 'createdAt';
-	const  FJ_DELETED_AT                           = 'deletedAt';
-	const  FJ_ID                                   = 'id';
-	const  FJ_NAME                                 = 'name';
-	const  FJ_SASID                                = 'sasId';
-	const  FJ_SUPERVISINGDIVISION                  = 'supervisingDivision';
-	const  FJ_SUPERVISOR                           = 'supervisor';
-	const  FJ_UPDATED_AT                           = 'updatedAt';
-	const  FJ_VALIDFROM                            = 'validFrom';
-	const  FJ_VALIDUNTIL                           = 'validUntil';
-	const  FR_AUDIT_OBJECT_BY_OBJECT               = 'relsAuditObjectByObject';
-	const  FR_AUTHOR                               = 'relAuthor';
-	const  FR_EXTERNAL_INSPECTIONS_BY_OBJECT       = 'relsExternalInspectionsByObject';
-	const  FR_EXTERNAL_INSPECTION_OBJECT_BY_OBJECT = 'relsExternalInspectionObjectByObject';
-	const  FR_FINES_BY_OBJECT                      = 'relsFinesByObject';
-	const  FR_ICS_MATRICES_BY_OBJECT               = 'relsIcsMatricesByObject';
-	const  FR_ICS_WORKS_BY_OBJECT                  = 'relsIcsWorksByObject';
-	const  FR_INTERNAL_INSPECTION_OBJECT_BY_OBJECT = 'relsInternalInspectionObjectByObject';
-	const  FR_RISK_RATES_BY_OBJECT                 = 'relsRiskRatesByObject';
-	const  FR_ROLES_BY_OBJECT                      = 'relsRolesByObject';
-	const  FR_SUPERVISINGDIVISION                  = 'relSupervisingDivision';
-	const  FR_SUPERVISOR                           = 'relSupervisor';
-	const  FT_AUTHOR                               = 'objects.author';
-	const  FT_CODE                                 = 'objects.code';
-	const  FT_CREATED_AT                           = 'objects.created_at';
-	const  FT_DELETED_AT                           = 'objects.deleted_at';
-	const  FT_ID                                   = 'objects.id';
-	const  FT_NAME                                 = 'objects.name';
-	const  FT_SASID                                = 'objects.sasId';
-	const  FT_SUPERVISINGDIVISION                  = 'objects.supervisingDivision';
-	const  FT_SUPERVISOR                           = 'objects.supervisor';
-	const  FT_UPDATED_AT                           = 'objects.updated_at';
-	const  FT_VALIDFROM                            = 'objects.validFrom';
-	const  FT_VALIDUNTIL                           = 'objects.validUntil';
-	const  F_AUTHOR                                = 'author';
-	const  F_CODE                                  = 'code';
-	const  F_CREATED_AT                            = 'created_at';
-	const  F_DELETED_AT                            = 'deleted_at';
-	const  F_ID                                    = 'id';
-	const  F_NAME                                  = 'name';
-	const  F_SASID                                 = 'sasId';
-	const  F_SUPERVISINGDIVISION                   = 'supervisingDivision';
-	const  F_SUPERVISOR                            = 'supervisor';
-	const  F_UPDATED_AT                            = 'updated_at';
-	const  F_VALIDFROM                             = 'validFrom';
-	const  F_VALIDUNTIL                            = 'validUntil';
+	const  FJ_AUTHOR                         = 'author';
+	const  FJ_CODE                           = 'code';
+	const  FJ_CREATED_AT                     = 'createdAt';
+	const  FJ_DELETED_AT                     = 'deletedAt';
+	const  FJ_ID                             = 'id';
+	const  FJ_NAME                           = 'name';
+	const  FJ_SASID                          = 'sasId';
+	const  FJ_SUPERVISINGDIVISION            = 'supervisingDivision';
+	const  FJ_SUPERVISOR                     = 'supervisor';
+	const  FJ_UPDATED_AT                     = 'updatedAt';
+	const  FJ_VALIDFROM                      = 'validFrom';
+	const  FJ_VALIDUNTIL                     = 'validUntil';
+	const  FR_AUTHOR                         = 'relAuthor';
+	const  FR_EXTERNAL_INSPECTIONS_BY_OBJECT = 'relsExternalInspectionsByObject';
+	const  FR_FINES_BY_OBJECT                = 'relsFinesByObject';
+	const  FR_ICS_MATRICES_BY_OBJECT         = 'relsIcsMatricesByObject';
+	const  FR_ICS_WORKS_BY_OBJECT            = 'relsIcsWorksByObject';
+	const  FR_ROLES_BY_OBJECT                = 'relsRolesByObject';
+	const  FR_SUPERVISINGDIVISION            = 'relSupervisingDivision';
+	const  FR_SUPERVISOR                     = 'relSupervisor';
+	const  FT_AUTHOR                         = 'objects.author';
+	const  FT_CODE                           = 'objects.code';
+	const  FT_CREATED_AT                     = 'objects.created_at';
+	const  FT_DELETED_AT                     = 'objects.deleted_at';
+	const  FT_ID                             = 'objects.id';
+	const  FT_NAME                           = 'objects.name';
+	const  FT_SASID                          = 'objects.sasId';
+	const  FT_SUPERVISINGDIVISION            = 'objects.supervisingDivision';
+	const  FT_SUPERVISOR                     = 'objects.supervisor';
+	const  FT_UPDATED_AT                     = 'objects.updated_at';
+	const  FT_VALIDFROM                      = 'objects.validFrom';
+	const  FT_VALIDUNTIL                     = 'objects.validUntil';
+	const  F_AUTHOR                          = 'author';
+	const  F_CODE                            = 'code';
+	const  F_CREATED_AT                      = 'created_at';
+	const  F_DELETED_AT                      = 'deleted_at';
+	const  F_ID                              = 'id';
+	const  F_NAME                            = 'name';
+	const  F_SASID                           = 'sasId';
+	const  F_SUPERVISINGDIVISION             = 'supervisingDivision';
+	const  F_SUPERVISOR                      = 'supervisor';
+	const  F_UPDATED_AT                      = 'updated_at';
+	const  F_VALIDFROM                       = 'validFrom';
+	const  F_VALIDUNTIL                      = 'validUntil';
 
     protected $table = 'objects';
 
@@ -174,22 +162,6 @@ class MObjects extends DBClass {
 
 
         /**
-         * @return DAuditObject[]|HasMany
-         */
-        public function relsAuditObjectByObject(){
-            return $this->hasMany(DAuditObject::class, DAuditObject::F_OBJECT, self::F_ID);
-        }
-            
-
-        /**
-         * @return DExternalInspectionObject[]|HasMany
-         */
-        public function relsExternalInspectionObjectByObject(){
-            return $this->hasMany(DExternalInspectionObject::class, DExternalInspectionObject::F_OBJECT, self::F_ID);
-        }
-            
-
-        /**
          * @return DExternalInspections[]|HasMany
          */
         public function relsExternalInspectionsByObject(){
@@ -218,22 +190,6 @@ class MObjects extends DBClass {
          */
         public function relsIcsWorksByObject(){
             return $this->hasMany(DIcsWorks::class, DIcsWorks::F_OBJECT, self::F_ID);
-        }
-            
-
-        /**
-         * @return DInternalInspectionObject[]|HasMany
-         */
-        public function relsInternalInspectionObjectByObject(){
-            return $this->hasMany(DInternalInspectionObject::class, DInternalInspectionObject::F_OBJECT, self::F_ID);
-        }
-            
-
-        /**
-         * @return DRiskRates[]|HasMany
-         */
-        public function relsRiskRatesByObject(){
-            return $this->hasMany(DRiskRates::class, DRiskRates::F_OBJECT, self::F_ID);
         }
             
 

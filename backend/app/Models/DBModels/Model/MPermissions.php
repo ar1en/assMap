@@ -6,55 +6,51 @@ namespace App\Models\DBModels\Model;
 
 use  App\Models\DBModels\Data\DUsers;
 use  Illuminate\Database\Eloquent\Relations\BelongsTo;
-use  App\Models\DBModels\Data\DRolePermission;
-use  Illuminate\Database\Eloquent\Relations\HasMany;
 use  App\Models\DBModels\DBClass;
 
 /**
  * Class MPermissions
- * Representation for db table permissions.
+ * Representation for db table ent_permissions.
 
- * @property  string            id                             [1] type:uuid         !NULL PRIMARY 
- * @property  string            name                           [2] type:varchar(255) !NULL         
- * @property  string            permission                     [3] type:varchar(255) !NULL         
- * @property  string            desc                           [4] type:varchar(255) !NULL         
- * @property  string            author                         [5] type:uuid         !NULL         
- * @property  \DateTime         created_at                     [6] type:timestamp                  
- * @property  \DateTime         updated_at                     [7] type:timestamp                  
- * @property  \DateTime         deleted_at                     [8] type:timestamp                  
- * @property  DUsers            relAuthor                                                          
- * @property  DRolePermission[] relsRolePermissionByPermission                                     
+ * @property  string    id         [1] type:uuid         !NULL PRIMARY 
+ * @property  string    name       [2] type:varchar(255) !NULL         
+ * @property  string    permission [3] type:varchar(255) !NULL         
+ * @property  string    desc       [4] type:varchar(255) !NULL         
+ * @property  string    author     [5] type:uuid         !NULL         
+ * @property  \DateTime created_at [6] type:timestamp                  
+ * @property  \DateTime updated_at [7] type:timestamp                  
+ * @property  \DateTime deleted_at [8] type:timestamp                  
+ * @property  DUsers    relAuthor                                      
  * @package App\Models\DBModels\Model
  */
 class MPermissions extends DBClass {
 
 
-	const  FJ_AUTHOR                        = 'author';
-	const  FJ_CREATED_AT                    = 'createdAt';
-	const  FJ_DELETED_AT                    = 'deletedAt';
-	const  FJ_DESC                          = 'desc';
-	const  FJ_ID                            = 'id';
-	const  FJ_NAME                          = 'name';
-	const  FJ_PERMISSION                    = 'permission';
-	const  FJ_UPDATED_AT                    = 'updatedAt';
-	const  FR_AUTHOR                        = 'relAuthor';
-	const  FR_ROLE_PERMISSION_BY_PERMISSION = 'relsRolePermissionByPermission';
-	const  FT_AUTHOR                        = 'permissions.author';
-	const  FT_CREATED_AT                    = 'permissions.created_at';
-	const  FT_DELETED_AT                    = 'permissions.deleted_at';
-	const  FT_DESC                          = 'permissions.desc';
-	const  FT_ID                            = 'permissions.id';
-	const  FT_NAME                          = 'permissions.name';
-	const  FT_PERMISSION                    = 'permissions.permission';
-	const  FT_UPDATED_AT                    = 'permissions.updated_at';
-	const  F_AUTHOR                         = 'author';
-	const  F_CREATED_AT                     = 'created_at';
-	const  F_DELETED_AT                     = 'deleted_at';
-	const  F_DESC                           = 'desc';
-	const  F_ID                             = 'id';
-	const  F_NAME                           = 'name';
-	const  F_PERMISSION                     = 'permission';
-	const  F_UPDATED_AT                     = 'updated_at';
+	const  FJ_AUTHOR     = 'author';
+	const  FJ_CREATED_AT = 'createdAt';
+	const  FJ_DELETED_AT = 'deletedAt';
+	const  FJ_DESC       = 'desc';
+	const  FJ_ID         = 'id';
+	const  FJ_NAME       = 'name';
+	const  FJ_PERMISSION = 'permission';
+	const  FJ_UPDATED_AT = 'updatedAt';
+	const  FR_AUTHOR     = 'relAuthor';
+	const  FT_AUTHOR     = 'permissions.author';
+	const  FT_CREATED_AT = 'permissions.created_at';
+	const  FT_DELETED_AT = 'permissions.deleted_at';
+	const  FT_DESC       = 'permissions.desc';
+	const  FT_ID         = 'permissions.id';
+	const  FT_NAME       = 'permissions.name';
+	const  FT_PERMISSION = 'permissions.permission';
+	const  FT_UPDATED_AT = 'permissions.updated_at';
+	const  F_AUTHOR      = 'author';
+	const  F_CREATED_AT  = 'created_at';
+	const  F_DELETED_AT  = 'deleted_at';
+	const  F_DESC        = 'desc';
+	const  F_ID          = 'id';
+	const  F_NAME        = 'name';
+	const  F_PERMISSION  = 'permission';
+	const  F_UPDATED_AT  = 'updated_at';
 
     protected $table = 'permissions';
 
@@ -100,13 +96,6 @@ class MPermissions extends DBClass {
             
 
 
-        /**
-         * @return DRolePermission[]|HasMany
-         */
-        public function relsRolePermissionByPermission(){
-            return $this->hasMany(DRolePermission::class, DRolePermission::F_PERMISSION, self::F_ID);
-        }
-            
 
 }
 

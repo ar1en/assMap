@@ -12,7 +12,7 @@ use  App\Models\DBModels\DBClass;
 
 /**
  * Class MProcessesTypes
- * Representation for db table processes_types.
+ * Representation for db table ent_processes_types.
 
  * @property  string       id                  [1] type:uuid      !NULL PRIMARY 
  * @property  string       name                [2] type:text      !NULL         

@@ -15,7 +15,7 @@ class CreatePeriodsTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('periods', function (Blueprint $table) {
+        Schema::create('ent_periods', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
             $table->date('start');
@@ -29,7 +29,7 @@ class CreatePeriodsTable extends Migration
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 
-            $table->foreign('author')->references('id')->on('users');
+            $table->foreign('author')->references('id')->on('ent_users');
             $table->index(['author']);
         });
 
@@ -43,6 +43,6 @@ class CreatePeriodsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('periods');
+        Schema::dropIfExists('ent_periods');
     }
 }

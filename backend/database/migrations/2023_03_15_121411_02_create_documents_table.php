@@ -14,7 +14,7 @@ return new class extends Migration {
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('documents', function (Blueprint $table) {
+        Schema::create('ent_documents', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->text('name');
             $table->uuid('type');
@@ -26,8 +26,8 @@ return new class extends Migration {
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 
-            $table->foreign('type')->references('id')->on('documents_types');
-            $table->foreign('author')->references('id')->on('users');
+            $table->foreign('type')->references('id')->on('ent_documents_types');
+            $table->foreign('author')->references('id')->on('ent_users');
             $table->index('author');
         });
 
@@ -41,6 +41,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('documents');
+        Schema::dropIfExists('ent_documents');
     }
 };

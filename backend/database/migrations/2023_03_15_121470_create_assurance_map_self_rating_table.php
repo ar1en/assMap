@@ -15,7 +15,7 @@ class CreateAssuranceMapSelfRatingTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('assurance_map_self_rating', function (Blueprint $table) {
+        Schema::create('rel_assurance_map_self_rating', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('assuranceMap');
             $table->uuid('selfRating');
@@ -25,8 +25,8 @@ class CreateAssuranceMapSelfRatingTable extends Migration
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 
-            $table->foreign('assuranceMap')->references('id')->on('assurance_maps');
-            $table->foreign('author')->references('id')->on('users');
+            $table->foreign('assuranceMap')->references('id')->on('ent_assurance_maps');
+            $table->foreign('author')->references('id')->on('ent_users');
             $table->index(['assuranceMap', 'selfRating', 'author']);
         });
 
@@ -40,6 +40,6 @@ class CreateAssuranceMapSelfRatingTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('assurance_map_self_rating');
+        Schema::dropIfExists('rel_assurance_map_self_rating');
     }
 }

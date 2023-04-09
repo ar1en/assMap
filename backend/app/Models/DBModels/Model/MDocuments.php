@@ -7,67 +7,57 @@ namespace App\Models\DBModels\Model;
 use  App\Models\DBModels\Data\DUsers;
 use  Illuminate\Database\Eloquent\Relations\BelongsTo;
 use  App\Models\DBModels\Data\DDocumentsTypes;
-use  App\Models\DBModels\Data\DAssuranceMapDocument;
-use  Illuminate\Database\Eloquent\Relations\HasMany;
-use  App\Models\DBModels\Data\DCollegiateBodyDocument;
-use  App\Models\DBModels\Data\DDocumentProcesses;
 use  App\Models\DBModels\DBClass;
 
 /**
  * Class MDocuments
- * Representation for db table documents.
+ * Representation for db table ent_documents.
 
- * @property  string                    id                                   [1] type:uuid      !NULL PRIMARY 
- * @property  string                    name                                 [2] type:text      !NULL         
- * @property  string                    type                                 [3] type:uuid      !NULL         
- * @property  \DateTime                 validFrom                            [4] type:timestamp !NULL         
- * @property  \DateTime                 validUntil                           [5] type:timestamp               
- * @property  string                    author                               [6] type:uuid      !NULL         
- * @property  \DateTime                 created_at                           [7] type:timestamp               
- * @property  \DateTime                 updated_at                           [8] type:timestamp               
- * @property  \DateTime                 deleted_at                           [9] type:timestamp               
- * @property  DUsers                    relAuthor                                                             
- * @property  DDocumentsTypes           relType                                                               
- * @property  DAssuranceMapDocument[]   relsAssuranceMapDocumentByDocument                                    
- * @property  DCollegiateBodyDocument[] relsCollegiateBodyDocumentByDocument                                  
- * @property  DDocumentProcesses[]      relsDocumentProcessesByDocument                                       
+ * @property  string          id         [1] type:uuid      !NULL PRIMARY 
+ * @property  string          name       [2] type:text      !NULL         
+ * @property  string          type       [3] type:uuid      !NULL         
+ * @property  \DateTime       validFrom  [4] type:timestamp !NULL         
+ * @property  \DateTime       validUntil [5] type:timestamp               
+ * @property  string          author     [6] type:uuid      !NULL         
+ * @property  \DateTime       created_at [7] type:timestamp               
+ * @property  \DateTime       updated_at [8] type:timestamp               
+ * @property  \DateTime       deleted_at [9] type:timestamp               
+ * @property  DUsers          relAuthor                                   
+ * @property  DDocumentsTypes relType                                     
  * @package App\Models\DBModels\Model
  */
 class MDocuments extends DBClass {
 
 
-	const  FJ_AUTHOR                               = 'author';
-	const  FJ_CREATED_AT                           = 'createdAt';
-	const  FJ_DELETED_AT                           = 'deletedAt';
-	const  FJ_ID                                   = 'id';
-	const  FJ_NAME                                 = 'name';
-	const  FJ_TYPE                                 = 'type';
-	const  FJ_UPDATED_AT                           = 'updatedAt';
-	const  FJ_VALIDFROM                            = 'validFrom';
-	const  FJ_VALIDUNTIL                           = 'validUntil';
-	const  FR_ASSURANCE_MAP_DOCUMENT_BY_DOCUMENT   = 'relsAssuranceMapDocumentByDocument';
-	const  FR_AUTHOR                               = 'relAuthor';
-	const  FR_COLLEGIATE_BODY_DOCUMENT_BY_DOCUMENT = 'relsCollegiateBodyDocumentByDocument';
-	const  FR_DOCUMENT_PROCESSES_BY_DOCUMENT       = 'relsDocumentProcessesByDocument';
-	const  FR_TYPE                                 = 'relType';
-	const  FT_AUTHOR                               = 'documents.author';
-	const  FT_CREATED_AT                           = 'documents.created_at';
-	const  FT_DELETED_AT                           = 'documents.deleted_at';
-	const  FT_ID                                   = 'documents.id';
-	const  FT_NAME                                 = 'documents.name';
-	const  FT_TYPE                                 = 'documents.type';
-	const  FT_UPDATED_AT                           = 'documents.updated_at';
-	const  FT_VALIDFROM                            = 'documents.validFrom';
-	const  FT_VALIDUNTIL                           = 'documents.validUntil';
-	const  F_AUTHOR                                = 'author';
-	const  F_CREATED_AT                            = 'created_at';
-	const  F_DELETED_AT                            = 'deleted_at';
-	const  F_ID                                    = 'id';
-	const  F_NAME                                  = 'name';
-	const  F_TYPE                                  = 'type';
-	const  F_UPDATED_AT                            = 'updated_at';
-	const  F_VALIDFROM                             = 'validFrom';
-	const  F_VALIDUNTIL                            = 'validUntil';
+	const  FJ_AUTHOR     = 'author';
+	const  FJ_CREATED_AT = 'createdAt';
+	const  FJ_DELETED_AT = 'deletedAt';
+	const  FJ_ID         = 'id';
+	const  FJ_NAME       = 'name';
+	const  FJ_TYPE       = 'type';
+	const  FJ_UPDATED_AT = 'updatedAt';
+	const  FJ_VALIDFROM  = 'validFrom';
+	const  FJ_VALIDUNTIL = 'validUntil';
+	const  FR_AUTHOR     = 'relAuthor';
+	const  FR_TYPE       = 'relType';
+	const  FT_AUTHOR     = 'documents.author';
+	const  FT_CREATED_AT = 'documents.created_at';
+	const  FT_DELETED_AT = 'documents.deleted_at';
+	const  FT_ID         = 'documents.id';
+	const  FT_NAME       = 'documents.name';
+	const  FT_TYPE       = 'documents.type';
+	const  FT_UPDATED_AT = 'documents.updated_at';
+	const  FT_VALIDFROM  = 'documents.validFrom';
+	const  FT_VALIDUNTIL = 'documents.validUntil';
+	const  F_AUTHOR      = 'author';
+	const  F_CREATED_AT  = 'created_at';
+	const  F_DELETED_AT  = 'deleted_at';
+	const  F_ID          = 'id';
+	const  F_NAME        = 'name';
+	const  F_TYPE        = 'type';
+	const  F_UPDATED_AT  = 'updated_at';
+	const  F_VALIDFROM   = 'validFrom';
+	const  F_VALIDUNTIL  = 'validUntil';
 
     protected $table = 'documents';
 
@@ -124,29 +114,6 @@ class MDocuments extends DBClass {
             
 
 
-        /**
-         * @return DAssuranceMapDocument[]|HasMany
-         */
-        public function relsAssuranceMapDocumentByDocument(){
-            return $this->hasMany(DAssuranceMapDocument::class, DAssuranceMapDocument::F_DOCUMENT, self::F_ID);
-        }
-            
-
-        /**
-         * @return DCollegiateBodyDocument[]|HasMany
-         */
-        public function relsCollegiateBodyDocumentByDocument(){
-            return $this->hasMany(DCollegiateBodyDocument::class, DCollegiateBodyDocument::F_DOCUMENT, self::F_ID);
-        }
-            
-
-        /**
-         * @return DDocumentProcesses[]|HasMany
-         */
-        public function relsDocumentProcessesByDocument(){
-            return $this->hasMany(DDocumentProcesses::class, DDocumentProcesses::F_DOCUMENT, self::F_ID);
-        }
-            
 
 }
 

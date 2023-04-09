@@ -10,7 +10,6 @@ use  App\Models\DBModels\Data\DDepartments;
 use  App\Models\DBModels\Data\DAutomatedMonitoring;
 use  Illuminate\Database\Eloquent\Relations\HasMany;
 use  App\Models\DBModels\Data\DCollegiateBodies;
-use  App\Models\DBModels\Data\DDepartmentProcess;
 use  App\Models\DBModels\Data\DExternalInspections;
 use  App\Models\DBModels\Data\DInternalInspections;
 use  App\Models\DBModels\Data\DObjects;
@@ -20,30 +19,29 @@ use  App\Models\DBModels\DBClass;
 
 /**
  * Class MDepartments
- * Representation for db table departments.
+ * Representation for db table ent_departments.
 
  * @property  string                 id                                        [1]  type:uuid         !NULL PRIMARY UNIQUE
- * @property  string                 parentDepartment                          [2]  type:uuid                       
- * @property  string                 bpmId                                     [3]  type:varchar(255)               
- * @property  string                 sasId                                     [4]  type:varchar(255)               
- * @property  string                 name                                      [5]  type:text         !NULL         
- * @property  int                    level                                     [6]  type:int4         !NULL         
- * @property  string                 path                                      [7]  type:text         !NULL         
- * @property  string                 author                                    [8]  type:uuid         !NULL         
- * @property  \DateTime              created_at                                [9]  type:timestamp                  
- * @property  \DateTime              updated_at                                [10] type:timestamp                  
- * @property  \DateTime              deleted_at                                [11] type:timestamp                  
- * @property  DUsers                 relAuthor                                                                      
- * @property  DDepartments           relParentDepartment                                                            
- * @property  DAutomatedMonitoring[] relsAutomatedMonitoringByDepartment                                            
- * @property  DCollegiateBodies[]    relsCollegiateBodiesBySourceDepartment                                         
- * @property  DDepartmentProcess[]   relsDepartmentProcessByDepartment                                              
- * @property  DDepartments[]         relsDepartmentsByParentDepartment                                              
- * @property  DExternalInspections[] relsExternalInspectionsBySourceDepartment                                      
- * @property  DInternalInspections[] relsInternalInspectionsByDepartment                                            
- * @property  DObjects[]             relsObjectsBySupervisingDivision                                               
- * @property  DRoles[]               relsRolesByDepartment                                                          
- * @property  DVacancies[]           relsVacanciesByDepartment                                                      
+ * @property  string                 parentDepartment                          [2]  type:uuid
+ * @property  string                 bpmId                                     [3]  type:varchar(255)
+ * @property  string                 sasId                                     [4]  type:varchar(255)
+ * @property  string                 name                                      [5]  type:text         !NULL
+ * @property  int                    level                                     [6]  type:int4         !NULL
+ * @property  string                 path                                      [7]  type:text         !NULL
+ * @property  string                 author                                    [8]  type:uuid         !NULL
+ * @property  \DateTime              created_at                                [9]  type:timestamp
+ * @property  \DateTime              updated_at                                [10] type:timestamp
+ * @property  \DateTime              deleted_at                                [11] type:timestamp
+ * @property  DUsers                 relAuthor
+ * @property  DDepartments           relParentDepartment
+ * @property  DAutomatedMonitoring[] relsAutomatedMonitoringByDepartment
+ * @property  DCollegiateBodies[]    relsCollegiateBodiesBySourceDepartment
+ * @property  DDepartments[]         relsDepartmentsByParentDepartment
+ * @property  DExternalInspections[] relsExternalInspectionsBySourceDepartment
+ * @property  DInternalInspections[] relsInternalInspectionsByDepartment
+ * @property  DObjects[]             relsObjectsBySupervisingDivision
+ * @property  DRoles[]               relsRolesByDepartment
+ * @property  DVacancies[]           relsVacanciesByDepartment
  * @package App\Models\DBModels\Model
  */
 class MDepartments extends DBClass {
@@ -64,7 +62,6 @@ class MDepartments extends DBClass {
 	const  FR_AUTOMATED_MONITORING_BY_DEPARTMENT       = 'relsAutomatedMonitoringByDepartment';
 	const  FR_COLLEGIATE_BODIES_BY_SOURCEDEPARTMENT    = 'relsCollegiateBodiesBySourceDepartment';
 	const  FR_DEPARTMENTS_BY_PARENTDEPARTMENT          = 'relsDepartmentsByParentDepartment';
-	const  FR_DEPARTMENT_PROCESS_BY_DEPARTMENT         = 'relsDepartmentProcessByDepartment';
 	const  FR_EXTERNAL_INSPECTIONS_BY_SOURCEDEPARTMENT = 'relsExternalInspectionsBySourceDepartment';
 	const  FR_INTERNAL_INSPECTIONS_BY_DEPARTMENT       = 'relsInternalInspectionsByDepartment';
 	const  FR_OBJECTS_BY_SUPERVISINGDIVISION           = 'relsObjectsBySupervisingDivision';
@@ -94,7 +91,7 @@ class MDepartments extends DBClass {
 	const  F_SASID                                     = 'sasId';
 	const  F_UPDATED_AT                                = 'updated_at';
 
-    protected $table = 'departments';
+    protected $table = 'env_departments';
 
 	public static array $jsonable = [
 		MDepartments::FJ_ID               =>[ MDepartments::F_ID               ,null,'string',           ],
@@ -122,7 +119,7 @@ class MDepartments extends DBClass {
 			self::F_CREATED_AT,
 			self::F_UPDATED_AT,
 			self::F_DELETED_AT,
-		]; 
+		];
 
 		protected $fillable = [
 			 self::F_PARENTDEPARTMENT,
@@ -144,7 +141,7 @@ class MDepartments extends DBClass {
         public function relAuthor(){
             return $this->belongsTo(DUsers::class,self::F_AUTHOR, DUsers::F_ID);
         }
-            
+
 
         /**
          * @return DDepartments|BelongsTo
@@ -152,7 +149,7 @@ class MDepartments extends DBClass {
         public function relParentDepartment(){
             return $this->belongsTo(DDepartments::class,self::F_PARENTDEPARTMENT, DDepartments::F_ID);
         }
-            
+
 
 
         /**
@@ -161,7 +158,7 @@ class MDepartments extends DBClass {
         public function relsAutomatedMonitoringByDepartment(){
             return $this->hasMany(DAutomatedMonitoring::class, DAutomatedMonitoring::F_DEPARTMENT, self::F_ID);
         }
-            
+
 
         /**
          * @return DCollegiateBodies[]|HasMany
@@ -169,15 +166,7 @@ class MDepartments extends DBClass {
         public function relsCollegiateBodiesBySourceDepartment(){
             return $this->hasMany(DCollegiateBodies::class, DCollegiateBodies::F_SOURCEDEPARTMENT, self::F_ID);
         }
-            
 
-        /**
-         * @return DDepartmentProcess[]|HasMany
-         */
-        public function relsDepartmentProcessByDepartment(){
-            return $this->hasMany(DDepartmentProcess::class, DDepartmentProcess::F_DEPARTMENT, self::F_ID);
-        }
-            
 
         /**
          * @return DDepartments[]|HasMany
@@ -185,7 +174,7 @@ class MDepartments extends DBClass {
         public function relsDepartmentsByParentDepartment(){
             return $this->hasMany(DDepartments::class, DDepartments::F_PARENTDEPARTMENT, self::F_ID);
         }
-            
+
 
         /**
          * @return DExternalInspections[]|HasMany
@@ -193,7 +182,7 @@ class MDepartments extends DBClass {
         public function relsExternalInspectionsBySourceDepartment(){
             return $this->hasMany(DExternalInspections::class, DExternalInspections::F_SOURCEDEPARTMENT, self::F_ID);
         }
-            
+
 
         /**
          * @return DInternalInspections[]|HasMany
@@ -201,7 +190,7 @@ class MDepartments extends DBClass {
         public function relsInternalInspectionsByDepartment(){
             return $this->hasMany(DInternalInspections::class, DInternalInspections::F_DEPARTMENT, self::F_ID);
         }
-            
+
 
         /**
          * @return DObjects[]|HasMany
@@ -209,7 +198,7 @@ class MDepartments extends DBClass {
         public function relsObjectsBySupervisingDivision(){
             return $this->hasMany(DObjects::class, DObjects::F_SUPERVISINGDIVISION, self::F_ID);
         }
-            
+
 
         /**
          * @return DRoles[]|HasMany
@@ -217,7 +206,7 @@ class MDepartments extends DBClass {
         public function relsRolesByDepartment(){
             return $this->hasMany(DRoles::class, DRoles::F_DEPARTMENT, self::F_ID);
         }
-            
+
 
         /**
          * @return DVacancies[]|HasMany
@@ -225,7 +214,7 @@ class MDepartments extends DBClass {
         public function relsVacanciesByDepartment(){
             return $this->hasMany(DVacancies::class, DVacancies::F_DEPARTMENT, self::F_ID);
         }
-            
+
 
 }
 

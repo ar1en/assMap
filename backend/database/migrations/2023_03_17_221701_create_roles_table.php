@@ -15,15 +15,15 @@ class CreateRolesTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('roles', function (Blueprint $table) {
+        Schema::create('ent_roles', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->unique('id');
-            $table->foreignUuid('parentRole')->nullable()->constrained('roles');
-            $table->foreignUuid('department')->nullable()->constrained('departments');
-            $table->foreignUuid('object')->nullable()->constrained('objects');
-            $table->foreignUuid('process')->nullable()->constrained('processes');
+            $table->foreignUuid('parentRole')->nullable()->constrained('ent_roles');
+            $table->foreignUuid('department')->nullable()->constrained('ent_departments');
+            $table->foreignUuid('object')->nullable()->constrained('ent_objects');
+            $table->foreignUuid('process')->nullable()->constrained('ent_processes');
             $table->string('name');
-            $table->foreignUuid('author')->constrained('users');
+            $table->foreignUuid('author')->constrained('ent_users');
             $table->timestamp('validFrom');
             $table->timestamp('validUntil')->nullable();
             $table->timestamps();
@@ -43,6 +43,6 @@ class CreateRolesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('roles');
+        Schema::dropIfExists('ent_roles');
     }
 }

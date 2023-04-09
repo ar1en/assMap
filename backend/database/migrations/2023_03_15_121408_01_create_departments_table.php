@@ -14,7 +14,7 @@ return new class extends Migration {
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('departments', function (Blueprint $table) {
+        Schema::create('ent_departments', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('parentDepartment')->nullable();
             $table->string('bpmId')->nullable();
@@ -30,8 +30,8 @@ return new class extends Migration {
             #$table->timestamp('updatedAt');
 
             $table->unique('id');
-            $table->foreign('parentDepartment')->references('id')->on('departments');
-            $table->foreign('author')->references('id')->on('users');
+            $table->foreign('parentDepartment')->references('id')->on('ent_departments');
+            $table->foreign('author')->references('id')->on('ent_users');
             $table->index(['parentDepartment', 'author']);
         });
 
@@ -45,6 +45,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('departments');
+        Schema::dropIfExists('ent_departments');
     }
 };

@@ -6,7 +6,7 @@ use App\Models\DBModels\Model\MIcsWorksTypes;
 
 /**
  * Class DIcsWorksTypes
- * Data class for db table ics_works_types.
+ * Data class for db table ent_ics_works_types.
  * @package App\Models\DBModels\Data
  */
 class DIcsWorksTypes extends MIcsWorksTypes {

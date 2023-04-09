@@ -14,7 +14,7 @@ return new class extends Migration {
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('internal_inspection_object', function (Blueprint $table) {
+        Schema::create('rel_internal_inspection_object', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('object');
             $table->uuid('inspection');
@@ -24,9 +24,9 @@ return new class extends Migration {
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 
-            $table->foreign('object')->references('id')->on('objects');
-            $table->foreign('inspection')->references('id')->on('internal_inspections');
-            $table->foreign('author')->references('id')->on('users');
+            $table->foreign('object')->references('id')->on('ent_objects');
+            $table->foreign('inspection')->references('id')->on('ent_internal_inspections');
+            $table->foreign('author')->references('id')->on('ent_users');
             $table->index(['object', 'inspection', 'author']);
         });
 
@@ -40,6 +40,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('internal_inspection_object');
+        Schema::dropIfExists('rel_internal_inspection_object');
     }
 };

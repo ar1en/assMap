@@ -6,7 +6,7 @@ use App\Models\DBModels\Model\MPeriods;
 
 /**
  * Class DPeriods
- * Data class for db table periods.
+ * Data class for db table ent_periods.
  * @package App\Models\DBModels\Data
  */
 class DPeriods extends MPeriods {

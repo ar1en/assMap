@@ -8,75 +8,71 @@ use  App\Models\DBModels\Data\DUsers;
 use  Illuminate\Database\Eloquent\Relations\BelongsTo;
 use  App\Models\DBModels\Data\DObjects;
 use  App\Models\DBModels\Data\DProcesses;
-use  App\Models\DBModels\Data\DAssuranceMapIcsMatrix;
-use  Illuminate\Database\Eloquent\Relations\HasMany;
 use  App\Models\DBModels\DBClass;
 
 /**
  * Class MIcsMatrices
- * Representation for db table ics_matrices.
+ * Representation for db table ent_ics_matrices.
 
- * @property  string                   id                                   [1]  type:uuid      !NULL PRIMARY 
- * @property  string                   object                               [2]  type:uuid      !NULL         
- * @property  string                   process                              [3]  type:uuid      !NULL         
- * @property  string                   desc                                 [4]  type:text                    
- * @property  boolean                  ics                                  [5]  type:bool      !NULL         
- * @property  boolean                  impactOnRisk                         [6]  type:bool      !NULL         
- * @property  int                      testingYear                          [7]  type:int4                    
- * @property  int                      updatingYear                         [8]  type:int4                    
- * @property  string                   author                               [9]  type:uuid      !NULL         
- * @property  \DateTime                created_at                           [10] type:timestamp               
- * @property  \DateTime                updated_at                           [11] type:timestamp               
- * @property  \DateTime                deleted_at                           [12] type:timestamp               
- * @property  DUsers                   relAuthor                                                              
- * @property  DObjects                 relObject                                                              
- * @property  DProcesses               relProcess                                                             
- * @property  DAssuranceMapIcsMatrix[] relsAssuranceMapIcsMatrixByIcsMatrix                                   
+ * @property  string     id           [1]  type:uuid      !NULL PRIMARY 
+ * @property  string     object       [2]  type:uuid      !NULL         
+ * @property  string     process      [3]  type:uuid      !NULL         
+ * @property  string     desc         [4]  type:text                    
+ * @property  boolean    ics          [5]  type:bool      !NULL         
+ * @property  boolean    impactOnRisk [6]  type:bool      !NULL         
+ * @property  int        testingYear  [7]  type:int4                    
+ * @property  int        updatingYear [8]  type:int4                    
+ * @property  string     author       [9]  type:uuid      !NULL         
+ * @property  \DateTime  created_at   [10] type:timestamp               
+ * @property  \DateTime  updated_at   [11] type:timestamp               
+ * @property  \DateTime  deleted_at   [12] type:timestamp               
+ * @property  DUsers     relAuthor                                      
+ * @property  DObjects   relObject                                      
+ * @property  DProcesses relProcess                                     
  * @package App\Models\DBModels\Model
  */
 class MIcsMatrices extends DBClass {
 
 
-	const  FJ_AUTHOR                                = 'author';
-	const  FJ_CREATED_AT                            = 'createdAt';
-	const  FJ_DELETED_AT                            = 'deletedAt';
-	const  FJ_DESC                                  = 'desc';
-	const  FJ_ICS                                   = 'ics';
-	const  FJ_ID                                    = 'id';
-	const  FJ_IMPACTONRISK                          = 'impactOnRisk';
-	const  FJ_OBJECT                                = 'object';
-	const  FJ_PROCESS                               = 'process';
-	const  FJ_TESTINGYEAR                           = 'testingYear';
-	const  FJ_UPDATED_AT                            = 'updatedAt';
-	const  FJ_UPDATINGYEAR                          = 'updatingYear';
-	const  FR_ASSURANCE_MAP_ICS_MATRIX_BY_ICSMATRIX = 'relsAssuranceMapIcsMatrixByIcsMatrix';
-	const  FR_AUTHOR                                = 'relAuthor';
-	const  FR_OBJECT                                = 'relObject';
-	const  FR_PROCESS                               = 'relProcess';
-	const  FT_AUTHOR                                = 'ics_matrices.author';
-	const  FT_CREATED_AT                            = 'ics_matrices.created_at';
-	const  FT_DELETED_AT                            = 'ics_matrices.deleted_at';
-	const  FT_DESC                                  = 'ics_matrices.desc';
-	const  FT_ICS                                   = 'ics_matrices.ics';
-	const  FT_ID                                    = 'ics_matrices.id';
-	const  FT_IMPACTONRISK                          = 'ics_matrices.impactOnRisk';
-	const  FT_OBJECT                                = 'ics_matrices.object';
-	const  FT_PROCESS                               = 'ics_matrices.process';
-	const  FT_TESTINGYEAR                           = 'ics_matrices.testingYear';
-	const  FT_UPDATED_AT                            = 'ics_matrices.updated_at';
-	const  FT_UPDATINGYEAR                          = 'ics_matrices.updatingYear';
-	const  F_AUTHOR                                 = 'author';
-	const  F_CREATED_AT                             = 'created_at';
-	const  F_DELETED_AT                             = 'deleted_at';
-	const  F_DESC                                   = 'desc';
-	const  F_ICS                                    = 'ics';
-	const  F_ID                                     = 'id';
-	const  F_IMPACTONRISK                           = 'impactOnRisk';
-	const  F_OBJECT                                 = 'object';
-	const  F_PROCESS                                = 'process';
-	const  F_TESTINGYEAR                            = 'testingYear';
-	const  F_UPDATED_AT                             = 'updated_at';
-	const  F_UPDATINGYEAR                           = 'updatingYear';
+	const  FJ_AUTHOR       = 'author';
+	const  FJ_CREATED_AT   = 'createdAt';
+	const  FJ_DELETED_AT   = 'deletedAt';
+	const  FJ_DESC         = 'desc';
+	const  FJ_ICS          = 'ics';
+	const  FJ_ID           = 'id';
+	const  FJ_IMPACTONRISK = 'impactOnRisk';
+	const  FJ_OBJECT       = 'object';
+	const  FJ_PROCESS      = 'process';
+	const  FJ_TESTINGYEAR  = 'testingYear';
+	const  FJ_UPDATED_AT   = 'updatedAt';
+	const  FJ_UPDATINGYEAR = 'updatingYear';
+	const  FR_AUTHOR       = 'relAuthor';
+	const  FR_OBJECT       = 'relObject';
+	const  FR_PROCESS      = 'relProcess';
+	const  FT_AUTHOR       = 'ics_matrices.author';
+	const  FT_CREATED_AT   = 'ics_matrices.created_at';
+	const  FT_DELETED_AT   = 'ics_matrices.deleted_at';
+	const  FT_DESC         = 'ics_matrices.desc';
+	const  FT_ICS          = 'ics_matrices.ics';
+	const  FT_ID           = 'ics_matrices.id';
+	const  FT_IMPACTONRISK = 'ics_matrices.impactOnRisk';
+	const  FT_OBJECT       = 'ics_matrices.object';
+	const  FT_PROCESS      = 'ics_matrices.process';
+	const  FT_TESTINGYEAR  = 'ics_matrices.testingYear';
+	const  FT_UPDATED_AT   = 'ics_matrices.updated_at';
+	const  FT_UPDATINGYEAR = 'ics_matrices.updatingYear';
+	const  F_AUTHOR        = 'author';
+	const  F_CREATED_AT    = 'created_at';
+	const  F_DELETED_AT    = 'deleted_at';
+	const  F_DESC          = 'desc';
+	const  F_ICS           = 'ics';
+	const  F_ID            = 'id';
+	const  F_IMPACTONRISK  = 'impactOnRisk';
+	const  F_OBJECT        = 'object';
+	const  F_PROCESS       = 'process';
+	const  F_TESTINGYEAR   = 'testingYear';
+	const  F_UPDATED_AT    = 'updated_at';
+	const  F_UPDATINGYEAR  = 'updatingYear';
 
     protected $table = 'ics_matrices';
 
@@ -150,13 +146,6 @@ class MIcsMatrices extends DBClass {
             
 
 
-        /**
-         * @return DAssuranceMapIcsMatrix[]|HasMany
-         */
-        public function relsAssuranceMapIcsMatrixByIcsMatrix(){
-            return $this->hasMany(DAssuranceMapIcsMatrix::class, DAssuranceMapIcsMatrix::F_ICSMATRIX, self::F_ID);
-        }
-            
 
 }
 

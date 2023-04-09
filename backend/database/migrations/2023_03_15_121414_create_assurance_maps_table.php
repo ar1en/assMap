@@ -15,7 +15,7 @@ class CreateAssuranceMapsTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('assurance_maps', function (Blueprint $table) {
+        Schema::create('ent_assurance_maps', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('period');
             $table->string('name');
@@ -27,8 +27,8 @@ class CreateAssuranceMapsTable extends Migration
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 
-            $table->foreign('period')->references('id')->on('periods');
-            $table->foreign('author')->references('id')->on('users');
+            $table->foreign('period')->references('id')->on('ent_periods');
+            $table->foreign('author')->references('id')->on('ent_users');
             $table->index('author');
         });
 
@@ -42,6 +42,6 @@ class CreateAssuranceMapsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('assurance_maps');
+        Schema::dropIfExists('ent_assurance_maps');
     }
 }

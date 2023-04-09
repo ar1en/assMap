@@ -12,7 +12,7 @@ use  App\Models\DBModels\DBClass;
 
 /**
  * Class MExternalControllersTypes
- * Representation for db table external_controllers_types.
+ * Representation for db table ent_external_controllers_types.
 
  * @property  string                 id                                              [1] type:uuid      !NULL PRIMARY 
  * @property  string                 name                                            [2] type:text      !NULL         

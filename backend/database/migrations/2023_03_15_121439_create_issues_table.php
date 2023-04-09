@@ -15,7 +15,7 @@ class CreateIssuesTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('issues', function (Blueprint $table) {
+        Schema::create('ent_issues', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('sasId')->unique();
             $table->uuid('type');
@@ -26,8 +26,8 @@ class CreateIssuesTable extends Migration
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 
-            $table->foreign('type')->references('id')->on('issues_types');
-            $table->foreign('author')->references('id')->on('users');
+            $table->foreign('type')->references('id')->on('ent_issues_types');
+            $table->foreign('author')->references('id')->on('ent_users');
             $table->index(['type', 'author']);
         });
 
@@ -41,6 +41,6 @@ class CreateIssuesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('issues');
+        Schema::dropIfExists('ent_issues');
     }
 }

@@ -10,10 +10,10 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('ent_users', function (Blueprint $table) {
 
             #$table->foreign('vacancy')->references('id')->on('vacancies');
-            $table->foreign('author')->references('id')->on('users');
+            $table->foreign('author')->references('id')->on('ent_users');
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('ent_users', function (Blueprint $table) {
 
             #$table->dropForeign(['vacancy']);
             $table->dropForeign(['author']);

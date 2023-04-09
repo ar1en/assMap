@@ -15,7 +15,7 @@ class CreateRiskRatesTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('risk_rates', function (Blueprint $table) {
+        Schema::create('rel_risk_rates', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('risk');
             $table->uuid('process');
@@ -27,10 +27,10 @@ class CreateRiskRatesTable extends Migration
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 
-            $table->foreign('risk')->references('id')->on('risks');
-            $table->foreign('process')->references('id')->on('processes');
-            $table->foreign('object')->references('id')->on('objects');
-            $table->foreign('author')->references('id')->on('users');
+            $table->foreign('risk')->references('id')->on('ent_risks');
+            $table->foreign('process')->references('id')->on('ent_processes');
+            $table->foreign('object')->references('id')->on('ent_objects');
+            $table->foreign('author')->references('id')->on('ent_users');
             $table->index(['risk', 'process', 'object', 'author']);
         });
 
@@ -44,6 +44,6 @@ class CreateRiskRatesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('risk_rates');
+        Schema::dropIfExists('rel_risk_rates');
     }
 }

@@ -10,84 +10,78 @@ use  App\Models\DBModels\Data\DDepartments;
 use  App\Models\DBModels\Data\DObjects;
 use  App\Models\DBModels\Data\DRoles;
 use  App\Models\DBModels\Data\DProcesses;
-use  App\Models\DBModels\Data\DRolePermission;
 use  Illuminate\Database\Eloquent\Relations\HasMany;
-use  App\Models\DBModels\Data\DUserRole;
 use  App\Models\DBModels\DBClass;
 
 /**
  * Class MRoles
- * Representation for db table roles.
+ * Representation for db table ent_roles.
 
- * @property  string            id                       [1]  type:uuid         !NULL PRIMARY UNIQUE
- * @property  string            parentRole               [2]  type:uuid                       
- * @property  string            department               [3]  type:uuid                       
- * @property  string            object                   [4]  type:uuid                       
- * @property  string            process                  [5]  type:uuid                       
- * @property  string            name                     [6]  type:varchar(255) !NULL         
- * @property  string            author                   [7]  type:uuid         !NULL         
- * @property  \DateTime         validFrom                [8]  type:timestamp    !NULL         
- * @property  \DateTime         validUntil               [9]  type:timestamp                  
- * @property  \DateTime         created_at               [10] type:timestamp                  
- * @property  \DateTime         updated_at               [11] type:timestamp                  
- * @property  \DateTime         deleted_at               [12] type:timestamp                  
- * @property  DUsers            relAuthor                                                     
- * @property  DDepartments      relDepartment                                                 
- * @property  DObjects          relObject                                                     
- * @property  DRoles            relParentRole                                                 
- * @property  DProcesses        relProcess                                                    
- * @property  DRolePermission[] relsRolePermissionByRole                                      
- * @property  DRoles[]          relsRolesByParentRole                                         
- * @property  DUserRole[]       relsUserRoleByRole                                            
+ * @property  string       id                    [1]  type:uuid         !NULL PRIMARY UNIQUE
+ * @property  string       parentRole            [2]  type:uuid                       
+ * @property  string       department            [3]  type:uuid                       
+ * @property  string       object                [4]  type:uuid                       
+ * @property  string       process               [5]  type:uuid                       
+ * @property  string       name                  [6]  type:varchar(255) !NULL         
+ * @property  string       author                [7]  type:uuid         !NULL         
+ * @property  \DateTime    validFrom             [8]  type:timestamp    !NULL         
+ * @property  \DateTime    validUntil            [9]  type:timestamp                  
+ * @property  \DateTime    created_at            [10] type:timestamp                  
+ * @property  \DateTime    updated_at            [11] type:timestamp                  
+ * @property  \DateTime    deleted_at            [12] type:timestamp                  
+ * @property  DUsers       relAuthor                                                  
+ * @property  DDepartments relDepartment                                              
+ * @property  DObjects     relObject                                                  
+ * @property  DRoles       relParentRole                                              
+ * @property  DProcesses   relProcess                                                 
+ * @property  DRoles[]     relsRolesByParentRole                                      
  * @package App\Models\DBModels\Model
  */
 class MRoles extends DBClass {
 
 
-	const  FJ_AUTHOR                  = 'author';
-	const  FJ_CREATED_AT              = 'createdAt';
-	const  FJ_DELETED_AT              = 'deletedAt';
-	const  FJ_DEPARTMENT              = 'department';
-	const  FJ_ID                      = 'id';
-	const  FJ_NAME                    = 'name';
-	const  FJ_OBJECT                  = 'object';
-	const  FJ_PARENTROLE              = 'parentRole';
-	const  FJ_PROCESS                 = 'process';
-	const  FJ_UPDATED_AT              = 'updatedAt';
-	const  FJ_VALIDFROM               = 'validFrom';
-	const  FJ_VALIDUNTIL              = 'validUntil';
-	const  FR_AUTHOR                  = 'relAuthor';
-	const  FR_DEPARTMENT              = 'relDepartment';
-	const  FR_OBJECT                  = 'relObject';
-	const  FR_PARENTROLE              = 'relParentRole';
-	const  FR_PROCESS                 = 'relProcess';
-	const  FR_ROLES_BY_PARENTROLE     = 'relsRolesByParentRole';
-	const  FR_ROLE_PERMISSION_BY_ROLE = 'relsRolePermissionByRole';
-	const  FR_USER_ROLE_BY_ROLE       = 'relsUserRoleByRole';
-	const  FT_AUTHOR                  = 'roles.author';
-	const  FT_CREATED_AT              = 'roles.created_at';
-	const  FT_DELETED_AT              = 'roles.deleted_at';
-	const  FT_DEPARTMENT              = 'roles.department';
-	const  FT_ID                      = 'roles.id';
-	const  FT_NAME                    = 'roles.name';
-	const  FT_OBJECT                  = 'roles.object';
-	const  FT_PARENTROLE              = 'roles.parentRole';
-	const  FT_PROCESS                 = 'roles.process';
-	const  FT_UPDATED_AT              = 'roles.updated_at';
-	const  FT_VALIDFROM               = 'roles.validFrom';
-	const  FT_VALIDUNTIL              = 'roles.validUntil';
-	const  F_AUTHOR                   = 'author';
-	const  F_CREATED_AT               = 'created_at';
-	const  F_DELETED_AT               = 'deleted_at';
-	const  F_DEPARTMENT               = 'department';
-	const  F_ID                       = 'id';
-	const  F_NAME                     = 'name';
-	const  F_OBJECT                   = 'object';
-	const  F_PARENTROLE               = 'parentRole';
-	const  F_PROCESS                  = 'process';
-	const  F_UPDATED_AT               = 'updated_at';
-	const  F_VALIDFROM                = 'validFrom';
-	const  F_VALIDUNTIL               = 'validUntil';
+	const  FJ_AUTHOR              = 'author';
+	const  FJ_CREATED_AT          = 'createdAt';
+	const  FJ_DELETED_AT          = 'deletedAt';
+	const  FJ_DEPARTMENT          = 'department';
+	const  FJ_ID                  = 'id';
+	const  FJ_NAME                = 'name';
+	const  FJ_OBJECT              = 'object';
+	const  FJ_PARENTROLE          = 'parentRole';
+	const  FJ_PROCESS             = 'process';
+	const  FJ_UPDATED_AT          = 'updatedAt';
+	const  FJ_VALIDFROM           = 'validFrom';
+	const  FJ_VALIDUNTIL          = 'validUntil';
+	const  FR_AUTHOR              = 'relAuthor';
+	const  FR_DEPARTMENT          = 'relDepartment';
+	const  FR_OBJECT              = 'relObject';
+	const  FR_PARENTROLE          = 'relParentRole';
+	const  FR_PROCESS             = 'relProcess';
+	const  FR_ROLES_BY_PARENTROLE = 'relsRolesByParentRole';
+	const  FT_AUTHOR              = 'roles.author';
+	const  FT_CREATED_AT          = 'roles.created_at';
+	const  FT_DELETED_AT          = 'roles.deleted_at';
+	const  FT_DEPARTMENT          = 'roles.department';
+	const  FT_ID                  = 'roles.id';
+	const  FT_NAME                = 'roles.name';
+	const  FT_OBJECT              = 'roles.object';
+	const  FT_PARENTROLE          = 'roles.parentRole';
+	const  FT_PROCESS             = 'roles.process';
+	const  FT_UPDATED_AT          = 'roles.updated_at';
+	const  FT_VALIDFROM           = 'roles.validFrom';
+	const  FT_VALIDUNTIL          = 'roles.validUntil';
+	const  F_AUTHOR               = 'author';
+	const  F_CREATED_AT           = 'created_at';
+	const  F_DELETED_AT           = 'deleted_at';
+	const  F_DEPARTMENT           = 'department';
+	const  F_ID                   = 'id';
+	const  F_NAME                 = 'name';
+	const  F_OBJECT               = 'object';
+	const  F_PARENTROLE           = 'parentRole';
+	const  F_PROCESS              = 'process';
+	const  F_UPDATED_AT           = 'updated_at';
+	const  F_VALIDFROM            = 'validFrom';
+	const  F_VALIDUNTIL           = 'validUntil';
 
     protected $table = 'roles';
 
@@ -178,26 +172,10 @@ class MRoles extends DBClass {
 
 
         /**
-         * @return DRolePermission[]|HasMany
-         */
-        public function relsRolePermissionByRole(){
-            return $this->hasMany(DRolePermission::class, DRolePermission::F_ROLE, self::F_ID);
-        }
-            
-
-        /**
          * @return DRoles[]|HasMany
          */
         public function relsRolesByParentRole(){
             return $this->hasMany(DRoles::class, DRoles::F_PARENTROLE, self::F_ID);
-        }
-            
-
-        /**
-         * @return DUserRole[]|HasMany
-         */
-        public function relsUserRoleByRole(){
-            return $this->hasMany(DUserRole::class, DUserRole::F_ROLE, self::F_ID);
         }
             
 

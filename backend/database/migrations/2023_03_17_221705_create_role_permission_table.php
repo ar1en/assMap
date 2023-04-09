@@ -15,11 +15,11 @@ class CreateRolePermissionTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('role_permission', function (Blueprint $table) {
+        Schema::create('rel_role_permission', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('role')->constrained('roles');
-            $table->foreignUuid('permission')->constrained('permissions');
-            $table->foreignUuid('author')->constrained('users');
+            $table->foreignUuid('role')->constrained('ent_roles');
+            $table->foreignUuid('permission')->constrained('ent_permissions');
+            $table->foreignUuid('author')->constrained('ent_users');
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
             $table->timestamp('validFrom');
@@ -40,6 +40,6 @@ class CreateRolePermissionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('role_permission');
+        Schema::dropIfExists('rel_role_permission');
     }
 }

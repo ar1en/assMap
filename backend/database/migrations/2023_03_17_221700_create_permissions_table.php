@@ -15,12 +15,12 @@ class CreatePermissionsTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('permissions', function (Blueprint $table) {
+        Schema::create('ent_permissions', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
             $table->string('permission');
             $table->string('desc');
-            $table->foreignUuid('author')->constrained('users');
+            $table->foreignUuid('author')->constrained('ent_users');
             $table->timestamps();
             $table->softDeletes();
             #$table->timestamp('createdAt');
@@ -38,6 +38,6 @@ class CreatePermissionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('permissions');
+        Schema::dropIfExists('ent_permissions');
     }
 }

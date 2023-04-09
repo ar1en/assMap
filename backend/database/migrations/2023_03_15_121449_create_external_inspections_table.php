@@ -15,7 +15,7 @@ class CreateExternalInspectionsTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('external_inspections', function (Blueprint $table) {
+        Schema::create('ent_external_inspections', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('externalControllerType');
             $table->text('desc')->nullable();
@@ -29,10 +29,10 @@ class CreateExternalInspectionsTable extends Migration
             #$table->uuid('createdAt');
             #$table->uuid('updatedAt');
 
-            $table->foreign('externalControllerType')->references('id')->on('external_controllers_types');
-            $table->foreign('object')->references('id')->on('objects');
-            $table->foreign('sourceDepartment')->references('id')->on('departments');
-            $table->foreign('author')->references('id')->on('users');
+            $table->foreign('externalControllerType')->references('id')->on('ent_external_controllers_types');
+            $table->foreign('object')->references('id')->on('ent_objects');
+            $table->foreign('sourceDepartment')->references('id')->on('ent_departments');
+            $table->foreign('author')->references('id')->on('ent_users');
         });
 
         Schema::enableForeignKeyConstraints();
@@ -45,6 +45,6 @@ class CreateExternalInspectionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('external_inspections');
+        Schema::dropIfExists('ent_external_inspections');
     }
 }

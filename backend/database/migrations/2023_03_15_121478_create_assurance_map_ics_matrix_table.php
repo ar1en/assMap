@@ -15,7 +15,7 @@ class CreateAssuranceMapIcsMatrixTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('assurance_map_ics_matrix', function (Blueprint $table) {
+        Schema::create('rel_assurance_map_ics_matrix', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('assuranceMap');
             $table->uuid('icsMatrix');
@@ -25,9 +25,9 @@ class CreateAssuranceMapIcsMatrixTable extends Migration
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 
-            $table->foreign('assuranceMap')->references('id')->on('assurance_maps');
-            $table->foreign('icsMatrix')->references('id')->on('ics_matrices');
-            $table->foreign('author')->references('id')->on('users');
+            $table->foreign('assuranceMap')->references('id')->on('ent_assurance_maps');
+            $table->foreign('icsMatrix')->references('id')->on('ent_ics_matrices');
+            $table->foreign('author')->references('id')->on('ent_users');
             $table->index(['assuranceMap', 'icsMatrix', 'author']);
         });
 
@@ -41,6 +41,6 @@ class CreateAssuranceMapIcsMatrixTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('assurance_map_ics_matrix');
+        Schema::dropIfExists('rel_assurance_map_ics_matrix');
     }
 }

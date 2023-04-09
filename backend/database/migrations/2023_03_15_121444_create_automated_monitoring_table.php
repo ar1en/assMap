@@ -15,7 +15,7 @@ class CreateAutomatedMonitoringTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('automated_monitoring', function (Blueprint $table) {
+        Schema::create('ent_automated_monitoring', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('department');
             $table->text('desc')->nullable();
@@ -27,8 +27,8 @@ class CreateAutomatedMonitoringTable extends Migration
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 
-            $table->foreign('department')->references('id')->on('departments');
-            $table->foreign('author')->references('id')->on('users');
+            $table->foreign('department')->references('id')->on('ent_departments');
+            $table->foreign('author')->references('id')->on('ent_users');
             $table->index(['department', 'author']);
         });
 
@@ -42,6 +42,6 @@ class CreateAutomatedMonitoringTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('automated_monitoring');
+        Schema::dropIfExists('ent_automated_monitoring');
     }
 }

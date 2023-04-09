@@ -12,7 +12,7 @@ use  App\Models\DBModels\DBClass;
 
 /**
  * Class MRisksTypes
- * Representation for db table risks_types.
+ * Representation for db table ent_risks_types.
 
  * @property  string    id              [1] type:uuid      !NULL PRIMARY 
  * @property  string    name            [2] type:text      !NULL         

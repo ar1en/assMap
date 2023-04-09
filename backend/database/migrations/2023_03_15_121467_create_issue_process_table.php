@@ -15,7 +15,7 @@ class CreateIssueProcessTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('issue_process', function (Blueprint $table) {
+        Schema::create('rel_issue_process', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('issue');
             $table->uuid('process');
@@ -25,9 +25,9 @@ class CreateIssueProcessTable extends Migration
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 
-            $table->foreign('issue')->references('id')->on('issues');
-            $table->foreign('process')->references('id')->on('processes');
-            $table->foreign('author')->references('id')->on('users');
+            $table->foreign('issue')->references('id')->on('ent_issues');
+            $table->foreign('process')->references('id')->on('ent_processes');
+            $table->foreign('author')->references('id')->on('ent_users');
             $table->index(['issue', 'process', 'author']);
         });
 
@@ -41,6 +41,6 @@ class CreateIssueProcessTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('issue_process');
+        Schema::dropIfExists('rel_issue_process');
     }
 }

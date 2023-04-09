@@ -12,7 +12,7 @@ use  App\Models\DBModels\DBClass;
 
 /**
  * Class MPeriods
- * Representation for db table periods.
+ * Representation for db table ent_periods.
 
  * @property  string           id                        [1] type:uuid         !NULL PRIMARY 
  * @property  string           name                      [2] type:varchar(255) !NULL         

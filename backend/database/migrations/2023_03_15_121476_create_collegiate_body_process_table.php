@@ -15,7 +15,7 @@ class CreateCollegiateBodyProcessTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('collegiate_body_process', function (Blueprint $table) {
+        Schema::create('rel_collegiate_body_process', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('collegiateBody');
             $table->uuid('process');
@@ -25,9 +25,9 @@ class CreateCollegiateBodyProcessTable extends Migration
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 
-            $table->foreign('collegiateBody')->references('id')->on('collegiate_bodies');
-            $table->foreign('process')->references('id')->on('processes');
-            $table->foreign('author')->references('id')->on('users');
+            $table->foreign('collegiateBody')->references('id')->on('ent_collegiate_bodies');
+            $table->foreign('process')->references('id')->on('ent_processes');
+            $table->foreign('author')->references('id')->on('ent_users');
         });
 
         Schema::enableForeignKeyConstraints();
@@ -40,6 +40,6 @@ class CreateCollegiateBodyProcessTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('collegiate_body_process');
+        Schema::dropIfExists('rel_collegiate_body_process');
     }
 }

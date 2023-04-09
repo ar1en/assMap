@@ -15,7 +15,7 @@ class CreateAssuranceMapRiskTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('assurance_map_risk', function (Blueprint $table) {
+        Schema::create('rel_assurance_map_risk', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('assuranceMap');
             $table->uuid('risk');
@@ -25,9 +25,9 @@ class CreateAssuranceMapRiskTable extends Migration
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 
-            $table->foreign('assuranceMap')->references('id')->on('assurance_maps');
-            $table->foreign('risk')->references('id')->on('risks');
-            $table->foreign('author')->references('id')->on('users');
+            $table->foreign('assuranceMap')->references('id')->on('ent_assurance_maps');
+            $table->foreign('risk')->references('id')->on('ent_risks');
+            $table->foreign('author')->references('id')->on('ent_users');
         });
 
         Schema::enableForeignKeyConstraints();
@@ -40,6 +40,6 @@ class CreateAssuranceMapRiskTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('assurance_map_risk');
+        Schema::dropIfExists('rel_assurance_map_risk');
     }
 }

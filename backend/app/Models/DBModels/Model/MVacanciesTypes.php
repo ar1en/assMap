@@ -12,16 +12,16 @@ use  App\Models\DBModels\DBClass;
 
 /**
  * Class MVacanciesTypes
- * Representation for db table vacancies_types.
+ * Representation for db table ent_vacancies_types.
 
- * @property  string       id                  [1] type:uuid      !NULL PRIMARY 
- * @property  string       name                [2] type:text      !NULL         
- * @property  string       author              [3] type:uuid      !NULL         
- * @property  \DateTime    created_at          [4] type:timestamp               
- * @property  \DateTime    updated_at          [5] type:timestamp               
- * @property  \DateTime    deleted_at          [6] type:timestamp               
- * @property  DUsers       relAuthor                                            
- * @property  DVacancies[] relsVacanciesByType                                  
+ * @property  string       id                  [1] type:uuid      !NULL PRIMARY
+ * @property  string       name                [2] type:text      !NULL
+ * @property  string       author              [3] type:uuid      !NULL
+ * @property  \DateTime    created_at          [4] type:timestamp
+ * @property  \DateTime    updated_at          [5] type:timestamp
+ * @property  \DateTime    deleted_at          [6] type:timestamp
+ * @property  DUsers       relAuthor
+ * @property  DVacancies[] relsVacanciesByType
  * @package App\Models\DBModels\Model
  */
 class MVacanciesTypes extends DBClass {
@@ -48,7 +48,7 @@ class MVacanciesTypes extends DBClass {
 	const  F_NAME               = 'name';
 	const  F_UPDATED_AT         = 'updated_at';
 
-    protected $table = 'vacancies_types';
+    protected $table = 'ent_vacancies_types';
 
 	public static array $jsonable = [
 		MVacanciesTypes::FJ_ID         =>[ MVacanciesTypes::F_ID         ,null,'string',           ],
@@ -66,7 +66,7 @@ class MVacanciesTypes extends DBClass {
 			self::F_CREATED_AT,
 			self::F_UPDATED_AT,
 			self::F_DELETED_AT,
-		]; 
+		];
 
 		protected $fillable = [
 			 self::F_NAME,
@@ -83,7 +83,7 @@ class MVacanciesTypes extends DBClass {
         public function relAuthor(){
             return $this->belongsTo(DUsers::class,self::F_AUTHOR, DUsers::F_ID);
         }
-            
+
 
 
         /**
@@ -92,7 +92,7 @@ class MVacanciesTypes extends DBClass {
         public function relsVacanciesByType(){
             return $this->hasMany(DVacancies::class, DVacancies::F_TYPE, self::F_ID);
         }
-            
+
 
 }
 

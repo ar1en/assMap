@@ -9,77 +9,61 @@ use  Illuminate\Database\Eloquent\Relations\BelongsTo;
 use  App\Models\DBModels\Data\DExternalControllersTypes;
 use  App\Models\DBModels\Data\DObjects;
 use  App\Models\DBModels\Data\DDepartments;
-use  App\Models\DBModels\Data\DAssuranceMapExternalInspection;
-use  Illuminate\Database\Eloquent\Relations\HasMany;
-use  App\Models\DBModels\Data\DExternalInspectionFine;
-use  App\Models\DBModels\Data\DExternalInspectionObject;
-use  App\Models\DBModels\Data\DExternalInspectionProcess;
-use  App\Models\DBModels\Data\DExternalInspectionRisk;
 use  App\Models\DBModels\DBClass;
 
 /**
  * Class MExternalInspections
- * Representation for db table external_inspections.
+ * Representation for db table ent_external_inspections.
 
- * @property  string                            id                                                     [1] type:uuid      !NULL PRIMARY 
- * @property  string                            externalControllerType                                 [2] type:uuid      !NULL         
- * @property  string                            desc                                                   [3] type:text                    
- * @property  string                            object                                                 [4] type:uuid      !NULL         
- * @property  string                            sourceDepartment                                       [5] type:uuid      !NULL         
- * @property  string                            author                                                 [6] type:uuid      !NULL         
- * @property  \DateTime                         created_at                                             [7] type:timestamp               
- * @property  \DateTime                         updated_at                                             [8] type:timestamp               
- * @property  \DateTime                         deleted_at                                             [9] type:timestamp               
- * @property  DUsers                            relAuthor                                                                               
- * @property  DExternalControllersTypes         relExternalControllerType                                                               
- * @property  DObjects                          relObject                                                                               
- * @property  DDepartments                      relSourceDepartment                                                                     
- * @property  DAssuranceMapExternalInspection[] relsAssuranceMapExternalInspectionByExternalInspection                                  
- * @property  DExternalInspectionFine[]         relsExternalInspectionFineByInspection                                                  
- * @property  DExternalInspectionObject[]       relsExternalInspectionObjectByInspection                                                
- * @property  DExternalInspectionProcess[]      relsExternalInspectionProcessByInspection                                               
- * @property  DExternalInspectionRisk[]         relsExternalInspectionRiskByExternalInspection                                          
+ * @property  string                    id                        [1] type:uuid      !NULL PRIMARY 
+ * @property  string                    externalControllerType    [2] type:uuid      !NULL         
+ * @property  string                    desc                      [3] type:text                    
+ * @property  string                    object                    [4] type:uuid      !NULL         
+ * @property  string                    sourceDepartment          [5] type:uuid      !NULL         
+ * @property  string                    author                    [6] type:uuid      !NULL         
+ * @property  \DateTime                 created_at                [7] type:timestamp               
+ * @property  \DateTime                 updated_at                [8] type:timestamp               
+ * @property  \DateTime                 deleted_at                [9] type:timestamp               
+ * @property  DUsers                    relAuthor                                                  
+ * @property  DExternalControllersTypes relExternalControllerType                                  
+ * @property  DObjects                  relObject                                                  
+ * @property  DDepartments              relSourceDepartment                                        
  * @package App\Models\DBModels\Model
  */
 class MExternalInspections extends DBClass {
 
 
-	const  FJ_AUTHOR                                                  = 'author';
-	const  FJ_CREATED_AT                                              = 'createdAt';
-	const  FJ_DELETED_AT                                              = 'deletedAt';
-	const  FJ_DESC                                                    = 'desc';
-	const  FJ_EXTERNALCONTROLLERTYPE                                  = 'externalControllerType';
-	const  FJ_ID                                                      = 'id';
-	const  FJ_OBJECT                                                  = 'object';
-	const  FJ_SOURCEDEPARTMENT                                        = 'sourceDepartment';
-	const  FJ_UPDATED_AT                                              = 'updatedAt';
-	const  FR_ASSURANCE_MAP_EXTERNAL_INSPECTION_BY_EXTERNALINSPECTION = 'relsAssuranceMapExternalInspectionByExternalInspection';
-	const  FR_AUTHOR                                                  = 'relAuthor';
-	const  FR_EXTERNALCONTROLLERTYPE                                  = 'relExternalControllerType';
-	const  FR_EXTERNAL_INSPECTION_FINE_BY_INSPECTION                  = 'relsExternalInspectionFineByInspection';
-	const  FR_EXTERNAL_INSPECTION_OBJECT_BY_INSPECTION                = 'relsExternalInspectionObjectByInspection';
-	const  FR_EXTERNAL_INSPECTION_PROCESS_BY_INSPECTION               = 'relsExternalInspectionProcessByInspection';
-	const  FR_EXTERNAL_INSPECTION_RISK_BY_EXTERNALINSPECTION          = 'relsExternalInspectionRiskByExternalInspection';
-	const  FR_OBJECT                                                  = 'relObject';
-	const  FR_SOURCEDEPARTMENT                                        = 'relSourceDepartment';
-	const  FT_AUTHOR                                                  = 'external_inspections.author';
-	const  FT_CREATED_AT                                              = 'external_inspections.created_at';
-	const  FT_DELETED_AT                                              = 'external_inspections.deleted_at';
-	const  FT_DESC                                                    = 'external_inspections.desc';
-	const  FT_EXTERNALCONTROLLERTYPE                                  = 'external_inspections.externalControllerType';
-	const  FT_ID                                                      = 'external_inspections.id';
-	const  FT_OBJECT                                                  = 'external_inspections.object';
-	const  FT_SOURCEDEPARTMENT                                        = 'external_inspections.sourceDepartment';
-	const  FT_UPDATED_AT                                              = 'external_inspections.updated_at';
-	const  F_AUTHOR                                                   = 'author';
-	const  F_CREATED_AT                                               = 'created_at';
-	const  F_DELETED_AT                                               = 'deleted_at';
-	const  F_DESC                                                     = 'desc';
-	const  F_EXTERNALCONTROLLERTYPE                                   = 'externalControllerType';
-	const  F_ID                                                       = 'id';
-	const  F_OBJECT                                                   = 'object';
-	const  F_SOURCEDEPARTMENT                                         = 'sourceDepartment';
-	const  F_UPDATED_AT                                               = 'updated_at';
+	const  FJ_AUTHOR                 = 'author';
+	const  FJ_CREATED_AT             = 'createdAt';
+	const  FJ_DELETED_AT             = 'deletedAt';
+	const  FJ_DESC                   = 'desc';
+	const  FJ_EXTERNALCONTROLLERTYPE = 'externalControllerType';
+	const  FJ_ID                     = 'id';
+	const  FJ_OBJECT                 = 'object';
+	const  FJ_SOURCEDEPARTMENT       = 'sourceDepartment';
+	const  FJ_UPDATED_AT             = 'updatedAt';
+	const  FR_AUTHOR                 = 'relAuthor';
+	const  FR_EXTERNALCONTROLLERTYPE = 'relExternalControllerType';
+	const  FR_OBJECT                 = 'relObject';
+	const  FR_SOURCEDEPARTMENT       = 'relSourceDepartment';
+	const  FT_AUTHOR                 = 'external_inspections.author';
+	const  FT_CREATED_AT             = 'external_inspections.created_at';
+	const  FT_DELETED_AT             = 'external_inspections.deleted_at';
+	const  FT_DESC                   = 'external_inspections.desc';
+	const  FT_EXTERNALCONTROLLERTYPE = 'external_inspections.externalControllerType';
+	const  FT_ID                     = 'external_inspections.id';
+	const  FT_OBJECT                 = 'external_inspections.object';
+	const  FT_SOURCEDEPARTMENT       = 'external_inspections.sourceDepartment';
+	const  FT_UPDATED_AT             = 'external_inspections.updated_at';
+	const  F_AUTHOR                  = 'author';
+	const  F_CREATED_AT              = 'created_at';
+	const  F_DELETED_AT              = 'deleted_at';
+	const  F_DESC                    = 'desc';
+	const  F_EXTERNALCONTROLLERTYPE  = 'externalControllerType';
+	const  F_ID                      = 'id';
+	const  F_OBJECT                  = 'object';
+	const  F_SOURCEDEPARTMENT        = 'sourceDepartment';
+	const  F_UPDATED_AT              = 'updated_at';
 
     protected $table = 'external_inspections';
 
@@ -152,45 +136,6 @@ class MExternalInspections extends DBClass {
             
 
 
-        /**
-         * @return DAssuranceMapExternalInspection[]|HasMany
-         */
-        public function relsAssuranceMapExternalInspectionByExternalInspection(){
-            return $this->hasMany(DAssuranceMapExternalInspection::class, DAssuranceMapExternalInspection::F_EXTERNALINSPECTION, self::F_ID);
-        }
-            
-
-        /**
-         * @return DExternalInspectionFine[]|HasMany
-         */
-        public function relsExternalInspectionFineByInspection(){
-            return $this->hasMany(DExternalInspectionFine::class, DExternalInspectionFine::F_INSPECTION, self::F_ID);
-        }
-            
-
-        /**
-         * @return DExternalInspectionObject[]|HasMany
-         */
-        public function relsExternalInspectionObjectByInspection(){
-            return $this->hasMany(DExternalInspectionObject::class, DExternalInspectionObject::F_INSPECTION, self::F_ID);
-        }
-            
-
-        /**
-         * @return DExternalInspectionProcess[]|HasMany
-         */
-        public function relsExternalInspectionProcessByInspection(){
-            return $this->hasMany(DExternalInspectionProcess::class, DExternalInspectionProcess::F_INSPECTION, self::F_ID);
-        }
-            
-
-        /**
-         * @return DExternalInspectionRisk[]|HasMany
-         */
-        public function relsExternalInspectionRiskByExternalInspection(){
-            return $this->hasMany(DExternalInspectionRisk::class, DExternalInspectionRisk::F_EXTERNALINSPECTION, self::F_ID);
-        }
-            
 
 }
 

@@ -15,7 +15,7 @@ class CreateAutomatedMonitoringProcessTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('automated_monitoring_process', function (Blueprint $table) {
+        Schema::create('rel_automated_monitoring_process', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('automatedMonitoring');
             $table->uuid('process');
@@ -25,9 +25,9 @@ class CreateAutomatedMonitoringProcessTable extends Migration
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 
-            $table->foreign('automatedMonitoring')->references('id')->on('automated_monitoring');
-            $table->foreign('process')->references('id')->on('processes');
-            $table->foreign('author')->references('id')->on('users');
+            $table->foreign('automatedMonitoring')->references('id')->on('ent_automated_monitoring');
+            $table->foreign('process')->references('id')->on('ent_processes');
+            $table->foreign('author')->references('id')->on('ent_users');
         });
 
         Schema::enableForeignKeyConstraints();
@@ -40,6 +40,6 @@ class CreateAutomatedMonitoringProcessTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('automated_monitoring_process');
+        Schema::dropIfExists('rel_automated_monitoring_process');
     }
 }

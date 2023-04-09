@@ -12,7 +12,7 @@ use  App\Models\DBModels\DBClass;
 
 /**
  * Class MDocumentsTypes
- * Representation for db table documents_types.
+ * Representation for db table ent_documents_types.
 
  * @property  string       id                  [1] type:uuid      !NULL PRIMARY 
  * @property  string       name                [2] type:text      !NULL         

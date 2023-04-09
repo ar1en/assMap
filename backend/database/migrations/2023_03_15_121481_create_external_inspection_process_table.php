@@ -15,7 +15,7 @@ class CreateExternalInspectionProcessTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('external_inspection_process', function (Blueprint $table) {
+        Schema::create('rel_external_inspection_process', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('inspection')->constrained('external_inspections');
             $table->uuid('process')->constrained('processes');
@@ -25,9 +25,9 @@ class CreateExternalInspectionProcessTable extends Migration
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 
-            $table->foreign('inspection')->references('id')->on('external_inspections');
-            $table->foreign('process')->references('id')->on('processes');
-            $table->foreign('author')->references('id')->on('users');
+            $table->foreign('inspection')->references('id')->on('ent_external_inspections');
+            $table->foreign('process')->references('id')->on('ent_processes');
+            $table->foreign('author')->references('id')->on('ent_users');
             $table->index(['inspection', 'process', 'author']);
         });
 
@@ -41,6 +41,6 @@ class CreateExternalInspectionProcessTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('external_inspection_process');
+        Schema::dropIfExists('rel_external_inspection_process');
     }
 }

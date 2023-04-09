@@ -15,7 +15,7 @@ class CreateCollegiateBodiesTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('collegiate_bodies', function (Blueprint $table) {
+        Schema::create('ent_collegiate_bodies', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('type');
             $table->text('desc')->nullable();
@@ -28,9 +28,9 @@ class CreateCollegiateBodiesTable extends Migration
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 
-            $table->foreign('type')->references('id')->on('collegiate_bodies_types');
-            $table->foreign('sourceDepartment')->references('id')->on('departments');
-            $table->foreign('author')->references('id')->on('users');
+            $table->foreign('type')->references('id')->on('ent_collegiate_bodies_types');
+            $table->foreign('sourceDepartment')->references('id')->on('ent_departments');
+            $table->foreign('author')->references('id')->on('ent_users');
             $table->index(['sourceDepartment', 'author']);
         });
 
@@ -44,6 +44,6 @@ class CreateCollegiateBodiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('collegiate_bodies');
+        Schema::dropIfExists('ent_collegiate_bodies');
     }
 }

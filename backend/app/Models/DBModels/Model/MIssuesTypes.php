@@ -12,7 +12,7 @@ use  App\Models\DBModels\DBClass;
 
 /**
  * Class MIssuesTypes
- * Representation for db table issues_types.
+ * Representation for db table ent_issues_types.
 
  * @property  string    id               [1] type:uuid      !NULL PRIMARY 
  * @property  string    name             [2] type:text      !NULL         

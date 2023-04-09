@@ -10,21 +10,21 @@ use  App\Models\DBModels\DBClass;
 
 /**
  * Class MLogins
- * Representation for db table logins.
+ * Representation for db table ent_logins.
 
- * @property  string    id             [1]  type:uuid         !NULL PRIMARY 
- * @property  string    user           [2]  type:uuid         !NULL         
- * @property  string    login          [3]  type:varchar(255) !NULL         
- * @property  string    password       [4]  type:varchar(255) !NULL         
- * @property  string    remember_token [5]  type:varchar(255)               
- * @property  string    author         [6]  type:uuid         !NULL         
- * @property  \DateTime validFrom      [7]  type:timestamp    !NULL         
- * @property  \DateTime validUntil     [8]  type:timestamp                  
- * @property  \DateTime created_at     [9]  type:timestamp                  
- * @property  \DateTime updated_at     [10] type:timestamp                  
- * @property  \DateTime deleted_at     [11] type:timestamp                  
- * @property  DUsers    relAuthor                                           
- * @property  DUsers    relUser                                             
+ * @property  string    id             [1]  type:uuid         !NULL PRIMARY
+ * @property  string    user           [2]  type:uuid         !NULL
+ * @property  string    login          [3]  type:varchar(255) !NULL
+ * @property  string    password       [4]  type:varchar(255) !NULL
+ * @property  string    remember_token [5]  type:varchar(255)
+ * @property  string    author         [6]  type:uuid         !NULL
+ * @property  \DateTime validFrom      [7]  type:timestamp    !NULL
+ * @property  \DateTime validUntil     [8]  type:timestamp
+ * @property  \DateTime created_at     [9]  type:timestamp
+ * @property  \DateTime updated_at     [10] type:timestamp
+ * @property  \DateTime deleted_at     [11] type:timestamp
+ * @property  DUsers    relAuthor
+ * @property  DUsers    relUser
  * @package App\Models\DBModels\Model
  */
 class MLogins extends DBClass {
@@ -66,7 +66,7 @@ class MLogins extends DBClass {
 	const  F_VALIDFROM       = 'validFrom';
 	const  F_VALIDUNTIL      = 'validUntil';
 
-    protected $table = 'logins';
+    protected $table = 'ent_logins';
 
 	public static array $jsonable = [
 		MLogins::FJ_ID             =>[ MLogins::F_ID             ,null,'string',           ],
@@ -94,7 +94,7 @@ class MLogins extends DBClass {
 			self::F_CREATED_AT,
 			self::F_UPDATED_AT,
 			self::F_DELETED_AT,
-		]; 
+		];
 
 		protected $fillable = [
 			 self::F_USER,
@@ -116,7 +116,7 @@ class MLogins extends DBClass {
         public function relAuthor(){
             return $this->belongsTo(DUsers::class,self::F_AUTHOR, DUsers::F_ID);
         }
-            
+
 
         /**
          * @return DUsers|BelongsTo
@@ -124,9 +124,5 @@ class MLogins extends DBClass {
         public function relUser(){
             return $this->belongsTo(DUsers::class,self::F_USER, DUsers::F_ID);
         }
-            
-
-
-
 }
 

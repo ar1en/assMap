@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_vacancy', function (Blueprint $table) {
+        Schema::create('rel_user_vacancy', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('user')->constrained('users');
-            $table->foreignUuid('vacancy')->constrained('vacancies');
-            $table->foreignUuid('author')->constrained('users');
+            $table->foreignUuid('user')->constrained('ent_users');
+            $table->foreignUuid('vacancy')->constrained('ent_vacancies');
+            $table->foreignUuid('author')->constrained('ent_users');
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
             $table->timestamp('validFrom');
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_vacancy');
+        Schema::dropIfExists('rel_user_vacancy');
     }
 };

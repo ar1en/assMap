@@ -15,11 +15,11 @@ class CreateUserRoleTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('user_role', function (Blueprint $table) {
+        Schema::create('rel_user_role', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('user')->constrained('users');
-            $table->foreignUuid('role')->constrained('roles');
-            $table->foreignUuid('author')->constrained('users');
+            $table->foreignUuid('user')->constrained('ent_users');
+            $table->foreignUuid('role')->constrained('ent_roles');
+            $table->foreignUuid('author')->constrained('ent_users');
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
             $table->timestamp('validFrom');
@@ -40,6 +40,6 @@ class CreateUserRoleTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_role');
+        Schema::dropIfExists('rel_user_role');
     }
 }

@@ -6,7 +6,7 @@ use App\Models\DBModels\Model\MInternalInspections;
 
 /**
  * Class DInternalInspections
- * Data class for db table internal_inspections.
+ * Data class for db table ent_internal_inspections.
  * @package App\Models\DBModels\Data
  */
 class DInternalInspections extends MInternalInspections {

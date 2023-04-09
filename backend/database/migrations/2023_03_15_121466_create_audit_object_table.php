@@ -15,7 +15,7 @@ class CreateAuditObjectTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('audit_object', function (Blueprint $table) {
+        Schema::create('rel_audit_object', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('audit');
             $table->uuid('object');
@@ -25,9 +25,9 @@ class CreateAuditObjectTable extends Migration
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 
-            $table->foreign('audit')->references('id')->on('audits');
-            $table->foreign('object')->references('id')->on('objects');
-            $table->foreign('author')->references('id')->on('users');
+            $table->foreign('audit')->references('id')->on('ent_audits');
+            $table->foreign('object')->references('id')->on('ent_objects');
+            $table->foreign('author')->references('id')->on('ent_users');
             $table->index(['audit', 'object', 'author']);
         });
 
@@ -41,6 +41,6 @@ class CreateAuditObjectTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('audit_object');
+        Schema::dropIfExists('rel_audit_object');
     }
 }

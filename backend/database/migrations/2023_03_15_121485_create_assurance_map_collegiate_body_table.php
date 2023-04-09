@@ -15,7 +15,7 @@ class CreateAssuranceMapCollegiateBodyTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('assurance_map_collegiate_body', function (Blueprint $table) {
+        Schema::create('rel_assurance_map_collegiate_body', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('assuranceMap');
             $table->uuid('collegiateBody');
@@ -25,9 +25,9 @@ class CreateAssuranceMapCollegiateBodyTable extends Migration
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 
-            $table->foreign('assuranceMap')->references('id')->on('assurance_maps');
-            $table->foreign('collegiateBody')->references('id')->on('collegiate_bodies');
-            $table->foreign('author')->references('id')->on('users');
+            $table->foreign('assuranceMap')->references('id')->on('ent_assurance_maps');
+            $table->foreign('collegiateBody')->references('id')->on('ent_collegiate_bodies');
+            $table->foreign('author')->references('id')->on('ent_users');
             $table->index(['assuranceMap', 'collegiateBody', 'author']);
         });
 
@@ -41,6 +41,6 @@ class CreateAssuranceMapCollegiateBodyTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('assurance_map_collegiate_body');
+        Schema::dropIfExists('rel_assurance_map_collegiate_body');
     }
 }

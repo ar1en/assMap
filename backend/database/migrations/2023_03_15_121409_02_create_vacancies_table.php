@@ -14,9 +14,9 @@ return new class extends Migration {
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('vacancies', function (Blueprint $table) {
+        Schema::create('ent_vacancies', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name');
+            $table->string('desc')->nullable();
             $table->uuid('type')->nullable();
             #$table->uuid('user');
             $table->uuid('department');
@@ -28,10 +28,10 @@ return new class extends Migration {
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 
-            $table->foreign('type')->references('id')->on('vacancies_types');
+            $table->foreign('type')->references('id')->on('ent_vacancies_types');
             #$table->foreign('user')->references('id')->on('users');
-            $table->foreign('department')->references('id')->on('departments');
-            $table->foreign('author')->references('id')->on('users');
+            $table->foreign('department')->references('id')->on('ent_departments');
+            $table->foreign('author')->references('id')->on('ent_users');
             $table->index(['department', 'author']);
         });
 
@@ -45,6 +45,8 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('vacancies');
+        Schema::disableForeignKeyConstraints();
+        Schema::dropIfExists('ent_vacancies');
+        Schema::enableForeignKeyConstraints();
     }
 };

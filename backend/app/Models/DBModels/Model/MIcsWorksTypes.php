@@ -12,7 +12,7 @@ use  App\Models\DBModels\DBClass;
 
 /**
  * Class MIcsWorksTypes
- * Representation for db table ics_works_types.
+ * Representation for db table ent_ics_works_types.
 
  * @property  string      id                 [1] type:uuid      !NULL PRIMARY 
  * @property  string      name               [2] type:text      !NULL         

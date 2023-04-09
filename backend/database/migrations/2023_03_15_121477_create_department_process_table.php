@@ -15,7 +15,7 @@ class CreateDepartmentProcessTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('department_process', function (Blueprint $table) {
+        Schema::create('rel_department_process', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('department');
             $table->uuid('process');
@@ -28,9 +28,9 @@ class CreateDepartmentProcessTable extends Migration
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 
-            $table->foreign('department')->references('id')->on('departments');
-            $table->foreign('process')->references('id')->on('processes');
-            $table->foreign('author')->references('id')->on('users');
+            $table->foreign('department')->references('id')->on('ent_departments');
+            $table->foreign('process')->references('id')->on('ent_processes');
+            $table->foreign('author')->references('id')->on('ent_users');
             $table->index(['department', 'process', 'desk', 'author']);
         });
 
@@ -44,6 +44,6 @@ class CreateDepartmentProcessTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('department_process');
+        Schema::dropIfExists('rel_department_process');
     }
 }

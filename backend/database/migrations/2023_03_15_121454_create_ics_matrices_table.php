@@ -15,7 +15,7 @@ class CreateIcsMatricesTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('ics_matrices', function (Blueprint $table) {
+        Schema::create('ent_ics_matrices', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('object');
             $table->uuid('process');
@@ -28,9 +28,9 @@ class CreateIcsMatricesTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('object')->references('id')->on('objects');
-            $table->foreign('process')->references('id')->on('processes');
-            $table->foreign('author')->references('id')->on('users');
+            $table->foreign('object')->references('id')->on('ent_objects');
+            $table->foreign('process')->references('id')->on('ent_processes');
+            $table->foreign('author')->references('id')->on('ent_users');
             $table->index(['object', 'process']);
         });
 
@@ -44,6 +44,6 @@ class CreateIcsMatricesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ics_matrices');
+        Schema::dropIfExists('ent_ics_matrices');
     }
 }

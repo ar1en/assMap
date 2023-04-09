@@ -15,7 +15,7 @@ class CreateDocumentProcessesTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('document_processes', function (Blueprint $table) {
+        Schema::create('rel_document_processes', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('document');
             $table->uuid('process');
@@ -25,9 +25,9 @@ class CreateDocumentProcessesTable extends Migration
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 
-            $table->foreign('document')->references('id')->on('documents');
-            $table->foreign('process')->references('id')->on('processes');
-            $table->foreign('author')->references('id')->on('users');
+            $table->foreign('document')->references('id')->on('ent_documents');
+            $table->foreign('process')->references('id')->on('ent_processes');
+            $table->foreign('author')->references('id')->on('ent_users');
             $table->index(['document', 'process', 'author']);
         });
 
@@ -41,6 +41,6 @@ class CreateDocumentProcessesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('document_processes');
+        Schema::dropIfExists('rel_document_processes');
     }
 }

@@ -12,7 +12,7 @@ use  App\Models\DBModels\DBClass;
 
 /**
  * Class MCollegiateBodiesTypes
- * Representation for db table collegiate_bodies_types.
+ * Representation for db table ent_collegiate_bodies_types.
 
  * @property  string              id                         [1] type:uuid      !NULL PRIMARY 
  * @property  string              name                       [2] type:text      !NULL         

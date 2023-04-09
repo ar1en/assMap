@@ -6,7 +6,7 @@ use App\Models\DBModels\Model\MIssuesTypes;
 
 /**
  * Class DIssuesTypes
- * Data class for db table issues_types.
+ * Data class for db table ent_issues_types.
  * @package App\Models\DBModels\Data
  */
 class DIssuesTypes extends MIssuesTypes {

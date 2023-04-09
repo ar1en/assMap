@@ -15,7 +15,7 @@ class CreateExternalInspectionRiskTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('external_inspection_risk', function (Blueprint $table) {
+        Schema::create('rel_external_inspection_risk', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('externalInspection');
             $table->uuid('risk');
@@ -25,9 +25,9 @@ class CreateExternalInspectionRiskTable extends Migration
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 
-            $table->foreign('externalInspection')->references('id')->on('external_inspections');
-            $table->foreign('risk')->references('id')->on('risks');
-            $table->foreign('author')->references('id')->on('users');
+            $table->foreign('externalInspection')->references('id')->on('ent_external_inspections');
+            $table->foreign('risk')->references('id')->on('ent_risks');
+            $table->foreign('author')->references('id')->on('ent_users');
             $table->index(['externalInspection', 'risk', 'author']);
         });
 
@@ -41,6 +41,6 @@ class CreateExternalInspectionRiskTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('external_inspection_risk');
+        Schema::dropIfExists('rel_external_inspection_risk');
     }
 }

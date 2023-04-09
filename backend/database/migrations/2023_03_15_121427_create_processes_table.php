@@ -15,7 +15,7 @@ class CreateProcessesTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('processes', function (Blueprint $table) {
+        Schema::create('ent_processes', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('parentProcess')->nullable();
             $table->longText('path');
@@ -35,10 +35,10 @@ class CreateProcessesTable extends Migration
             #$table->timestamp('updatedAt');
 
             $table->unique('id');
-            $table->foreign('parentProcess')->references('id')->on('processes');
-            $table->foreign('type')->references('id')->on('processes_types');
-            $table->foreign('owner')->references('id')->on('vacancies');
-            $table->foreign('author')->references('id')->on('users');
+            $table->foreign('parentProcess')->references('id')->on('ent_processes');
+            $table->foreign('type')->references('id')->on('ent_processes_types');
+            $table->foreign('owner')->references('id')->on('ent_vacancies');
+            $table->foreign('author')->references('id')->on('ent_users');
             $table->index(['parentProcess', 'bpmId', 'owner', 'author']);
         });
 
@@ -52,6 +52,6 @@ class CreateProcessesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('processes');
+        Schema::dropIfExists('ent_processes');
     }
 }

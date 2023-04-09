@@ -15,7 +15,7 @@ class CreateSystemsTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('systems', function (Blueprint $table) {
+        Schema::create('ent_systems', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->text('name')->nullable();
             $table->uuid('author');
@@ -24,7 +24,7 @@ class CreateSystemsTable extends Migration
             #$table->timestamp('createdAt');
             #$table->timestamp('updatedAt');
 
-            $table->foreign('author')->references('id')->on('users');
+            $table->foreign('author')->references('id')->on('ent_users');
             $table->index('author');
         });
 
@@ -38,6 +38,6 @@ class CreateSystemsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('systems');
+        Schema::dropIfExists('ent_systems');
     }
 }
