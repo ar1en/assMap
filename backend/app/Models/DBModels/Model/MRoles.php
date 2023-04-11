@@ -18,23 +18,23 @@ use  App\Models\DBModels\DBClass;
  * Representation for db table ent_roles.
 
  * @property  string       id                    [1]  type:uuid         !NULL PRIMARY UNIQUE
- * @property  string       parentRole            [2]  type:uuid                       
- * @property  string       department            [3]  type:uuid                       
- * @property  string       object                [4]  type:uuid                       
- * @property  string       process               [5]  type:uuid                       
- * @property  string       name                  [6]  type:varchar(255) !NULL         
- * @property  string       author                [7]  type:uuid         !NULL         
- * @property  \DateTime    validFrom             [8]  type:timestamp    !NULL         
- * @property  \DateTime    validUntil            [9]  type:timestamp                  
- * @property  \DateTime    created_at            [10] type:timestamp                  
- * @property  \DateTime    updated_at            [11] type:timestamp                  
- * @property  \DateTime    deleted_at            [12] type:timestamp                  
- * @property  DUsers       relAuthor                                                  
- * @property  DDepartments relDepartment                                              
- * @property  DObjects     relObject                                                  
- * @property  DRoles       relParentRole                                              
- * @property  DProcesses   relProcess                                                 
- * @property  DRoles[]     relsRolesByParentRole                                      
+ * @property  string       parentRole            [2]  type:uuid
+ * @property  string       department            [3]  type:uuid
+ * @property  string       object                [4]  type:uuid
+ * @property  string       process               [5]  type:uuid
+ * @property  string       name                  [6]  type:varchar(255) !NULL
+ * @property  string       author                [7]  type:uuid         !NULL
+ * @property  \DateTime    validFrom             [8]  type:timestamp    !NULL
+ * @property  \DateTime    validUntil            [9]  type:timestamp
+ * @property  \DateTime    created_at            [10] type:timestamp
+ * @property  \DateTime    updated_at            [11] type:timestamp
+ * @property  \DateTime    deleted_at            [12] type:timestamp
+ * @property  DUsers       relAuthor
+ * @property  DDepartments relDepartment
+ * @property  DObjects     relObject
+ * @property  DRoles       relParentRole
+ * @property  DProcesses   relProcess
+ * @property  DRoles[]     relsRolesByParentRole
  * @package App\Models\DBModels\Model
  */
 class MRoles extends DBClass {
@@ -83,7 +83,7 @@ class MRoles extends DBClass {
 	const  F_VALIDFROM            = 'validFrom';
 	const  F_VALIDUNTIL           = 'validUntil';
 
-    protected $table = 'roles';
+    protected $table = 'ent_roles';
 
 	public static array $jsonable = [
 		MRoles::FJ_ID         =>[ MRoles::F_ID         ,null,'string',           ],
@@ -113,7 +113,7 @@ class MRoles extends DBClass {
 			self::F_CREATED_AT,
 			self::F_UPDATED_AT,
 			self::F_DELETED_AT,
-		]; 
+		];
 
 		protected $fillable = [
 			 self::F_PARENTROLE,
@@ -136,7 +136,7 @@ class MRoles extends DBClass {
         public function relAuthor(){
             return $this->belongsTo(DUsers::class,self::F_AUTHOR, DUsers::F_ID);
         }
-            
+
 
         /**
          * @return DDepartments|BelongsTo
@@ -144,7 +144,7 @@ class MRoles extends DBClass {
         public function relDepartment(){
             return $this->belongsTo(DDepartments::class,self::F_DEPARTMENT, DDepartments::F_ID);
         }
-            
+
 
         /**
          * @return DObjects|BelongsTo
@@ -152,7 +152,7 @@ class MRoles extends DBClass {
         public function relObject(){
             return $this->belongsTo(DObjects::class,self::F_OBJECT, DObjects::F_ID);
         }
-            
+
 
         /**
          * @return DRoles|BelongsTo
@@ -160,7 +160,7 @@ class MRoles extends DBClass {
         public function relParentRole(){
             return $this->belongsTo(DRoles::class,self::F_PARENTROLE, DRoles::F_ID);
         }
-            
+
 
         /**
          * @return DProcesses|BelongsTo
@@ -168,7 +168,7 @@ class MRoles extends DBClass {
         public function relProcess(){
             return $this->belongsTo(DProcesses::class,self::F_PROCESS, DProcesses::F_ID);
         }
-            
+
 
 
         /**
@@ -177,7 +177,7 @@ class MRoles extends DBClass {
         public function relsRolesByParentRole(){
             return $this->hasMany(DRoles::class, DRoles::F_PARENTROLE, self::F_ID);
         }
-            
+
 
 }
 

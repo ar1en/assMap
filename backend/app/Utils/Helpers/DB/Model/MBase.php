@@ -8,6 +8,7 @@ use App\Utils\Helpers\DB\HDB;
 use App\Utils\Helpers\Formats\HDateTime;
 use App\Utils\Helpers\Formats\HString;
 use DateTime;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Базовый класс для все Model приложения
@@ -16,7 +17,8 @@ use DateTime;
  *
  * @package App\BPM\Model\Base
  */
-abstract class MBase extends MBaseBulk {
+//abstract class MBase extends MBaseBulk {
+abstract class MBase extends Model {
 
     // добавляем устранитель ошибки для MSSQL в котором есть лимит на количество параметров
     // для запроса 2100 штук

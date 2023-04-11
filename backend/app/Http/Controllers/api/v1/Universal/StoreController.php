@@ -27,12 +27,14 @@ class StoreController extends Controller
 
                 //разделяем массив полученных из json данных на поля сущности и связи
                 $fields = Arr::only($validatedData, $model->getFillable());
+                dump($fields);
                 $relations = Arr::except($validatedData, array_keys($fields));
 
                 $model->fill(array_merge($fields, [
                     $model->F_AUTHOR => Auth::guard('sanctum')->user()['user'],
                     $model->F_VALIDFROM => $model->validFromUntil ? date("Y-m-d H:i:s", time()) : null,
                 ]));
+                dump($model);
 
                 $model->save();
 

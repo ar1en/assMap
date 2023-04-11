@@ -3,7 +3,6 @@
 namespace App\Models\DBModels\Data;
 
 use App\Models\DBModels\Model\MUsers;
-use App\Models\Vacancy;
 
 /**
  * Class DUsers
@@ -13,18 +12,20 @@ use App\Models\Vacancy;
 class DUsers extends MUsers {
     protected static array $validationRules = [
         'name' => ['required','string'],
-        'Vacancy' => ['nullable'],
-        'Vacancy.*' => ['nullable','uuid','exists:ent_vacancies,id', 'unique:rel_user_vacancy,vacancy'],
-        //'Departments'=> ['uuid','exists:departments,id'],
-        //'validFrom' => 'data',
-        //'validUntil' => 'data',
+        'relVacancies' => ['nullable'],
+        'relVacancies.*' => ['nullable','uuid','exists:ent_vacancies,id', 'unique:rel_user_vacancy,vacancy'],
+        'relRoles' => ['nullable'],
+        'relRoles.*' => ['nullable', 'uuid', 'exists:ent_roles, id', 'unique:rel_user_role, role'],
     ];
     public function getValidationRules(): array {
         return static::$validationRules;
     }
 
-    public function Vacancy(): object
-    {
-        return $this->belongsToMany(Vacancy::class, 'rel_user_vacancy', 'user', 'vacancy');
+    public function relVacancies(): object {
+        return $this->belongsToMany(DVacancies::class, 'rel_user_vacancy', 'user', 'vacancy')->withTimestamps();
+    }
+
+    public function relRoles(): object {
+        return $this->belongsToMany(DRoles::class, 'rel_user_role', 'user', 'role')->withTimestamps();
     }
 }
