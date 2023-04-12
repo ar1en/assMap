@@ -10,12 +10,14 @@ use App\Models\DBModels\Model\MUsers;
  * @package App\Models\DBModels\Data
  */
 class DUsers extends MUsers {
+
+    public bool $validFromUntil = false;
     protected static array $validationRules = [
         'name' => ['required','string'],
-        'relVacancies' => ['nullable'],
-        'relVacancies.*' => ['nullable','uuid','exists:ent_vacancies,id', 'unique:rel_user_vacancy,vacancy'],
-        'relRoles' => ['nullable'],
-        'relRoles.*' => ['nullable', 'uuid', 'exists:ent_roles, id', 'unique:rel_user_role, role'],
+        'rel_vacancies' => ['nullable'],
+        'rel_vacancies.*' => ['nullable','uuid','exists:ent_vacancies,id', 'unique:rel_user_vacancy,vacancy'],
+        'rel_roles' => ['nullable'],
+        'rel_roles.*' => ['nullable', 'uuid', 'exists:ent_roles, id', 'unique:rel_user_role, role'],
     ];
     public function getValidationRules(): array {
         return static::$validationRules;

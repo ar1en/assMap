@@ -11,7 +11,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-
 class StoreController extends Controller
 {
     public function __invoke(String $apiName, Request $request): JsonResponse
@@ -24,17 +23,18 @@ class StoreController extends Controller
                 $validatedData = $request->validate($model->getValidationRules());
 
                 $this->transformKeysNameToCamelCase($validatedData);
-
+                //dump($validatedData);
                 //разделяем массив полученных из json данных на поля сущности и связи
                 $fields = Arr::only($validatedData, $model->getFillable());
-                dump($fields);
+
                 $relations = Arr::except($validatedData, array_keys($fields));
 
                 $model->fill(array_merge($fields, [
-                    $model->F_AUTHOR => Auth::guard('sanctum')->user()['user'],
-                    $model->F_VALIDFROM => $model->validFromUntil ? date("Y-m-d H:i:s", time()) : null,
+                    $model::F_AUTHOR => Auth::guard('sanctum')->user()['user'],
+                    ($model->validFromUntil) ? $model::F_VALIDFROM : null => ($model->validFromUntil) ? date("Y-m-d H:i:s", time()) : null,
                 ]));
-                dump($model);
+
+                //dump($relations);
 
                 $model->save();
 
@@ -76,9 +76,10 @@ class StoreController extends Controller
             [
                 'id' => Str::uuid(),
                 'author' => Auth::guard('sanctum')->user()['user'],
-                'validFrom' => $model->timestamps ? date("Y-m-d H:i:s", time()) : null,
-                'created_at' => $model->validFromUntil ? date("Y-m-d H:i:s", time()) : null,
-                'updated_at' => $model->validFromUntil ? date("Y-m-d H:i:s", time()): null
+                //'validFrom' => $model->validFromUntil ? date("Y-m-d H:i:s", time()) : null,
+                'validFrom' => date("Y-m-d H:i:s", time()),
+                'created_at' => $model->timeStamps ? date("Y-m-d H:i:s", time()) : null,
+                'updated_at' => $model->timeStamps ? date("Y-m-d H:i:s", time()): null
             ]);
     }
 
