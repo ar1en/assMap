@@ -11,19 +11,20 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+
 class StoreController extends Controller
 {
-    public function __invoke(String $apiName, Request $request): JsonResponse
+    public function __invoke(String $apiName, Request $request, ?String $requestType): JsonResponse
     {
         $modelName = array_search($apiName, app('models'));
-
+        dump($requestType);
         if ($modelName) {
             $response = DB::transaction(function () use ($request, $modelName) {
                 $model = new ("App\\Models\\DBModels\\Data\\{$modelName}")();
-                $validatedData = $request->validate($model->getValidationRules());
-
+                //$validatedData = $request->validate($model->getValidationRules());
+                $validatedData = $request->validate(("App\\Http\\Requests\\".$modelName."DefaultRequest")::rules());
                 $this->transformKeysNameToCamelCase($validatedData);
-                //dump($validatedData);
+
                 //разделяем массив полученных из json данных на поля сущности и связи
                 $fields = Arr::only($validatedData, $model->getFillable());
 
@@ -33,8 +34,6 @@ class StoreController extends Controller
                     $model::F_AUTHOR => Auth::guard('sanctum')->user()['user'],
                     ($model->validFromUntil) ? $model::F_VALIDFROM : null => ($model->validFromUntil) ? date("Y-m-d H:i:s", time()) : null,
                 ]));
-
-                //dump($relations);
 
                 $model->save();
 
