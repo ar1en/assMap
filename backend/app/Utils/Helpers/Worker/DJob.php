@@ -44,7 +44,7 @@ class DJob extends MBase {
     public const F_TRY_COUNT = 'try_count';
     public const F_PROGRESS = 'progress';
 
-    public const C_DATE_TIME_FORMAT_LOG = 'Y-d-m H:i:s';
+    public const C_DATE_TIME_FORMAT_LOG = 'Y-m-d H:i:s';
 
     public const C_STATE_ACTIVE = 0;
     public const C_STATE_BLOCKED = 1;

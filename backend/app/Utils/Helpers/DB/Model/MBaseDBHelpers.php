@@ -52,7 +52,7 @@ trait MBaseDBHelpers {
     public function getDateFormat() {
 
         if (!$this->isPgSql()) {
-            return 'Y-d-m H:i:s.u';
+            return 'Y-m-d H:i:s.u';
         }
         return parent::getDateFormat();
     }

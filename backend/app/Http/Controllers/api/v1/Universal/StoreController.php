@@ -12,17 +12,20 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
+use App\Http\Resources\api\v1\UserDefaultResource;
+
 class StoreController extends Controller
 {
-    public function __invoke(String $apiName, Request $request, ?String $requestType): JsonResponse
+    public function __invoke(String $apiName, Request $request): JsonResponse
     {
         $modelName = array_search($apiName, app('models'));
-        dump($requestType);
+
         if ($modelName) {
             $response = DB::transaction(function () use ($request, $modelName) {
                 $model = new ("App\\Models\\DBModels\\Data\\{$modelName}")();
                 //$validatedData = $request->validate($model->getValidationRules());
-                $validatedData = $request->validate(("App\\Http\\Requests\\".$modelName."DefaultRequest")::rules());
+
+                $validatedData = $request->validate(("App\\Http\\Requests\\".$modelName."Request")::rules());
                 $this->transformKeysNameToCamelCase($validatedData);
 
                 //разделяем массив полученных из json данных на поля сущности и связи
@@ -44,8 +47,10 @@ class StoreController extends Controller
                 }
 
                 //$model->save();
+                //dump(new UserDefaultResource($model));
 
-                return $model;
+                //return $model;
+                return new UserDefaultResource($model);
             });
         } else $response = sprintf('%s model does not exist', $apiName);
 
