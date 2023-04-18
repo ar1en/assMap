@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api\v1\Universal;
 
 use App\Http\Resources\api\v1\UserDefaultResource;
+use App\Singletons\ModelManager;
 Use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
@@ -12,6 +13,9 @@ use App\Models\DBModels\Data;
 class ShowController extends Controller
 {
     public function __invoke($apiName, $id): JsonResponse {
+
+        $modelManager = app(ModelManager::class);
+
         $modelName = array_search($apiName, app('models'));
         if ($modelName) {
             $model = ("App\\Models\\DBModels\\Data\\".$modelName)::find($id);
