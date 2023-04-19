@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\api\v1\Universal;
 
-use App\Http\Resources\api\v1\UserDefaultResource;
+use App\Http\Resources\api\v1\DUsersDefaultResource;
 use App\Singletons\ModelManager;
 Use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
@@ -19,7 +19,7 @@ class ShowController extends Controller
         $modelName = array_search($apiName, app('models'));
         if ($modelName) {
             $model = ("App\\Models\\DBModels\\Data\\".$modelName)::find($id);
-            $response = new UserDefaultResource($model);
+            $response = new DUsersDefaultResource($model);
             //if ($model) {
                 //$modelMethods = get_class_methods($model);
 

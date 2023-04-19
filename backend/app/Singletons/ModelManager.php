@@ -1,16 +1,25 @@
 <?php
 namespace App\Singletons;
 
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Str;
+use JetBrains\PhpStorm\NoReturn;
 use ReflectionException;
 
 class ModelManager
 {
     private static ?ModelManager $instance = null;
-    private array $models = [];
-    private array $resources = [];
+    private array $modelsMetaData = [];
+    private static string $modelsPath = 'Models/DBModels/Data';
+    private static string $resourcesPath = 'Http/Resources/api/v1';
+    private static string $requestsPath = 'Http/Requests';
 
     private function __construct() {}
 
+    /**
+     * @throws ReflectionException
+     */
     public static function getInstance():ModelManager {
         if (!self::$instance) {
             self::$instance = new ModelManager();
@@ -22,20 +31,10 @@ class ModelManager
     /**
      * @throws ReflectionException
      */
-    private function init():void{
-        //Определяем директории, в которых находятся модели и ресурсы
-        $modelsPath = 'Models/DBModels/Data';
-        $resourcesPath = app_path('Resources');
-
-        $this->scanModels($modelsPath);
-    }
-
-    /**
-     * @throws ReflectionException
-     */
-    private function scanModels(String $path):void {
+    #[NoReturn]
+    private function init():void {
         // Сканируем директорию и получаем список файлов
-        $files = scandir(app_path($path));
+        $files = scandir(app_path(self::$modelsPath));
 
         // Проходим по списку файлов и определяем, какие из них являются моделями
         foreach ($files as $file) {
@@ -43,49 +42,90 @@ class ModelManager
                 continue;
             }
 
-            //$filePath = $path . DIRECTORY_SEPARATOR . $file;
-
-            //Получаем информации о классе
+            //Получаем информации о классе и формируем путь по которому он доступен для создания
             $modelName = pathinfo($file, PATHINFO_FILENAME);
-            $modelPath = 'App\\' . str_replace('/', '\\', $path) . '\\';
+            $modelPath = 'App\\' . str_replace('/', '\\', self::$modelsPath) . '\\';
 
-            //dump($classPath . $className);
-            //dump($filePath);
             $model = new \ReflectionClass($modelPath . $modelName);
             // Если класс является моделью, то добавляем его в список моделей
             if ($model->isSubclassOf('Illuminate\Database\Eloquent\Model')) {
-                $this->models[$modelName] = $model->newInstance();
 
-                // Сканируем ресурсы для данной модели
-                $this->scanResources($path, $modelName);
+                $this->modelsMetaData[$modelName] = [
+                    'api' => Str::kebab(substr($modelName, 1)),
+                    'instancePath' => $modelPath . $modelName,
+                    'resources' => $this->getModelData($modelName, 'Resources'),
+                    'requests' => $this->getModelData($modelName, 'Requests'),
+                    ];
             }
         }
-        dd($this->models);
+        //dd($this->modelsMetaData);
     }
 
-    private function scanResources($path, $modelName):void {
-        // Определяем путь к директории с ресурсами для данной модели
-        $resourcePath = $path . DIRECTORY_SEPARATOR . $modelName . DIRECTORY_SEPARATOR . 'Resources';
+    /**
+     * @throws ReflectionException
+     */
 
-        // Если директория с ресурсами не существует, то выходим из метода
-        if (!is_dir($resourcePath)) {
-            return;
+    private function getModelData($modelName, $dataType):array {
+        $result= [];
+
+        switch ($dataType) {
+            case 'Resources':
+                $path = self::$resourcesPath;
+                $class = 'Illuminate\Http\Resources\Json\JsonResource';
+                $classPostfix = 'Resource';
+                break;
+            case 'Requests':
+                $path = self::$requestsPath;
+                $class = 'Illuminate\Foundation\Http\FormRequest';
+                $classPostfix = 'Request';
+                break;
+            default:
+                return $result;
         }
 
-        // Сканируем директорию с ресурсами и добавляем ресурсы в список для данной модели
-        $files = scandir($resourcePath);
+        $files = scandir(app_path($path));
+
         foreach ($files as $file) {
-            if ($file == '.' || $file == '..') {
-                continue;
-            }
+            if ($file == '.' || $file == '..') continue;
 
-            $resourceName = pathinfo($file, PATHINFO_FILENAME);
-            $resourceClass = 'App\Models\\' . $modelName . '\\Resources\\' . $resourceName;
+            $dataName = pathinfo($file, PATHINFO_FILENAME);
+            $dataPath = 'App\\' . str_replace('/', '\\', $path) . '\\';
 
-            // Используем рефлексию для проверки, существует ли класс ресурса
-            if (class_exists($resourceClass)) {
-                $this->resources[$modelName][$resourceName] = new $resourceClass();
+            if (Str::startsWith($dataName, $modelName)) {
+                $resource = new \ReflectionClass($dataPath . $dataName);
+                if ($resource->isSubclassOf($class)) {
+                    $result += [str_replace([$modelName, $classPostfix], '', $dataName) => $dataName];
+                }
             }
         }
+        return $result;
+    }
+
+    public function getModelNameByApi(string $api): ?string {
+        foreach ($this->modelsMetaData as $modelName => $modelData) {
+            if ($modelData['api'] === $api) {
+                return $modelName;
+            }
+        }
+        return null;
+    }
+
+    public function modelExistsByApi(string $api): bool {
+        return $this->getModelNameByApi($api) !== null;
+    }
+
+    public function getModelInstancePath(string $modelName):?string {
+        return $this->modelsMetaData[$modelName]['instancePath'];
+    }
+
+    public function createModel(string $modelName) {
+        return ($this->getModelInstancePath($modelName))::all();
+    }
+
+    public function getModelResource($model, String $resourceName):JsonResource {
+        //dd($model);
+        $path = 'App\\' . str_replace('/', '\\', self::$resourcesPath) . '\\';
+        $resourceInstanceName = $this->modelsMetaData[$model->name()]['resources'][$resourceName];
+        return new ($path . $resourceInstanceName)($model);
     }
 }

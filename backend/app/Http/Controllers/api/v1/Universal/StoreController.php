@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
-use App\Http\Resources\api\v1\UserDefaultResource;
+use App\Http\Resources\api\v1\DUsersDefaultResource;
 
 class StoreController extends Controller
 {
@@ -47,10 +47,10 @@ class StoreController extends Controller
                 }
 
                 //$model->save();
-                //dump(new UserDefaultResource($model));
+                //dump(new DUsersDefaultResource($model));
 
                 //return $model;
-                return new UserDefaultResource($model);
+                return new DUsersDefaultResource($model);
             });
         } else $response = sprintf('%s model does not exist', $apiName);
 
