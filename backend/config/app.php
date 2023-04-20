@@ -196,7 +196,7 @@ return [
 
         //Custom providers - assuranceMap
         App\Providers\SanctumServiceProvider::class,
-        App\Providers\ApiModelProvider::class,
+        //App\Providers\ApiModelProvider::class,
     ],
 
     /*
@@ -214,4 +214,10 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
 
+    //Custom configs//
+
+    /*App Folders*/
+    'models_path' => 'App\\Models\\DBModels\\Data\\',
+    'resources_path' => 'App\\Http\\Resources\\api\\v1\\',
+    'requests_path' => 'App\\Http\\Requests\\',
 ];

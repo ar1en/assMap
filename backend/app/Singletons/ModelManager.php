@@ -1,8 +1,7 @@
 <?php
 namespace App\Singletons;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use JetBrains\PhpStorm\NoReturn;
 use ReflectionException;
@@ -11,9 +10,9 @@ class ModelManager
 {
     private static ?ModelManager $instance = null;
     private array $modelsMetaData = [];
-    private static string $modelsPath = 'Models/DBModels/Data';
-    private static string $resourcesPath = 'Http/Resources/api/v1';
-    private static string $requestsPath = 'Http/Requests';
+    //private static string $modelsPath = 'Models/DBModels/Data';
+    //private static string $resourcesPath = 'Http/Resources/api/v1';
+    //private static string $requestsPath = 'Http/Requests';
 
     private function __construct() {}
 
@@ -34,7 +33,8 @@ class ModelManager
     #[NoReturn]
     private function init():void {
         // Сканируем директорию и получаем список файлов
-        $files = scandir(app_path(self::$modelsPath));
+        $path = str_replace(['App\\', '\\'], ['', '/'], config('app.models_path'));
+        $files = scandir(app_path($path));
 
         // Проходим по списку файлов и определяем, какие из них являются моделями
         foreach ($files as $file) {
@@ -44,9 +44,9 @@ class ModelManager
 
             //Получаем информации о классе и формируем путь по которому он доступен для создания
             $modelName = pathinfo($file, PATHINFO_FILENAME);
-            $modelPath = 'App\\' . str_replace('/', '\\', self::$modelsPath) . '\\';
-
+            $modelPath = config('app.models_path');
             $model = new \ReflectionClass($modelPath . $modelName);
+
             // Если класс является моделью, то добавляем его в список моделей
             if ($model->isSubclassOf('Illuminate\Database\Eloquent\Model')) {
 
@@ -70,12 +70,12 @@ class ModelManager
 
         switch ($dataType) {
             case 'Resources':
-                $path = self::$resourcesPath;
+                $path = config('app.resources_path');
                 $class = 'Illuminate\Http\Resources\Json\JsonResource';
                 $classPostfix = 'Resource';
                 break;
             case 'Requests':
-                $path = self::$requestsPath;
+                $path = config('app.requests_path');
                 $class = 'Illuminate\Foundation\Http\FormRequest';
                 $classPostfix = 'Request';
                 break;
@@ -83,16 +83,15 @@ class ModelManager
                 return $result;
         }
 
-        $files = scandir(app_path($path));
+        $files = scandir(str_replace(['App\\', '\\'], ['', '/'], app_path($path)));
 
         foreach ($files as $file) {
             if ($file == '.' || $file == '..') continue;
 
             $dataName = pathinfo($file, PATHINFO_FILENAME);
-            $dataPath = 'App\\' . str_replace('/', '\\', $path) . '\\';
 
             if (Str::startsWith($dataName, $modelName)) {
-                $resource = new \ReflectionClass($dataPath . $dataName);
+                $resource = new \ReflectionClass($path . $dataName);
                 if ($resource->isSubclassOf($class)) {
                     $result += [str_replace([$modelName, $classPostfix], '', $dataName) => $dataName];
                 }
@@ -118,14 +117,11 @@ class ModelManager
         return $this->modelsMetaData[$modelName]['instancePath'];
     }
 
-    public function createModel(string $modelName) {
-        return ($this->getModelInstancePath($modelName))::all();
-    }
+    public function getModelResourceName(string $modelName, bool $withPath = true, string $resourceName = 'Default'):?string {
+        $result = Arr::get($this->modelsMetaData, "{$modelName}.resources.{$resourceName}");
 
-    public function getModelResource($model, String $resourceName):JsonResource {
-        //dd($model);
-        $path = 'App\\' . str_replace('/', '\\', self::$resourcesPath) . '\\';
-        $resourceInstanceName = $this->modelsMetaData[$model->name()]['resources'][$resourceName];
-        return new ($path . $resourceInstanceName)($model);
+        if ($withPath) $result = config('app.resources_path') . $result;
+
+        return $result;
     }
 }

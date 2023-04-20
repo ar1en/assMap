@@ -13,21 +13,15 @@ class IndexController extends Controller
      */
     public function __invoke($apiName):JsonResponse {
         $mm = ModelManager::getInstance();
+
         if ($mm->modelExistsByApi($apiName)) {
             $modelName = $mm->getModelNameByApi($apiName);
-            $model = $mm->getModelInstancePath($modelName)::all();
-            $resource = $mm->getModelResource($model, 'Default');
-            dd($resource);
-            return $resource;
-            //return response()->json(['data' => $mm->getModelInstancePath($modelName)::all()], 200);
-        } else return response()->json(['message' => sprintf('Model %s not found', $apiName)], 404);
-
-        /*$model = "App\Models\\" . $model;
-        if(class_exists($model)) {
-            return response()->json(['data' => $model::all()], 200);
-        } else {
-            return response()->json(['message' => sprintf('Model %s not found', $model)], 404);
-        }*/
-
+            $resourceName = $mm->getModelResourceName($modelName);
+            if ($modelName && $resourceName) {
+                $model = $mm->getModelInstancePath($modelName)::all();
+                $response = response()->json(['data' => ($resourceName)::collection($model)], 200);
+            } else $response =  response()->json(['error' => sprintf('Model or resource %s not found', $apiName)], 404);
+            return response()->json(['data' => ($resourceName)::collection($model)], 200);
+        } else return response()->json(['error' => sprintf('Model %s not found', $apiName)], 404);
     }
 }
