@@ -15,13 +15,16 @@ class IndexController extends Controller
         $mm = ModelManager::getInstance();
 
         if ($mm->modelExistsByApi($apiName)) {
-            $modelName = $mm->getModelNameByApi($apiName);
+            $modelName = $mm->getModelNameByApi($apiName, false);
             $resourceName = $mm->getModelResourceName($modelName);
+
             if ($modelName && $resourceName) {
-                $model = $mm->getModelInstancePath($modelName)::all();
-                $response = response()->json(['data' => ($resourceName)::collection($model)], 200);
+                $model = new ($mm->getModelNameByApi($apiName));
+                $data = $model::paginate(2);
+                $response = response()->json(['data' => ($resourceName)::collection($data)], 200);
             } else $response =  response()->json(['error' => sprintf('Model or resource %s not found', $apiName)], 404);
-            return response()->json(['data' => ($resourceName)::collection($model)], 200);
-        } else return response()->json(['error' => sprintf('Model %s not found', $apiName)], 404);
+        } else $response = response()->json(['error' => sprintf('Model %s not found', $apiName)], 404);
+
+        return $response;
     }
 }

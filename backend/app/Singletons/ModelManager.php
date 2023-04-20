@@ -52,7 +52,6 @@ class ModelManager
 
                 $this->modelsMetaData[$modelName] = [
                     'api' => Str::kebab(substr($modelName, 1)),
-                    'instancePath' => $modelPath . $modelName,
                     'resources' => $this->getModelData($modelName, 'Resources'),
                     'requests' => $this->getModelData($modelName, 'Requests'),
                     ];
@@ -100,13 +99,15 @@ class ModelManager
         return $result;
     }
 
-    public function getModelNameByApi(string $api): ?string {
+    public function getModelNameByApi(string $api, bool $withPath = true): ?string {
+        $result = null;
         foreach ($this->modelsMetaData as $modelName => $modelData) {
             if ($modelData['api'] === $api) {
-                return $modelName;
+                $result = $modelName;
             }
         }
-        return null;
+        if ($withPath && $result) $result = config('app.models_path') . $result;
+        return $result;
     }
 
     public function modelExistsByApi(string $api): bool {
@@ -119,9 +120,7 @@ class ModelManager
 
     public function getModelResourceName(string $modelName, bool $withPath = true, string $resourceName = 'Default'):?string {
         $result = Arr::get($this->modelsMetaData, "{$modelName}.resources.{$resourceName}");
-
         if ($withPath) $result = config('app.resources_path') . $result;
-
         return $result;
     }
 }
