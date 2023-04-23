@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\api\v1\Universal;
 
+use App\Singletons\ModelManager;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Http\JsonResponse;
@@ -16,9 +17,15 @@ use App\Http\Resources\api\v1\DUsersDefaultResource;
 
 class StoreController extends Controller
 {
+    /**
+     * @throws \ReflectionException
+     */
     public function __invoke(String $apiName, Request $request): JsonResponse
     {
-        $modelName = array_search($apiName, app('models'));
+        dd($request->query());
+        $mm = ModelManager::getInstance();
+        $modelName = $mm->getModelNameByApi($apiName, false);
+        //$modelName = array_search($apiName, app('models'));
 
         if ($modelName) {
             $response = DB::transaction(function () use ($request, $modelName) {

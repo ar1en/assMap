@@ -99,8 +99,8 @@ class ModelManager
         return $result;
     }
 
-    public function getModelNameByApi(string $api, bool $withPath = true): ?string {
-        $result = null;
+    public function getModelNameByApi(string $api, bool $withPath = true): string {
+        $result = '';
         foreach ($this->modelsMetaData as $modelName => $modelData) {
             if ($modelData['api'] === $api) {
                 $result = $modelName;
@@ -120,6 +120,7 @@ class ModelManager
 
     public function getModelResourceName(string $modelName, bool $withPath = true, string $resourceName = 'Default'):?string {
         $result = Arr::get($this->modelsMetaData, "{$modelName}.resources.{$resourceName}");
+        if (!$result) return null;
         if ($withPath) $result = config('app.resources_path') . $result;
         return $result;
     }

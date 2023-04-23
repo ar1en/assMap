@@ -13,11 +13,11 @@ class DUsers extends MUsers {
 
     public bool $validFromUntil = false;
 
-    public function relVacancies(): object {
+    public function vacancies(): object {
         return $this->belongsToMany(DVacancies::class, 'rel_user_vacancy', 'user', 'vacancy')->withTimestamps();
     }
 
-    public function relRoles(): object {
+    public function roles(): object {
         return $this->belongsToMany(DRoles::class, 'rel_user_role', 'user', 'role')->withTimestamps();
     }
 }

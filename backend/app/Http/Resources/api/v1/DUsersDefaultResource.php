@@ -2,21 +2,17 @@
 
 namespace App\Http\Resources\api\v1;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class DUsersDefaultResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
-     */
-    public function toArray(Request $request): array
+    public function toArray($request): array
     {
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'vacancies' => $this->vacancies,
         ];
+
     }
 }
