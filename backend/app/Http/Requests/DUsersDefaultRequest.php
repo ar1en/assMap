@@ -23,10 +23,10 @@ class DUsersDefaultRequest extends FormRequest
     {
         return [
             'name' => ['required','string'],
-            'rel_vacancies' => ['nullable'],
-            'rel_vacancies.*' => ['nullable','uuid','exists:ent_vacancies,id', 'unique:rel_user_vacancy,vacancy'],
-            'rel_roles' => ['nullable'],
-            'rel_roles.*' => ['nullable', 'uuid', 'exists:ent_roles, id', 'unique:rel_user_role, role'],
+            'vacancies' => ['nullable'],
+            'vacancies.*' => ['nullable','uuid','exists:ent_vacancies,id', 'unique:rel_user_vacancy,vacancy'],
+            'roles' => ['nullable'],
+            'roles.*' => ['nullable', 'uuid', 'exists:ent_roles, id', 'unique:rel_user_role, role'],
         ];
     }
 }

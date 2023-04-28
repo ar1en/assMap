@@ -31,6 +31,7 @@ Route::group(['prefix' => '', 'namespace' => 'App\Http\Controllers\api\v1\Univer
    Route::get('/{model}', 'IndexController')->name('universal.index');
    Route::get('{model}/{id}', 'ShowController')->name('universal.show');
    Route::post('/{model}', 'StoreController')->name('universal.store');
+   Route::put('{model}/{id}', 'UpdateController')->name('universal.update');
 });
 
 

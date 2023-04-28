@@ -12,27 +12,24 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-
-use App\Http\Resources\api\v1\DUsersDefaultResource;
+use ReflectionException;
 
 class StoreController extends Controller
 {
     /**
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function __invoke(String $apiName, Request $request): JsonResponse
     {
-        dd($request->query());
         $mm = ModelManager::getInstance();
         $modelName = $mm->getModelNameByApi($apiName, false);
-        //$modelName = array_search($apiName, app('models'));
 
         if ($modelName) {
             $response = DB::transaction(function () use ($request, $modelName) {
-                $model = new ("App\\Models\\DBModels\\Data\\{$modelName}")();
-                //$validatedData = $request->validate($model->getValidationRules());
 
-                $validatedData = $request->validate(("App\\Http\\Requests\\".$modelName."Request")::rules());
+                $model = new (config('app.models_path') . $modelName)();
+
+                $validatedData = $request->validate((config('app.requests_path').$modelName."DefaultRequest")::rules());
                 $this->transformKeysNameToCamelCase($validatedData);
 
                 //разделяем массив полученных из json данных на поля сущности и связи
@@ -53,11 +50,8 @@ class StoreController extends Controller
                     }
                 }
 
-                //$model->save();
-                //dump(new DUsersDefaultResource($model));
-
-                //return $model;
-                return new DUsersDefaultResource($model);
+                return $model;
+                //return new DUsersDefaultResource($model);
             });
         } else $response = sprintf('%s model does not exist', $apiName);
 

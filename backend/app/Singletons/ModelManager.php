@@ -114,9 +114,11 @@ class ModelManager
         return $this->getModelNameByApi($api) !== null;
     }
 
-    public function getModelInstancePath(string $modelName):?string {
+    /*public function getModelInstancePath(string $modelName, bool $withModelName = true):?string {
+        //dump($this->modelsMetaData);
+        //return $modelName ? $this->modelsMetaData[$modelName]['instancePath'] : $this->modelsMetaData[$modelName]['instancePath'] . $modelName;
         return $this->modelsMetaData[$modelName]['instancePath'];
-    }
+    }*/
 
     public function getModelResourceName(string $modelName, bool $withPath = true, string $resourceName = 'Default'):?string {
         $result = Arr::get($this->modelsMetaData, "{$modelName}.resources.{$resourceName}");

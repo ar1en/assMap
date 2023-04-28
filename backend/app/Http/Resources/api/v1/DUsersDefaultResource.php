@@ -3,6 +3,8 @@
 namespace App\Http\Resources\api\v1;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\api\v1\DVacanciesDefaultResource;
+use App\Http\Resources\api\v1\DRolesDefaultResource;
 
 class DUsersDefaultResource extends JsonResource
 {
@@ -11,8 +13,8 @@ class DUsersDefaultResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'vacancies' => $this->vacancies,
+            'vacancies' => DVacanciesDefaultResource::collection($this->whenLoaded('vacancies')),
+            'roles' => DRolesDefaultResource::collection($this->whenLoaded('roles')),
         ];
-
     }
 }

@@ -2,45 +2,33 @@
 
 namespace App\Http\Controllers\api\v1\Universal;
 
-use App\Http\Resources\api\v1\DUsersDefaultResource;
-use App\Singletons\ModelManager;
-Use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Str;
+use App\Singletons\ModelManager;
 use Illuminate\Http\Request;
-use App\Models\DBModels\Data;
+use ReflectionException;
 
 class ShowController extends Controller
 {
-    public function __invoke($apiName, $id): JsonResponse {
+    /**
+     * @throws ReflectionException
+     */
+    public function __invoke(String $apiName, String $id,String $resourceType = 'Default') {
 
-        $modelManager = app(ModelManager::class);
+        $mm = ModelManager::getInstance();
+        $modelName = $mm->getModelNameByApi($apiName, false);
+        $resourceName = $mm->getModelResourceName($modelName, true, $resourceType);
 
-        $modelName = array_search($apiName, app('models'));
-        if ($modelName) {
-            $model = ("App\\Models\\DBModels\\Data\\".$modelName)::find($id);
-            $response = new DUsersDefaultResource($model);
-            //if ($model) {
-                //$modelMethods = get_class_methods($model);
+        if (!$modelName or !$resourceName) {
+            return response()->json(['error' => sprintf('Model or Resource not found for <%s>', $apiName)], 404);
+        }
 
-                /*foreach ($modelMethods as $method) {
+        $model = $mm->getModelNameByApi($apiName)::with($this->withArray())
+            ->find($id);
 
-                    //$relationship = $model->{$method}();
-                    if (Str::contains($method, "rel")) {
-                        switch (true) {
-                            case $model->{$method}() instanceof BelongsToMany:
-                                dump($method);
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                }*/
+        return new $resourceName($model);
+    }
 
-                //$response = response()->json(['error' => sprintf("%s with id:%s not found", $modelName, $id)], 400);
-            //} else $response = response()->json(['data' => $data], 200);
-        } else $response = response()->json(['error' => sprintf('%s model does not exist', $apiName)], 400);
-
-        return response()->json($response, 200);
+    private function withArray(): array{
+        return request('with', []);
     }
 }

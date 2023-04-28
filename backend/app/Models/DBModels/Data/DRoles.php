@@ -3,6 +3,7 @@
 namespace App\Models\DBModels\Data;
 
 use App\Models\DBModels\Model\MRoles;
+use App\Models\DBModels\Data\DUsers;
 
 /**
  * Class DRoles
