@@ -28,10 +28,15 @@ Route::group(['prefix' => 'auth', 'namespace' => 'App\Http\Controllers\auth'], f
 
 /*Группа роутов универсальных контроллеров. Должна располгаться после всех остальных групп контроллеров*/
 Route::group(['prefix' => '', 'namespace' => 'App\Http\Controllers\api\v1\Universal', 'middleware' => 'auth:sanctum'], function() {
-   Route::get('/{model}', 'IndexController')->name('universal.index');
-   Route::get('{model}/{id}', 'ShowController')->name('universal.show');
-   Route::post('/{model}', 'StoreController')->name('universal.store');
+   Route::get('{model}/{with?}', 'IndexController')->name('universal.index')
+       ->where('with', '[^0-9-]+(?:-[a-zA-Z0-9]+)*');
+   Route::get('{model}/{id}/{with?}', 'ShowController')->name('universal.show')
+       ->where('id', '[a-f0-9]{8}-[a-f0-9]{4}-[1-5][a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}')
+       ->where('with', '[^0-9-]+(?:-[a-zA-Z0-9]+)*');
+   // ->where('id', '[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}');
+   Route::post('{model}', 'StoreController')->name('universal.store');
    Route::put('{model}/{id}', 'UpdateController')->name('universal.update');
+   //    ->where('id', '[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}');
 });
 
 

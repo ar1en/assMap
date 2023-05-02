@@ -1,6 +1,7 @@
 <?php
 namespace App\Singletons;
 
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use JetBrains\PhpStorm\NoReturn;
@@ -54,10 +55,11 @@ class ModelManager
                     'api' => Str::kebab(substr($modelName, 1)),
                     'resources' => $this->getModelData($modelName, 'Resources'),
                     'requests' => $this->getModelData($modelName, 'Requests'),
+                    //'relations' => $this->getRelationshipMethods($model),
                     ];
             }
         }
-        //dd($this->modelsMetaData);
+        //dump($this->modelsMetaData);
     }
 
     /**
@@ -97,6 +99,42 @@ class ModelManager
             }
         }
         return $result;
+    }
+
+    private function getRelationshipMethods(\ReflectionClass &$model): array {
+        // Получаем все методы модели
+        $methods = $model->getMethods();
+        //dump($methods);
+        // Определяем методы отношений
+        $relationshipMethods = [];
+
+        $counter = 5;
+        //dump($counter);
+        foreach ($methods as $method) {
+            // Определяем, относится ли метод к отношениям
+            $returnType = $method->getReturnType();
+
+            //dump($counter);
+            if ($counter > 0){
+                dump($model->getName());
+                dump($method->getName());
+                dump($returnType);
+                dump(is_subclass_of($method, Relation::class));
+                $counter --;
+            }
+
+
+            //if ($returnType instanceof \ReflectionNamedType && is_subclass_of($returnType->getName(), Relation::class)) {
+            //dump()
+            //if($returnType) dump($method->getName());
+            /*if (is_subclass_of($returnType->getName(), Relation::class)) {
+
+                // Если да, добавляем его в список методов отношений
+                $relationshipMethods[] = $method->getName();
+            }*/
+        }
+
+        return $relationshipMethods;
     }
 
     public function getModelNameByApi(string $api, bool $withPath = true): string {

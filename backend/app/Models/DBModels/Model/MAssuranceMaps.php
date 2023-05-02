@@ -13,17 +13,17 @@ use  App\Models\DBModels\DBClass;
  * Class MAssuranceMaps
  * Representation for db table ent_assurance_maps.
 
- * @property  string    id         [1] type:uuid         !NULL PRIMARY 
- * @property  string    period     [2] type:uuid         !NULL         
- * @property  string    name       [3] type:varchar(255) !NULL         
- * @property  string    status     [4] type:uuid         !NULL         
- * @property  \DateTime statusDate [5] type:timestamp    !NULL         
- * @property  string    author     [6] type:uuid         !NULL         
- * @property  \DateTime created_at [7] type:timestamp                  
- * @property  \DateTime updated_at [8] type:timestamp                  
- * @property  \DateTime deleted_at [9] type:timestamp                  
- * @property  DUsers    relAuthor                                      
- * @property  DPeriods  relPeriod                                      
+ * @property  string    id         [1] type:uuid         !NULL PRIMARY
+ * @property  string    period     [2] type:uuid         !NULL
+ * @property  string    name       [3] type:varchar(255) !NULL
+ * @property  string    status     [4] type:uuid         !NULL
+ * @property  \DateTime statusDate [5] type:timestamp    !NULL
+ * @property  string    author     [6] type:uuid         !NULL
+ * @property  \DateTime created_at [7] type:timestamp
+ * @property  \DateTime updated_at [8] type:timestamp
+ * @property  \DateTime deleted_at [9] type:timestamp
+ * @property  DUsers    relAuthor
+ * @property  DPeriods  relPeriod
  * @package App\Models\DBModels\Model
  */
 class MAssuranceMaps extends DBClass {
@@ -83,7 +83,7 @@ class MAssuranceMaps extends DBClass {
 			self::F_CREATED_AT,
 			self::F_UPDATED_AT,
 			self::F_DELETED_AT,
-		]; 
+		];
 
 		protected $fillable = [
 			 self::F_PERIOD,
@@ -100,10 +100,10 @@ class MAssuranceMaps extends DBClass {
         /**
          * @return DUsers|BelongsTo
          */
-        public function relAuthor(){
+        public function relAuthor(): DUsers{
             return $this->belongsTo(DUsers::class,self::F_AUTHOR, DUsers::F_ID);
         }
-            
+
 
         /**
          * @return DPeriods|BelongsTo
@@ -111,7 +111,7 @@ class MAssuranceMaps extends DBClass {
         public function relPeriod(){
             return $this->belongsTo(DPeriods::class,self::F_PERIOD, DPeriods::F_ID);
         }
-            
+
 
 
 

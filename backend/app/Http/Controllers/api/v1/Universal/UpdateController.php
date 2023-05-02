@@ -29,14 +29,16 @@ class UpdateController extends Controller
                 //$model = new (config('app.models_path') . $modelName)();
                 $model = (config('app.models_path') . $modelName)::find($id);
 
-                $validatedData = $request->validate((config('app.requests_path').$modelName."DefaultRequest")::rules());
+                $validatedData = $request->validate((config('app.requests_path').$modelName."UpdateRequest")::rules());
                 $this->transformKeysNameToCamelCase($validatedData);
 
                 //разделяем массив полученных из json данных на поля сущности и связи
                 $fields = Arr::only($validatedData, $model->getFillable());
 
                 $relations = Arr::except($validatedData, array_keys($fields));
-
+                dump($fields);
+                dump($relations);
+                dump(Arr::only($relations, ['relUsers'])['add']);
                 /*$model->fill(array_merge($fields, [
                     $model::F_AUTHOR => Auth::guard('sanctum')->user()['user'],
                     ($model->validFromUntil) ? $model::F_VALIDFROM : null => ($model->validFromUntil) ? date("Y-m-d H:i:s", time()) : null,
