@@ -1,11 +1,24 @@
-import React from 'react';
+import React from 'react'
+import {UsersList} from './components/UsersList/UsersList'
+
 import logo from './logo.svg';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import TestPage from "./pages/TestPage";
-import './App.css';
+//import './App.css';
 
-function App() {
+
+function App(){
+  return (
+      <div>
+        <UsersList />
+        <UsersList />
+        <UsersList />
+        <UsersList />
+      </div>
+  )
+}
+/*function App() {
   return (
     <div className="App">
       <header className="App-header">
@@ -32,7 +45,7 @@ function App() {
       </header>
     </div>
   );
-}
+}*/
 
 
 export default App;

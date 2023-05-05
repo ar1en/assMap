@@ -36,22 +36,26 @@ class UpdateController extends Controller
                 $fields = Arr::only($validatedData, $model->getFillable());
 
                 $relations = Arr::except($validatedData, array_keys($fields));
-                dump($fields);
-                dump($relations);
-                dump(Arr::only($relations, ['relUsers'])['add']);
-                /*$model->fill(array_merge($fields, [
-                    $model::F_AUTHOR => Auth::guard('sanctum')->user()['user'],
-                    ($model->validFromUntil) ? $model::F_VALIDFROM : null => ($model->validFromUntil) ? date("Y-m-d H:i:s", time()) : null,
-                ]));*/
 
                 $model->update($fields);
                 $model->save();
 
-                //dd($model);
-
                 foreach ($relations as $key => $value) {
-                    if (method_exists($model, $key)) {
-                        $this->setRelationship($model, $key, $value);
+                    foreach ($value as $action => $subValue) {
+                        switch ($action) {
+                            case 'add':
+                                foreach ($subValue as $data){
+                                    if (method_exists($model, $key)) {
+                                        $this->setRelationship($model, $key, $data);
+                                    }
+                                }
+                                break;
+                            case 'del':
+                                foreach ($subValue as $data){
+                                    $model->{$key}()->withTimestamps()->updateExistingPivot($data, ['deleted_at' => date("Y-m-d H:i:s", time())]);
+                                }
+                            break;
+                        };
                     }
                 }
 
@@ -82,14 +86,15 @@ class UpdateController extends Controller
     }
 
     private function attachRelatedEntity(&$model, $key, $value): void{
+        dump($model->timestamps);
         $model->{$key}()->attach($value,
             [
                 'id' => Str::uuid(),
                 'author' => Auth::guard('sanctum')->user()['user'],
                 //'validFrom' => $model->validFromUntil ? date("Y-m-d H:i:s", time()) : null,
                 'validFrom' => date("Y-m-d H:i:s", time()),
-                'created_at' => $model->timeStamps ? date("Y-m-d H:i:s", time()) : null,
-                'updated_at' => $model->timeStamps ? date("Y-m-d H:i:s", time()): null
+                'created_at' => $model->timestamps ? date("Y-m-d H:i:s", time()) : null,
+                'updated_at' => $model->timestamps ? date("Y-m-d H:i:s", time()): null
             ]);
     }
 

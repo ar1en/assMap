@@ -83,8 +83,8 @@ class StoreController extends Controller
                 'author' => Auth::guard('sanctum')->user()['user'],
                 //'validFrom' => $model->validFromUntil ? date("Y-m-d H:i:s", time()) : null,
                 'validFrom' => date("Y-m-d H:i:s", time()),
-                'created_at' => $model->timeStamps ? date("Y-m-d H:i:s", time()) : null,
-                'updated_at' => $model->timeStamps ? date("Y-m-d H:i:s", time()): null
+                'created_at' => $model->timestamps ? date("Y-m-d H:i:s", time()) : null,
+                'updated_at' => $model->timestamps ? date("Y-m-d H:i:s", time()): null
             ]);
     }
 

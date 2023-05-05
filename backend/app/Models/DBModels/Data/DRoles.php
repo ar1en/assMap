@@ -13,6 +13,8 @@ use App\Models\DBModels\Data\DUsers;
 class DRoles extends MRoles {
 
     public function relUsers(): object {
-        return $this->belongsToMany(DUsers::class, 'rel_user_role', 'role', 'user')->withTimestamps();
+        return $this->belongsToMany(DUsers::class, 'rel_user_role', 'role', 'user')
+            ->withTimestamps()
+            ->wherePivotNull('deleted_at');
     }
 }

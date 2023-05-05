@@ -28,7 +28,7 @@ services:
     volumes:
       - ../frontend:/app
     ports:
-      - "8877:3000"
+      - "3000:3000"
     working_dir: /app
     command: sh -c "npm install && npm start"
     #command: sh -c "npx create-react-app myapp --template typescript"
