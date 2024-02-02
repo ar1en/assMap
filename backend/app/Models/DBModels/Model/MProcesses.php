@@ -20,29 +20,29 @@ use  App\Models\DBModels\DBClass;
  * Representation for db table ent_processes.
 
  * @property  string          id                           [1]  type:uuid         !NULL PRIMARY UNIQUE
- * @property  string          parentProcess                [2]  type:uuid                       
- * @property  string          path                         [3]  type:text         !NULL         
- * @property  int             level                        [4]  type:int4         !NULL         
- * @property  string          type                         [5]  type:uuid         !NULL         
+ * @property  string          parentProcess                [2]  type:uuid
+ * @property  string          path                         [3]  type:text         !NULL
+ * @property  int             level                        [4]  type:int4         !NULL
+ * @property  string          type                         [5]  type:uuid         !NULL
  * @property  string          sasId                        [6]  type:varchar(255) !NULL         UNIQUE
  * @property  string          bpmId                        [7]  type:varchar(255) !NULL         UNIQUE
- * @property  string          name                         [8]  type:text         !NULL         
- * @property  string          code                         [9]  type:text         !NULL         
- * @property  string          owner                        [10] type:uuid         !NULL         
- * @property  \DateTime       validFrom                    [11] type:timestamp    !NULL         
- * @property  \DateTime       validUntil                   [12] type:timestamp                  
- * @property  string          author                       [13] type:uuid         !NULL         
- * @property  \DateTime       created_at                   [14] type:timestamp                  
- * @property  \DateTime       updated_at                   [15] type:timestamp                  
- * @property  \DateTime       deleted_at                   [16] type:timestamp                  
- * @property  DUsers          relAuthor                                                         
- * @property  DVacancies      relOwner                                                          
- * @property  DProcesses      relParentProcess                                                  
- * @property  DProcessesTypes relType                                                           
- * @property  DIcsMatrices[]  relsIcsMatricesByProcess                                          
- * @property  DIcsWorks[]     relsIcsWorksByProcess                                             
- * @property  DProcesses[]    relsProcessesByParentProcess                                      
- * @property  DRoles[]        relsRolesByProcess                                                
+ * @property  string          name                         [8]  type:text         !NULL
+ * @property  string          code                         [9]  type:text         !NULL
+ * @property  string          owner                        [10] type:uuid         !NULL
+ * @property  \DateTime       validFrom                    [11] type:timestamp    !NULL
+ * @property  \DateTime       validUntil                   [12] type:timestamp
+ * @property  string          author                       [13] type:uuid         !NULL
+ * @property  \DateTime       created_at                   [14] type:timestamp
+ * @property  \DateTime       updated_at                   [15] type:timestamp
+ * @property  \DateTime       deleted_at                   [16] type:timestamp
+ * @property  DUsers          relAuthor
+ * @property  DVacancies      relOwner
+ * @property  DProcesses      relParentProcess
+ * @property  DProcessesTypes relType
+ * @property  DIcsMatrices[]  relsIcsMatricesByProcess
+ * @property  DIcsWorks[]     relsIcsWorksByProcess
+ * @property  DProcesses[]    relsProcessesByParentProcess
+ * @property  DRoles[]        relsRolesByProcess
  * @package App\Models\DBModels\Model
  */
 class MProcesses extends DBClass {
@@ -105,7 +105,7 @@ class MProcesses extends DBClass {
 	const  F_VALIDFROM                   = 'validFrom';
 	const  F_VALIDUNTIL                  = 'validUntil';
 
-    protected $table = 'processes';
+    protected $table = 'ent_processes';
 
 	public static array $jsonable = [
 		MProcesses::FJ_ID            =>[ MProcesses::F_ID            ,null,'string',           ],
@@ -143,7 +143,7 @@ class MProcesses extends DBClass {
 			self::F_CREATED_AT,
 			self::F_UPDATED_AT,
 			self::F_DELETED_AT,
-		]; 
+		];
 
 		protected $fillable = [
 			 self::F_PARENTPROCESS,
@@ -170,7 +170,7 @@ class MProcesses extends DBClass {
         public function relAuthor(){
             return $this->belongsTo(DUsers::class,self::F_AUTHOR, DUsers::F_ID);
         }
-            
+
 
         /**
          * @return DVacancies|BelongsTo
@@ -178,7 +178,7 @@ class MProcesses extends DBClass {
         public function relOwner(){
             return $this->belongsTo(DVacancies::class,self::F_OWNER, DVacancies::F_ID);
         }
-            
+
 
         /**
          * @return DProcesses|BelongsTo
@@ -186,7 +186,7 @@ class MProcesses extends DBClass {
         public function relParentProcess(){
             return $this->belongsTo(DProcesses::class,self::F_PARENTPROCESS, DProcesses::F_ID);
         }
-            
+
 
         /**
          * @return DProcessesTypes|BelongsTo
@@ -194,7 +194,7 @@ class MProcesses extends DBClass {
         public function relType(){
             return $this->belongsTo(DProcessesTypes::class,self::F_TYPE, DProcessesTypes::F_ID);
         }
-            
+
 
 
         /**
@@ -203,7 +203,7 @@ class MProcesses extends DBClass {
         public function relsIcsMatricesByProcess(){
             return $this->hasMany(DIcsMatrices::class, DIcsMatrices::F_PROCESS, self::F_ID);
         }
-            
+
 
         /**
          * @return DIcsWorks[]|HasMany
@@ -211,7 +211,7 @@ class MProcesses extends DBClass {
         public function relsIcsWorksByProcess(){
             return $this->hasMany(DIcsWorks::class, DIcsWorks::F_PROCESS, self::F_ID);
         }
-            
+
 
         /**
          * @return DProcesses[]|HasMany
@@ -219,7 +219,7 @@ class MProcesses extends DBClass {
         public function relsProcessesByParentProcess(){
             return $this->hasMany(DProcesses::class, DProcesses::F_PARENTPROCESS, self::F_ID);
         }
-            
+
 
         /**
          * @return DRoles[]|HasMany
@@ -227,7 +227,7 @@ class MProcesses extends DBClass {
         public function relsRolesByProcess(){
             return $this->hasMany(DRoles::class, DRoles::F_PROCESS, self::F_ID);
         }
-            
+
 
 }
 

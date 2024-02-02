@@ -26,7 +26,7 @@ Route::group(['prefix' => 'auth', 'namespace' => 'App\Http\Controllers\auth'], f
    Route::post('/', 'StoreController')->name('user.store');
 });*/
 
-/*Группа роутов универсальных контроллеров. Должна располгаться после всех остальных групп контроллеров*/
+/*Группа роутов универсальных контроллеров. Должна располагаться после всех остальных групп контроллеров*/
 Route::group(['prefix' => '', 'namespace' => 'App\Http\Controllers\api\v1\Universal', 'middleware' => 'auth:sanctum'], function() {
    Route::get('{model}/{with?}', 'IndexController')->name('universal.index')
        ->where('with', '[^0-9-]+(?:-[a-zA-Z0-9]+)*');

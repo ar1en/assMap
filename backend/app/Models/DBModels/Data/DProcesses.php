@@ -12,4 +12,3 @@ use App\Models\DBModels\Model\MProcesses;
 class DProcesses extends MProcesses {
 
 }
-        
