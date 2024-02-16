@@ -1,10 +1,9 @@
-// import logo from './logo.svg';
-import './App.css';
+
 import React, { useEffect, useState  } from 'react'
-import Auth from "./components/Auth/Auth";
-
-
+import Auth from "./components/Auth";
 import TreeView from "./components/TreeView/TreeView";
+import Cookies from "js-cookie";
+
 import { TreeProvider, useTreeState } from "./components/TreeView/TreeContext";
 
 function MainApp() {
@@ -34,33 +33,14 @@ function MainApp() {
         });
     }
 
-    async function loginHandler(logPass) {
-
-        console.log(logPass);
-
-        const response = await fetch('http://localhost:8876/api/v1/auth/login',
-            {
-                method: 'POST',
-                body: JSON.stringify(logPass),
-                headers: {'Content-Type': 'application/json'}
-            });
-
-        let data = await response.json();
-
-        setAuthKey(data);
-        console.log(data);
-    }
-
     async function getProcessesHandler() {
-
-        console.log(authKey.token_type +  ' ' + authKey.access_token);
 
         const response = await fetch('http://localhost:8876/api/v1/processes?per-page=1000',
             {
                 method: 'GET',
                 // body: JSON.stringify(logPass),
                 headers: {'Content-Type': 'application/json',
-                          'Authorization': authKey.token_type + ' ' + authKey.access_token
+                          'Authorization': "Bearer" + ' ' + Cookies.get('token')
                 }
 
             });
@@ -88,38 +68,39 @@ function MainApp() {
     }
 
   return (
-     <div className="content" >
-         <div className="App-auth">
-            <Auth onAuth={loginHandler} />
-            <p className='smallCaption'>{authKey.access_token}</p>
+     <div className="" >
+         <div className="mb-4"></div>
+         <div className="d-flex justify-content-center mb-3">
+            <Auth />
          </div>
 
-         <p/>
-         <div className="content">
-             <button onClick={getProcessesHandler}>Загрузить дерево</button>
-             <p/>
+         <h5>{authKey.access_token}</h5>
 
-
-             <input className="input"
-                 type="text"
-                 placeholder="Поиск..."
-                 value={searchQuery}
-                 onChange={onHandleSearch}
-             />
-
-             <div>
-                 <button onClick={() => dispatch({ type: "EXPAND_ALL" })}>
-                     Развернуть все
-                 </button>
-                 <button onClick={() => dispatch({ type: "COLLAPSE_ALL" })}>
-                     Свернуть все
-                 </button>
+         <div className="d-flex flex-column justify-content-center p-3 m-3 bg-light rounded-4">
+             <h3>Древовидный справочник</h3>
+             <div className="d-flex flex-row mb-3">
+                 <div className="btn-group me-3">
+                    <button className="btn btn-outline-primary" onClick={getProcessesHandler}>
+                        <i className="bi bi-arrow-clockwise"></i>
+                    </button>
+                     <button className="btn btn-outline-primary"
+                             onClick={() => dispatch({ type: "EXPAND_ALL" })}>
+                         <i className="bi bi-plus-lg"></i>
+                     </button>
+                     <button className="btn btn-outline-primary"
+                             onClick={() => dispatch({ type: "COLLAPSE_ALL" })}>
+                         <i className="bi bi-dash-lg"></i>
+                     </button>
+                 </div>
+                 <input className="form-control"
+                        type="text"
+                        placeholder="Поиск..."
+                        value={searchQuery}
+                        onChange={onHandleSearch}
+                 />
              </div>
-
-             <TreeView data={state} />
+             <TreeView data={state}/>
          </div>
-
-
     </div>
   );
 }

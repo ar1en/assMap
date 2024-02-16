@@ -47,7 +47,7 @@ const searchNodesAndUpdateHighlight = (nodes, query) => {
 };
 
 const treeReducer = (state, action) => {
-    console.log("ttt", action);
+    //console.log("ttt", action);
     switch (action.type) {
         case "INIT_DATA":
             return action.data;

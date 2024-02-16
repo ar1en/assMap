@@ -1,29 +1,22 @@
-import React from "react";
 import { useTreeState } from "./TreeContext";
-import './TreeView.css';
 
 const TreeNode = ({ node }) => {
     const { dispatch } = useTreeState();
     return (
-        <div
-            className="tree-node"
-            style={{ color: node.isHighlight ? "red" : "initial" }}
-        >
+        <div className="ms-1 ps-3"
+            style={{ color: node.isHighlight ? "tomato" : "initial" }}>
             {node.children && (
-                <button
-                    onClick={() =>
+                <button className="btn btn-light"
+                        onClick={() =>
                         dispatch({
                             type: "TOGGLE_NODE",
                             id: node.id,
                             isExpanded: !node.isExpanded
-                        })
-                    }
-                    className="toggle-icon"
-                >
-                    {node.isExpanded ? "⮝" : "⮟"}
+                        })}>
+                    {node.isExpanded ? <i className="bi bi-dash-lg"></i> : <i className="bi bi-plus-lg"></i>}
                 </button>
             )}
-            <span>{node.name}</span>
+            <span>{node.name.slice(0, 100)}</span>
             {node.isExpanded && <TreeView data={node?.children} />}
         </div>
     );
@@ -31,7 +24,7 @@ const TreeNode = ({ node }) => {
 
 const TreeView = ({ data }) => {
     return (
-        <div className="tree-view">
+        <div className="mb-1 ms-0 ps-4">
             {data?.map((node) => (
                 <TreeNode key={node.id} node={node} />
             ))}
