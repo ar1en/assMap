@@ -1,12 +1,17 @@
-
-import React, { useEffect, useState  } from 'react'
 import Auth from "./components/Auth";
+
+/*import { TreeProvider, useTreeState } from "./components/TreeView/TreeContext";
 import TreeView from "./components/TreeView/TreeView";
-import Cookies from "js-cookie";
+import Cookies from "js-cookie";*/
 
-import { TreeProvider, useTreeState } from "./components/TreeView/TreeContext";
+export default function App() {
+    return (
+        <Auth />
+    );
+}
 
-function MainApp() {
+
+/*function MainApp() {
     const [authKey, setAuthKey] = useState([]);
     const [processes, setProcesses] = useState([]);
 
@@ -103,14 +108,5 @@ function MainApp() {
          </div>
     </div>
   );
-}
+}*/
 
-
-
-export default function App() {
-    return (
-        <TreeProvider>
-            <MainApp />
-        </TreeProvider>
-    );
-}

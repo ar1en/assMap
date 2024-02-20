@@ -1,5 +1,4 @@
 import { useTreeState } from "./TreeContext";
-
 const TreeNode = ({ node }) => {
     const { dispatch } = useTreeState();
     return (
@@ -21,7 +20,6 @@ const TreeNode = ({ node }) => {
         </div>
     );
 };
-
 const TreeView = ({ data }) => {
     return (
         <div className="mb-1 ms-0 ps-4">
@@ -31,5 +29,4 @@ const TreeView = ({ data }) => {
         </div>
     );
 };
-
 export default TreeView;
