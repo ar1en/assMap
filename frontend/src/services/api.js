@@ -41,9 +41,9 @@ const authenticatedRequest = async (method, url, data) => {
     }
 };
 
-export const login = async (username, password) => {
+export const loginApi = async ({login, password}) => {
     try {
-        const response = await axios.post(`${baseUrl}auth/login`, { login: username, password: password });
+        const response = await axios.post(`${baseUrl}auth/login`, { login: login, password: password });
 
         const token = response.data["access_token"];
 
@@ -66,8 +66,8 @@ export const login = async (username, password) => {
     }
 };*/
 
-export const logout = () => {
+export const logoutApi = () => {
     removeToken();
 };
 
-export default login;
+export default loginApi;

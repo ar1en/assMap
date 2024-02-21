@@ -1,37 +1,25 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {authActions} from "../../store/auth";
+import {login, logout} from "../../store/auth-slice";
 
 import style from "./Auth.module.css";
-import {login, logout} from "../../services/api"
-
 
 export default function AuthForm(props) {
 
-    const isLogin = useSelector((state)=>state.auth.isLogin);
+    const isAuthenticated = useSelector((state)=>state.auth.isAuthenticated);
 
-    const [isAuthorized, setIsAuthorized] = useState(false);
-    const [hasError, setHasError] = useState(false);
     const [userLogin, setUserLogin] = useState('');
     const [password, setPassword] = useState('');
-
-    const dispatchFunction = useDispatch();
+    const dispatch = useDispatch();
     const loginHandler = (e) => {
         e.preventDefault();
 
-        dispatchFunction(authActions.login());
-        /*login(userLogin, password)
-            .then(response => {
-                setIsAuthorized(true);
-            })
-            .catch(error => {
-                setHasError(true);
-            });*/
+        dispatch(login({login: userLogin, password}))
+            .then()
+            .catch()
     };
     const logoutHandler = () => {
-        dispatchFunction(authActions.logout());
-        /*logout();
-        setIsAuthorized(false);*/
+        dispatch(logout());
     }
 
     const loginForm = (
@@ -63,7 +51,7 @@ export default function AuthForm(props) {
 
     return (
         <div className="d-flex justify-content-center bg-light rounded-4 p-3">
-            {isLogin ? logoutForm : loginForm}
+            {isAuthenticated ? logoutForm : loginForm}
         </div>
     );
 };
