@@ -1,4 +1,5 @@
 import Auth from "./components/Auth";
+import AuthStore from "./store/auth-store";
 
 /*import { TreeProvider, useTreeState } from "./components/TreeView/TreeContext";
 import TreeView from "./components/TreeView/TreeView";

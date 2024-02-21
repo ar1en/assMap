@@ -1,25 +1,22 @@
 import React, {useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {login, logout} from "../../store/auth-slice";
+import {observer} from "mobx-react-lite";
+import AuthStore from "../../store/auth-store";
 
 import style from "./Auth.module.css";
 
-export default function AuthForm(props) {
-
-    const isAuthenticated = useSelector((state)=>state.auth.isAuthenticated);
-
+const AuthForm = observer(() => {
+    const {login, logout, isAuthorised, isLoading, hasError} = AuthStore;
     const [userLogin, setUserLogin] = useState('');
     const [password, setPassword] = useState('');
-    const dispatch = useDispatch();
+
     const loginHandler = (e) => {
         e.preventDefault();
-
-        dispatch(login({login: userLogin, password}))
-            .then()
-            .catch()
+        login(userLogin, password);
     };
     const logoutHandler = () => {
-        dispatch(logout());
+        setUserLogin('');
+        setPassword('')
+        logout();
     }
 
     const loginForm = (
@@ -51,7 +48,9 @@ export default function AuthForm(props) {
 
     return (
         <div className="d-flex justify-content-center bg-light rounded-4 p-3">
-            {isAuthenticated ? logoutForm : loginForm}
+            {isAuthorised ? logoutForm : loginForm}
         </div>
     );
-};
+})
+
+export default AuthForm;
