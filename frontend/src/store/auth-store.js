@@ -3,16 +3,16 @@ import {loginApi} from '../services/api';
 
 class AuthStore {
     isAuthorised = false;
-    isLoading = true;
+    isLoading = false;
     hasError = false;
 
     constructor() {
         makeAutoObservable(this);
     }
 
-    login = (login, password) => {
-        this.setIsLoading(true);
-        loginApi({login, password})
+    login = (credentials) => {
+        this.isLoading = true;
+        loginApi(credentials)
             .then(()=>{
                 this.setIsAuthorised(true);
                 this.setIsLoading(false);

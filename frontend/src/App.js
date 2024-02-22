@@ -1,4 +1,5 @@
 import Auth from "./components/Auth";
+import Tree from './components/Tree';
 import AuthStore from "./store/auth-store";
 
 /*import { TreeProvider, useTreeState } from "./components/TreeView/TreeContext";
@@ -7,7 +8,10 @@ import Cookies from "js-cookie";*/
 
 export default function App() {
     return (
-        <Auth />
+        <div>
+            <Auth />
+            <Tree/>
+        </div>
     );
 }
 
