@@ -1,5 +1,5 @@
 import {makeAutoObservable} from "mobx";
-import {loginApi} from '../services/api';
+import {loginApi} from '../api/auth-api';
 
 class AuthStore {
     isAuthorised = false;
@@ -40,4 +40,4 @@ class AuthStore {
     }
 }
 
-export default new AuthStore();
+export {AuthStore};

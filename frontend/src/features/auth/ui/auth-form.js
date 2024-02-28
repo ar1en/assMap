@@ -3,7 +3,7 @@ import {observer} from "mobx-react-lite";
 import AuthStore from "../../store/auth-store";
 import Loader from "../UI/loader";
 
-import style from "./Auth.module.css";
+import style from "./auth.module.css";
 
 const AuthForm = observer(() => {
     const {login, logout, isAuthorised, isLoading, hasError} = AuthStore;
@@ -56,4 +56,4 @@ const AuthForm = observer(() => {
     );
 })
 
-export default AuthForm;
+export {AuthForm};

@@ -41,33 +41,8 @@ const authenticatedRequest = async (method, url, data) => {
     }
 };
 
-export const loginApi = async ({login, password}) => {
-    try {
-        const response = await axios.post(`${baseUrl}auth/login`, { login: login, password: password });
-
-        const token = response.data["access_token"];
-
-        saveToken(token);
-
-        return response.data;
-    } catch (error) {
-        console.error('Login failed:', error);
-        throw error;
-    }
-};
-
-/*export const getProcesses = async () => {
-    try {
-        const processes = await authenticatedRequest('get', 'processes');
-        return processes;
-    } catch (error) {
-        console.error('Failed to fetch processes:', error);
-        throw error;
-    }
-};*/
-
-export const logoutApi = () => {
+const logoutApi = () => {
     removeToken();
 };
 
-export default loginApi;
+export {axios, saveToken, getToken, removeToken, baseUrl};
