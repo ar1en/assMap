@@ -1,15 +1,19 @@
 import {RootStoreContext, RootStore} from "./shared/store";
 import {BrowserRouter as Router } from "react-router-dom";
+import {RoutesElement} from "./app/routes";
+
+/*import {AuthForm} from "./features/auth";*/
 
 /*import { TreeProvider, useTreeState } from "./components/TreeView/TreeContext";
 import TreeView from "./components/TreeView/TreeView";
 import Cookies from "js-cookie";*/
 
 export default function App() {
+
     return (
         <RootStoreContext.Provider value={new RootStore}>
             <Router>
-
+                <RoutesElement/>
             </Router>
         </RootStoreContext.Provider>
     );

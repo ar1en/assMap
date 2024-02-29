@@ -1,7 +1,7 @@
 import {AuthStore} from "../../features/auth";
 
 class RootStore {
-    auth = AuthStore;
+    auth = new AuthStore();
 }
 
 export {RootStore};

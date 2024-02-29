@@ -1,15 +1,39 @@
-import {Route, Routes} from "react-router-dom";
+import {Navigate, Route, Routes} from "react-router-dom";
 import routeObjects from "./route-objects";
+import PrivateRoute from "./private-route";
+import {useStore} from "../../shared/store";
 
-const routes = () => {
+const RoutesElement = () => {
+    const {isAuthorised} = useStore().auth;
+
     return(
         <Routes>
             {routeObjects.map( (route) => (
-                route.isPrivate
+                createRoute(route, isAuthorised)
                 )
             )}
         </Routes>
     );
 }
 
-export {routes};
+const createRoute = ({isPrivate, path, element}, isAuthorised) => {
+    if (isPrivate) {
+        return(
+            <Route
+                key={path}
+                path={path}
+                element={isAuthorised ? element : <Navigate to="/login"/>}
+            />
+        );
+    } else {
+        return(
+            <Route
+                key={path}
+                path={path}
+                element={element}
+            />
+        );
+    }
+}
+
+export {RoutesElement};

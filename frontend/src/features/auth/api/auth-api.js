@@ -1,4 +1,4 @@
-import {axios, baseUrl, saveToken} from "../../shared/api"
+import {axios, baseUrl, saveToken} from "../../../shared/api"
 export const loginApi = async ({login, password}) => {
     try {
         const response = await axios.post(`${baseUrl}auth/login`, { login: login, password: password });
