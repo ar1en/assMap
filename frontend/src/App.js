@@ -2,6 +2,8 @@ import {RootStoreContext, RootStore} from "./shared/store";
 import {BrowserRouter as Router } from "react-router-dom";
 import {RoutesElement} from "./app/routes";
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 /*import {AuthForm} from "./features/auth";*/
 
 /*import { TreeProvider, useTreeState } from "./components/TreeView/TreeContext";

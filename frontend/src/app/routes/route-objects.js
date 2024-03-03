@@ -1,12 +1,16 @@
-import {LoginPage} from "../../pages/login/login-page";
-import {ProtectedPage} from "../../pages/protected-page";
+import {Login, MainPage, ProtectedPage} from "../../pages";
 
 
 const routeObjects = [
     {
+        isPrivate: true,
+        path:'/',
+        element: <MainPage/>
+    },
+    {
         isPrivate: false,
         path: '/login',
-        element: <LoginPage />,
+        element: <Login />,
     },
     {
         isPrivate: true,

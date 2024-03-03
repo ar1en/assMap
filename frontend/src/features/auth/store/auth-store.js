@@ -1,4 +1,4 @@
-import {makeAutoObservable} from "mobx";
+import {makeAutoObservable, autorun} from "mobx";
 import {loginApi} from '../api/auth-api';
 
 class AuthStore {
@@ -8,6 +8,12 @@ class AuthStore {
 
     constructor() {
         makeAutoObservable(this);
+        // При создании хранилища пытаемся восстановить его из localstorage
+        this.restoreFromLocalStorage();
+        //При изменении состояния сохраняем его в localstorage
+        autorun(() => {
+            this.saveToLocalStorage();
+        });
     }
 
     login = (credentials) => {
@@ -37,6 +43,25 @@ class AuthStore {
 
     setHasError = (value) =>{
         this.hasError = value;
+    }
+
+    /*Сохранение и восстановление состояния*/
+    saveToLocalStorage = () =>{
+        const authData = {
+            isAuthorised: this.isAuthorised,
+        }
+
+        localStorage.setItem('authData', JSON.stringify(authData));
+    }
+
+    restoreFromLocalStorage = () => {
+        const authData = localStorage.getItem('authData');
+
+        if (authData) {
+            const parsedAuthData = JSON.parse(authData);
+
+            this.isAuthorised = parsedAuthData.isAuthorised;
+        }
     }
 }
 
