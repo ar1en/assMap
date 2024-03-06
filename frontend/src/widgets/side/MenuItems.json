@@ -1,0 +1,27 @@
+{
+  "mainMenu": [
+    {
+      "id": "1",
+      "description": "Главная",
+      "route" : "/",
+      "icon": "bi bi-house"
+    },
+    {
+      "id": "2",
+      "description": "Настройка периодов",
+      "route" : "/",
+      "icon": "bi bi-clock"
+    },
+    {
+      "id": "3",
+      "description": "Ввод данных",
+      "route" : "/",
+      "icon": "bi bi-clipboard-data"
+    },
+    {
+      "id": "4",
+      "description": "Карта гарантий",
+      "route" : "/",
+      "icon": "bi bi-map"
+    }]
+}

@@ -1,0 +1,45 @@
+.side_menu {
+    position: fixed;
+    width: 270px;
+    left: -200px;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    background-color: #f8f9fa;
+}
+
+.side_menu_active {
+    position: fixed;
+    width: 270px;
+    left: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    background-color: #f8f9fa;
+    transition: transform 0.3s linear;
+}
+
+.buttonMenuText {
+    width: 200px;
+}
+.buttonMenuIcon {
+    width: 50px;
+}
+
+.hidePlace {
+    /*background-color: rgba(190, 85, 10, 0.91);*/
+    margin-left: -8px;
+    height: 100%;
+}
+
+.button_hide {
+    width: 15px;
+    align-content: center;
+    margin: 0;
+    height: 100%;
+    border-radius: 5px;
+    border-width: thin;
+}
+

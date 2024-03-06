@@ -1,0 +1,26 @@
+.main{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    height: 100%;
+    align-self: start;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    height: 75px;
+    width: 100%;
+}
+
+.middle {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin-top: 90px;
+}
+
+.content {
+    margin-left: 300px;
+}

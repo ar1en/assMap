@@ -1,7 +1,11 @@
 import {Navbar, Nav, Breadcrumb, BreadcrumbItem, Dropdown} from "react-bootstrap";
 import style from "./header.module.css";
+import {useStore} from "../../shared/store"
 
 function Header (props) {
+
+    const {logout} = useStore().auth
+
     return (
         <Navbar bg="light">
             <Navbar.Brand className="d-flex flex-row align-items-center" href="">
@@ -25,7 +29,7 @@ function Header (props) {
                             <Dropdown.Menu>
                                 <Dropdown.Item href="#">Профиль</Dropdown.Item>
                                 <Dropdown.Divider />
-                                <Dropdown.Item href="#">Выйти</Dropdown.Item>
+                                <Dropdown.Item href="/" onClick={logout}>Выйти</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
                     </Nav.Item>

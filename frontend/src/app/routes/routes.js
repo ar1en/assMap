@@ -1,6 +1,5 @@
 import {Navigate, Route, Routes} from "react-router-dom";
 import routeObjects from "./route-objects";
-import PrivateRoute from "./private-route";
 import {useStore} from "../../shared/store";
 
 const RoutesElement = () => {
