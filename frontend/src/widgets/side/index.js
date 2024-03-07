@@ -4,9 +4,21 @@ import {useStore} from "../../shared/store"
 import {useState} from "react"
 import menuItems from "./MenuItems.json"
 
-function Side (props) {
 
-    const [isCollapsed, setCollapsed] = useState(false);
+function Side (props) {
+    const {CollapseSideMenu, ExpandSideMenu, isSideMenuCollapsed} = useStore().env;
+
+    const [isCollapsed, setCollapsed] = useState(isSideMenuCollapsed);
+
+    const expandCollapseHandler = () =>{
+       if (isCollapsed) {
+           setCollapsed(false)
+           ExpandSideMenu();
+       } else {
+           setCollapsed(true)
+           CollapseSideMenu();
+       }
+    }
 
     return(
                 <div className= {isCollapsed ? style.side_menu : style.side_menu_active}>
@@ -27,7 +39,7 @@ function Side (props) {
                          }
                     </div>
                     <div className={style.hidePlace}>
-                        <Button className={`btn-light ${style.button_hide}`}  onClick={()=>setCollapsed(!isCollapsed)}>
+                        <Button className={`btn-light ${style.button_hide}`}  onClick={expandCollapseHandler}>
                              {isCollapsed?">":"<"}
                          </Button>
                     </div>
