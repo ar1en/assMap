@@ -1,8 +1,12 @@
+import PageWrapper from "../../widgets/pageWrapper"
+
 const ProtectedPage = () => {
   return(
-      <div>
-          <h6>ProtectedContent</h6>
-      </div>
+      <PageWrapper>
+          <div>
+              <h6>ProtectedContent</h6>
+          </div>
+      </PageWrapper>
   );
 };
 
