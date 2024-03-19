@@ -3,25 +3,25 @@
     {
       "id": "1",
       "description": "Главная",
-      "route" : "/",
+      "route" : "/main",
       "icon": "bi bi-house"
     },
     {
       "id": "2",
       "description": "Настройка периодов",
-      "route" : "/",
+      "route" : "/periods",
       "icon": "bi bi-clock"
     },
     {
       "id": "3",
       "description": "Ввод данных",
-      "route" : "/",
+      "route" : "/data",
       "icon": "bi bi-clipboard-data"
     },
     {
       "id": "4",
       "description": "Карта гарантий",
-      "route" : "/",
+      "route" : "/map",
       "icon": "bi bi-map"
     }]
 }

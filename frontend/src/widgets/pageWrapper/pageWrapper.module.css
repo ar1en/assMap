@@ -1,0 +1,46 @@
+body {
+    margin: 0;
+    padding: 0;
+    /*overflow: hidden; !* чтобы избежать прокрутки страницы *!*/
+}
+
+.appContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.hdr {
+    position: fixed;
+    top: 0;
+    height: 75px;
+    width: 100%;
+    z-index: 1000;
+
+    /*    position: fixed;*/
+    /*    top: 0;*/
+    /*    height: 75px;*/
+    /*    width: 100%;*/
+}
+
+.mainContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+
+    /*flex-grow: 1;*/
+    /*overflow: hidden;*/
+    /*transition: margin-left 0.3s;*/
+}
+
+.content {
+    margin-top: 85px;
+    margin-left: 75px;
+    transition: margin-left 0.3s;
+}
+
+.contentCollapsed {
+    margin-top: 85px;
+    margin-left: 275px;
+    transition: margin-left 0.3s;
+}
