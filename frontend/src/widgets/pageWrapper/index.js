@@ -1,46 +1,39 @@
-import {useStore} from "../../shared/store";
-import {useState} from "react";
+import {RootStore, useStore} from "../../shared/store";
+import React, {useState,useContext,useEffect} from "react";
 import {Header} from "../header";
 import {Side} from "../side";
 import style from "./pageWrapper.module.css"
 
 
 const PageWrapper = (props) => {
+    let isSideMenuCollapsed = useStore().env.isSideMenuCollapsed;
+    const [isSideCollapsed, setIsSideCollapsed] = useState(isSideMenuCollapsed)
 
-    const {CollapseSideMenu, ExpandSideMenu, isSideMenuCollapsed} = useStore().env;
+    const toggleSideHandler = ()=>{
 
-    const [isSidebarCollapsed, setCollapsed] = useState(isSideMenuCollapsed);
-
-    const toggleSideBarHandler = () =>{
-
-        console.log(isSidebarCollapsed)
-        if (isSidebarCollapsed) {
-            setCollapsed(false)
-            ExpandSideMenu();
-        } else {
-            setCollapsed(true)
-            CollapseSideMenu();
-        }
+        setIsSideCollapsed(!isSideCollapsed)
     }
 
     return (
+                <div className={style.appContainer}>
 
-        <div className={style.appContainer}>
+                    <div className={style.hdr}>
+                        <Header/>
+                    </div>
 
-            <div className={style.hdr}>
-                <Header/>
-            </div>
+                    <div className={style.mainContainer}>
 
-            <div className={style.mainContainer}>
-                <Side isCollapsed={isSidebarCollapsed} toggleSideBar={toggleSideBarHandler} />
-                <div className={isSidebarCollapsed ? style.content : style.contentCollapsed}>
-                    {props.children}
+                        <div className={style.sideMenu}>
+                            <Side onToggleSide={toggleSideHandler}/>
+                        </div>
+
+                        <div className={isSideCollapsed ? style.content : style.contentCollapsed }>
+                            {props.children}
+                        </div>
+
+                    </div>
                 </div>
-            </div>
-        </div>
-
-
-    );
+            );
 
 
 }

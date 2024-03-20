@@ -17,6 +17,16 @@ const routeObjects = [
         path: '/page',
         element: <ProtectedPage />,
     },
+    {
+        isPrivate: true,
+        path: '/reference',
+        element: <ProtectedPage contentType='reference' contentSubType='' />,
+    },
+    {
+        isPrivate: true,
+        path: '/reference/businessProcess',
+        element: <ProtectedPage contentType='reference' contentSubType='businessProcess' />,
+    }
 ];
 
 export default routeObjects;

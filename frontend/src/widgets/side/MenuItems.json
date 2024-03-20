@@ -23,5 +23,11 @@
       "description": "Карта гарантий",
       "route" : "/page",
       "icon": "bi bi-map"
+    },
+    {
+      "id": "5",
+      "description": "Справочники",
+      "route" : "/reference",
+      "icon": "bi bi-book"
     }]
 }

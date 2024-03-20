@@ -7,29 +7,45 @@ import menuItems from "./MenuItems.json"
 
 function Side (props) {
 
+    const {CollapseSideMenu, ExpandSideMenu, isSideMenuCollapsed} = useStore().env;
+
+    const [isCollapsed,setCollapsed] = useState(isSideMenuCollapsed)
+
+    const toggleSideBarHandler = () =>{
+        if (isSideMenuCollapsed) {
+            setCollapsed(false)
+            ExpandSideMenu();
+        } else {
+            setCollapsed(true)
+            CollapseSideMenu();
+        }
+
+        props.onToggleSide();
+    }
 
     return(
-                <div className= {props.isCollapsed ? style.sidebarCollapsed : style.sidebarOpen}>
-
+                <div className= { isCollapsed ? style.sidebarCollapsed : style.sidebarOpen }>
                     <div>
                          {
                              menuItems.mainMenu.map((item) => (
-                                 <ButtonGroup key={item.id + '_grp'}  className="me-2">
-                                     <Button key={item.id + '_txt'} href={item.route} className={`${style.buttonMenuText}`} variant="light">
-                                         {item.description}
+                                 // <ButtonGroup key={item.id + '_grp'}  className="me-2">
+                                     <Button key={item.id + '_txt'} href={item.route}  variant="light">
+                                        <div className={`${style.buttonMenu}`}>
+                                           {item.description}
+                                           <i className={item.icon}> </i>
+                                        </div>
                                      </Button>
-
-                                     <Button key={item.id + '_img'} href={item.route} className={`${style.buttonMenuIcon}`} variant="light">
-                                         <i className={item.icon}> </i>
-                                     </Button>
-                                 </ButtonGroup>
+                                 // </ButtonGroup>
                              ))
                          }
                     </div>
+
                     <div className={style.hidePlace}>
-                        <button className={`${style.button_hide}`}  onClick={props.toggleSideBar}>
-                             {props.isCollapsed?">":"<"}
-                         </button>
+                        <Button variant="light" onClick={toggleSideBarHandler}>
+                            <div className={`${style.button_hide}`}>
+                                {isCollapsed?">>":"<< свернуть"}
+                            </div>
+                        </Button>
                     </div>
                 </div>
     );

@@ -10,6 +10,14 @@ body {
     height: 100vh;
 }
 
+.sideMenu {
+    position: fixed;
+    height: 100%;
+    top: 90px;
+    z-index: 1000;
+    overflow-y: auto;
+}
+
 .hdr {
     position: fixed;
     top: 0;
@@ -26,21 +34,22 @@ body {
 .mainContainer {
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
-
+    /*align-items: flex-start;*/
+    justify-content: space-between;
     /*flex-grow: 1;*/
     /*overflow: hidden;*/
-    /*transition: margin-left 0.3s;*/
+    transition: margin-left 0.3s;
 }
 
 .content {
-    margin-top: 85px;
-    margin-left: 75px;
+    margin-top: 90px;
+    margin-left: 55px;
+    position: absolute;
     transition: margin-left 0.3s;
 }
 
 .contentCollapsed {
-    margin-top: 85px;
-    margin-left: 275px;
+    margin-top: 90px;
+    margin-left: 235px;
     transition: margin-left 0.3s;
 }
