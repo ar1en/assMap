@@ -1,5 +1,5 @@
-import {AuthStore} from "../../features/auth";
-import {EnvStore} from "../../features/env/store/env-store";
+import {AuthStore} from "../../features";
+import {EnvStore} from "../../features";
 
 class RootStore {
     auth = new AuthStore();

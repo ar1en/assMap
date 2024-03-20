@@ -1,4 +1,4 @@
-import {AuthForm} from "../../features/auth";
+import {AuthForm} from "../../features";
 const Login = () =>{
     return(
         <AuthForm/>

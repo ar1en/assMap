@@ -7,7 +7,7 @@ function Header (props) {
     const {logout} = useStore().auth
 
     return (
-        <Navbar bg="light">
+        <Navbar className="fixed-top" bg="light">
             <Navbar.Brand className="d-flex flex-row align-items-center" href="">
                 <i className="bi bi-box-fill fs-1 text-primary ms-2 me-2"></i>
                 Карта гарантий
