@@ -1,54 +1,33 @@
 import {Button} from "react-bootstrap";
 import style from "./side.module.css";
 import {useStore} from "../../../shared/store"
-import {useState} from "react"
 import menuItems from "./MenuItems.json"
+import {observer} from "mobx-react-lite";
 
-function Side (props) {
+const Side = observer( (props) => {
 
-    const {CollapseSideMenu, ExpandSideMenu, isSideMenuCollapsed} = useStore().env;
+    const {ToggleSideMenu, isSideMenuCollapsed} = useStore().env;
 
-    const [isCollapsed,setCollapsed] = useState(isSideMenuCollapsed)
-
-    const toggleSideBarHandler = () =>{
-        if (isSideMenuCollapsed) {
-            setCollapsed(false)
-            ExpandSideMenu();
-        } else {
-            setCollapsed(true)
-            CollapseSideMenu();
-        }
-
-        props.onToggleSide();
+    const toggleSideHandler = ()=>{
+        ToggleSideMenu();
     }
 
     return(
-                <div className= { isCollapsed ? style.sidebarCollapsed : style.sidebarOpen }>
-                    <div>
-                         {
-                             menuItems.mainMenu.map((item) => (
-                                 // <ButtonGroup key={item.id + '_grp'}  className="me-2">
-                                     <Button key={item.id + '_txt'} href={item.route}  variant="light">
-                                        <div className={`${style.buttonMenu}`}>
-                                           {item.description}
-                                           <i className={item.icon}> </i>
-                                        </div>
-                                     </Button>
-                                 // </ButtonGroup>
-                             ))
-                         }
-                    </div>
-
-                    <div className={style.hidePlace}>
-                        <Button variant="light" onClick={toggleSideBarHandler}>
-                            <div className={`${style.button_hide}`}>
-                                {isCollapsed?">>":"<< свернуть"}
-                            </div>
-                        </Button>
-                    </div>
-                </div>
+        <div className={`position-fixed bg-light ${style.menuWrapper}`}>
+            <div className="list-group rounded-0">
+                {menuItems.mainMenu.map((item) => (
+                    <a className={`list-group-item list-group-item-action bg-light border-0 text-truncate ${style.listItem}`} href={item.route}>
+                        <i className={item.icon}> </i>
+                            {!isSideMenuCollapsed ? item.description : ""}
+                    </a>
+                ))}
+                <hr className="m-3 mb-1 mt-1"/>
+                <Button className="rounded-0" variant="light" onClick={toggleSideHandler}>
+                    {isSideMenuCollapsed ? <i className="bi bi-arrow-bar-right"></i> : <i className="bi bi-arrow-bar-left"></i>}
+                </Button>
+            </div>
+        </div>
     );
-
-}
+});
 
 export {Side};

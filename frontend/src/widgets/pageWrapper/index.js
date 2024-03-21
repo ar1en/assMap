@@ -1,32 +1,26 @@
-import {RootStore, useStore} from "../../shared/store";
-import React, {useState} from "react";
+import {observer} from "mobx-react-lite";
+import {useStore} from "../../shared/store";
 import {Header} from "../../widgets";
 import {Side} from "../../features";
 import style from "./pageWrapper.module.css"
 
-const PageWrapper = (props) => {
-    let isSideMenuCollapsed = useStore().env.isSideMenuCollapsed;
-    const [isSideCollapsed, setIsSideCollapsed] = useState(isSideMenuCollapsed)
-
-    const toggleSideHandler = ()=>{
-        setIsSideCollapsed(!isSideCollapsed)
-    }
+const PageWrapper = observer( (props) => {
+    const {isSideMenuCollapsed} = useStore().env;
 
     return (
-                <div className={style.appContainer}>
-                    <Header/>
+        <div>
+            {/*Header*/}
+            <Header/>
 
-                    <div className={style.mainContainer}>
-                        <div className={style.sideMenu}>
-                            <Side onToggleSide={toggleSideHandler}/>
-                        </div>
-                        <div className={isSideCollapsed ? style.content : style.contentCollapsed}>
-                            {props.children}
-                        </div>
-                    </div>
+            {/*LeftSide*/}
+            <Side/>
 
-                </div>
-            );
-}
+            {/*Content*/}
+            <div className={`${isSideMenuCollapsed ? style.content : style.contentCollapsed}`}>
+                {props.children}
+            </div>
+        </div>
+    );
+});
 
-export default  PageWrapper
+export default PageWrapper

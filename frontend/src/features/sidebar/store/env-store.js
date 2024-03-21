@@ -1,5 +1,4 @@
 import {makeAutoObservable, autorun} from "mobx";
-// import {loginApi} from '../api/auth-api';
 
 class EnvStore {
     isSideMenuCollapsed = false;
@@ -14,12 +13,12 @@ class EnvStore {
         });
     }
 
-    ExpandSideMenu = () => {
-        this.isSideMenuCollapsed = false;
+    ToggleSideMenu = () => {
+        this.isSideMenuCollapsed = !this.isSideMenuCollapsed ;
     }
-    CollapseSideMenu = () => {
+    /*CollapseSideMenu = () => {
         this.isSideMenuCollapsed = true;
-    }
+    }*/
 
     /*Сохранение и восстановление состояния*/
     saveToLocalStorage = () =>{
