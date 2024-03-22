@@ -1,4 +1,6 @@
 import {Login, MainPage, ProtectedPage} from "../../pages";
+import References from "../../pages/references";
+import BusinessProcess from "../../pages/references/BusinessProcess";
 
 
 const routeObjects = [
@@ -10,22 +12,22 @@ const routeObjects = [
     {
         isPrivate: false,
         path: '/login',
-        element: <Login />,
+        element: <Login />
     },
     {
         isPrivate: true,
         path: '/page',
-        element: <ProtectedPage />,
+        element: <ProtectedPage />
     },
     {
         isPrivate: true,
         path: '/reference',
-        element: <ProtectedPage contentType='reference' contentSubType='' />,
+        element: <References />
     },
     {
         isPrivate: true,
-        path: '/reference/businessProcess',
-        element: <ProtectedPage contentType='reference' contentSubType='businessProcess' />,
+        path: '/businessProcess',
+        element: <BusinessProcess />
     }
 ];
 
