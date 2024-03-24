@@ -45,4 +45,4 @@ const logoutApi = () => {
     removeToken();
 };
 
-export {axios, saveToken, getToken, removeToken, baseUrl};
+export {axios, saveToken, getToken, removeToken, baseUrl, authenticatedRequest};

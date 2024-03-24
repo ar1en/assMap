@@ -1,5 +1,4 @@
 import {Navbar, Nav, Breadcrumb, BreadcrumbItem, Dropdown} from "react-bootstrap";
-import style from "./header.module.css";
 import {useStore} from "../../shared/store"
 
 function Header (props) {
@@ -7,9 +6,9 @@ function Header (props) {
     const {logout} = useStore().auth
 
     return (
-        <Navbar className="sticky-top" bg="light">
+        <Navbar className="sticky-top p-0" bg="light">
             <div className="container-fluid">
-                <Navbar.Brand className="d-flex flex-row align-items-center" href="">
+                <Navbar.Brand className="d-flex flex-row align-items-center p-0" href="">
                     <i className="bi bi-box-fill fs-1 text-primary ms-2 me-2"></i>
                     Карта гарантий
                 </Navbar.Brand>
@@ -21,16 +20,16 @@ function Header (props) {
                     <Nav>
                         <Nav.Item>
                             <Dropdown>
-                                <Dropdown.Toggle className="d-flex flex-row align-items-center me-2"
+                                <Dropdown.Toggle className="d-flex flex-row align-items-center me-2 p-0 ps-2 pe-2"
                                                  variant="outline"
                                                  id="dropdown-basic">
                                     <i className="bi bi-person-circle fs-1 me-2"></i>
                                     yaddemidov1
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu>
-                                    <Dropdown.Item href="#">Профиль</Dropdown.Item>
-                                    <Dropdown.Divider />
-                                    <Dropdown.Item href="/" onClick={logout}>Выйти</Dropdown.Item>
+                                    <Dropdown.Item className="pb-0 pt-0" href="#">Профиль</Dropdown.Item>
+                                    <Dropdown.Divider className="m-1"/>
+                                    <Dropdown.Item className="pb-0 pt-0" href="/" onClick={logout}>Выйти</Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
                         </Nav.Item>

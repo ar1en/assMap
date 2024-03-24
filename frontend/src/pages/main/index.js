@@ -1,10 +1,9 @@
-import PageWrapper from "../../widgets/pageWrapper"
-
+import {Layout} from "../../widgets/"
 
 const MainPage = () => {
 
           return (
-           <PageWrapper>
+           <Layout>
                  Content1<br/>Content2<br/>Content3<br/>Content<br/>Content<br/>Content<br/>
                  Content<br/>Content<br/>Content<br/>Content<br/>Content<br/>Content<br/>
                  Content<br/>Content<br/>Content<br/>Content<br/>Content<br/>Content<br/>
@@ -27,7 +26,7 @@ const MainPage = () => {
                  Content<br/>Content<br/>Content<br/>Content<br/>Content<br/>Content<br/>
                  Content<br/>Content<br/>Content<br/>Content<br/>Content<br/>Content<br/>
                  Content<br/>Content<br/>Content<br/>Content<br/>Content<br/>Content<br/>
-            </PageWrapper>
+            </Layout>
         );
 };
 

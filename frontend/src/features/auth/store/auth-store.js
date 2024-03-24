@@ -46,7 +46,7 @@ class AuthStore {
     }
 
     /*Сохранение и восстановление состояния*/
-    saveToLocalStorage = () =>{
+    saveToLocalStorage = () => {
         const authData = {
             isAuthorised: this.isAuthorised,
         }
