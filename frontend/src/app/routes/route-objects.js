@@ -1,6 +1,5 @@
 import {Login, MainPage, ProtectedPage, References, BP, BP2} from "../../pages";
 
-
 const routeObjects = [
     {
         isPrivate: true,

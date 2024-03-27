@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-const baseUrl = "http://localhost:8876/api/v1/";
+const baseUrl = "http://localhost:8876/api/v1";
 
 const saveToken = (token) => {
     Cookies.set('token', token, { expires: 1 });
@@ -26,7 +26,7 @@ const authenticatedRequest = async (method, url, data) => {
     try {
         const response = await axios({
             method,
-            url: `${baseUrl}/${url}`,
+            url: `${baseUrl}${url}`,
             headers: {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json',

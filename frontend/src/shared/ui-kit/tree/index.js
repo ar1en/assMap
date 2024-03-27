@@ -1,36 +1,24 @@
-const Tree = () => {
+
+const TreeNode = ({nodeData:data}) => {
+    return(
+        <li className="list-group-item pt-0 pb-0 rounded-0 border-bottom">
+            {data.children && (
+                <details>
+                    <summary>{data.name}</summary>
+                    <Tree data={data.children}/>
+                </details>
+            )}
+            {!data.children && data.name}
+        </li>
+    );
+}
+const Tree = ({data}) => {
 
     return (
-        <ul className="list-group">
-            <li className="list-group-item pt-0 pb-0">
-                1
-            </li>
-            <li className="list-group-item pt-0 pb-0">
-                <details>
-                    <summary>2</summary>
-                    <ul className="list-group-flush">
-                        <li className="list-group-item border-0 pt-0 pb-0">
-                            2.1
-                        </li>
-                        <li className="list-group-item border-0 pt-0 pb-0">
-                            <details>
-                                <summary>2.2</summary>
-                                <ul className="list-group-flush">
-                                    <li className="list-group-item border-0 pt-0 pb-0">2.2.1</li>
-                                    <li className="list-group-item border-0 pt-0 pb-0">2.2.2</li>
-                                    <li className="list-group-item border-0 pt-0 pb-0">2.2.3</li>
-                                </ul>
-                            </details>
-                        </li>
-                        <li className="list-group-item border-0 pt-0 pb-0">
-                            2.3
-                        </li>
-                    </ul>
-                </details>
-            </li>
-            <li className="list-group-item pt-0 pb-0">
-                3
-            </li>
+        <ul className="list-group-flush">
+            {data?.map((node) => (
+                <TreeNode nodeData={node} key={node.id}/>
+            ))}
         </ul>
     );
 }

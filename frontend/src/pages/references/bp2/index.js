@@ -1,13 +1,29 @@
 import {Layout} from "../../../widgets";
 import {Tree} from "../../../shared/ui-kit";
-import {getBPData} from "../../../entities";
+import {bpToTree} from "../../../entities";
+import {useEffect, useState} from "react";
+import {authenticatedRequest} from "../../../shared/api";
 
 const BP2 = (props) =>{
-    //getBPData();
+
+    /*КОСЫЛЬ ДЛЯ ЗАМЕНЫ-->*/
+    const [data, setData] = useState();
+
+    useEffect(() => {
+        authenticatedRequest("GET", "/processes/?per-page=1000")
+            .then(response =>{
+                setData(bpToTree(response.data));
+            })
+            .catch(error => {
+                throw error;
+            });
+    }, []);
+    /*<--КОСТЫЛЬ ДЛЯ ЗАМЕНЫ*/
 
     return (
       <Layout>
-          <Tree/>
+          <h2>Справочник бизнес-процессов</h2>
+          <Tree data={data}/>
       </Layout>
   )
 };

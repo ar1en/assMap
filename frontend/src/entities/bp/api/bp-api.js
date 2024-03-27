@@ -2,10 +2,13 @@ import {authenticatedRequest} from "../../../shared/api.js";
 import data from "./dummy.json";
 
 const getBPData = () => {
-    const data = authenticatedRequest("GET", "processes/", "?per-page=1000")
-        .then(() =>
-            console.log(data)
-        );
+    authenticatedRequest("GET", "/processes/")
+        .then(response =>{
+                return(response.data);
+        })
+        .catch(error => {
+            throw error;
+        });
 }
 
 const getBP = () => {
