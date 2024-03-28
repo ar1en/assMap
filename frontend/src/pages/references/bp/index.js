@@ -1,7 +1,9 @@
 import {Layout} from "../../../widgets";
 import {TableView} from "../../../shared/ui-kit";
+
 import {useEffect, useState} from "react";
 import {authenticatedRequest} from "../../../shared/api";
+import {getBP} from "../../../entities";
 
 
 const BP = (props) =>{

@@ -14,6 +14,7 @@
 // }
 import React, {useEffect, useState} from "react";
 import {Button} from "react-bootstrap";
+import styles from "./table.module.css"
 
 function dynamicSort(property) {
     let sortOrder = 1;
@@ -183,7 +184,7 @@ const TableView = ({data: {header, data}, keyColumn}) => {
                                             editibleCellName === row[keyColumn] + '#' + cell.key) ?
                                             <textarea onBlur={editCellFinishedHandler}  //onInput={editCellHandler}
                                                    defaultValue={currCellValue}
-                                                      rows="auto"
+                                                   className={styles.textEdit}
                                             />
                                             : row[cell.key]}
                                     </td>
