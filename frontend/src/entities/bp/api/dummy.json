@@ -1,33 +1,55 @@
 {
   "header": [
-    {
-      "key": "id",
-      "name": "id"
-    },
-    {
-      "key": "name",
-      "name": "Наименование"
-    },
-    {
-      "key": "description",
-      "name": "Описание"
-    }
+    { "key": "id",
+      "name": "ID" },
+
+    { "key": "parentProcess",
+      "name": "родительский процесс" },
+
+    { "key": "path",
+      "name": "Путь" },
+
+    { "key": "level",
+      "name": "Уровень" },
+
+    { "key": "type",
+      "name": "Тип" },
+
+    { "key": "sasId",
+      "name": "ID в SAS" },
+
+    { "key": "bpmId",
+      "name": "Код БП" },
+
+    { "key": "name",
+      "name": "Имя" },
+
+    { "key": "code",
+      "name": "Код" },
+
+    { "key": "validFrom",
+      "name": "Действительно с" },
+
+    { "key": "validUntil",
+      "name": "Действительно до" },
+
+    { "key": "author",
+      "name": "Автор" }
   ],
   "data": [
     {
       "id": "1",
-      "name": "Процесс_1",
-      "description": "Хороший процесс"
-    },
-    {
-      "id": "2",
-      "name": "Процесс_2",
-      "description": "Очень хороший процесс"
-    },
-    {
-      "id": "3",
-      "name": "Процесс_3",
-      "description": "Великолепный ультра классный ламповый процесс"
+      "parentProcess": "",
+      "path": "",
+      "level": "",
+      "type": "",
+      "sasId": "",
+      "bpmId": "",
+      "name": "Получение данных",
+      "code": "",
+      "validFrom": "",
+      "validUntil": "",
+      "author": ""
     }
   ]
 }

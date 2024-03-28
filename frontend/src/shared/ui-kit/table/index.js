@@ -11,9 +11,8 @@
 // keyColumn : 'name of column contains key values'
 // options: {
 //            isShowRowCounter: display row counter or not
-//
 // }
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Button} from "react-bootstrap";
 
 function dynamicSort(property) {
@@ -29,43 +28,7 @@ function dynamicSort(property) {
     }
 }
 
-function applyChanges(baseArr, changeArr, keyColumnName){
-
-    changeArr.map(change => {
-
-        if (change.type === 'edit') {
-            let objIndex = baseArr.findIndex(obj => obj[keyColumnName] === change['rowId'])
-
-            if (objIndex > -1) {
-                baseArr[objIndex].keys.map(propName =>{
-                    if (propName!=='rowId'){
-                        baseArr[objIndex][propName] = change[propName]
-                    }
-                })
-            }
-        }
-    })
-
-}
-
-function trackChange(changeArr, rowId, propName, newValue) {
-    const resultArray = [...changeArr];
-
-    let objIndex = resultArray.findIndex(obj => obj['rowId'] === rowId)
-
-    if (objIndex>-1){
-        resultArray[objIndex][propName] = newValue
-    } else {
-        let newChange = {rowId: rowId}
-        newChange[propName] = newValue
-        resultArray.push(newChange)
-    }
-
-    return resultArray
-
-}
-
-const Table = ({data: {header, data}, keyColumn}) => {
+const TableView = ({data: {header, data}, keyColumn}) => {
     const [sortColumn, setSortColumn] = useState('');
     const [sortOrder, setSortOrder] = useState('asc');
 
@@ -76,10 +39,19 @@ const Table = ({data: {header, data}, keyColumn}) => {
     const [editibleCellName, setEditibleCellName] = useState('');
     const [currCellValue, setCurrCellValue] = useState('');
 
-    const [diffData, setDiffData] = useState([])
+    const [modifyData, setModifyData] = useState(data.length > 0 ? data.map((_arrayElement) => Object.assign({}, _arrayElement)) : [])
 
-    let customizedData = (filterColumn ==='' || filterValue ==='') ? data : data.filter((dataRow) => dataRow[filterColumn].includes(filterValue));
-    customizedData = sortColumn ==='' ? customizedData : customizedData.sort(dynamicSort(sortOrder==='desc' ? '-' + sortColumn : sortColumn));
+    useEffect(() => {
+        setModifyData(data.length > 0 ? data.map((_arrayElement) => Object.assign({}, _arrayElement)) : [])
+    }, [data])
+
+    // console.log(modifyData)
+
+    let customizedData = (filterColumn === '' || filterValue === '') ? modifyData : modifyData.filter((dataRow) => dataRow[filterColumn].includes(filterValue));
+    customizedData = (sortColumn ==='' ? customizedData : customizedData.sort(dynamicSort(sortOrder==='desc' ? '-' + sortColumn : sortColumn)));
+
+    // console.log(customizedData)
+
     const sortColumnHandler = (event) => {
         const field = event.target.accessKey==='' ? '' : event.target.accessKey.replace('btnSort_','')
 
@@ -107,31 +79,42 @@ const Table = ({data: {header, data}, keyColumn}) => {
     }
 
     const startEditCellHandler = (initData,event) => {
-        // if (event.target.accessKey[1] === props.keyColumn) {
-        //     alert ("Ключевой столбец нельзя редактировать!")
-        // }  else {
-        setIsEditingCell(true)
-        setEditibleCellName(event.target.accessKey)
-        setCurrCellValue(initData)
-        // }
+        if ( event.target.accessKey.split('#')[1] === keyColumn) {
+            alert ("Ключевой столбец нельзя редактировать!")
+        }  else {
+            setIsEditingCell(true);
+            setEditibleCellName(event.target.accessKey);
+            setCurrCellValue(initData);
+        }
     }
 
     const editCellFinishedHandler = (event) => {
-        // setDiffData((prevDiffData)=>{ trackChange(prevDiffData,editibleCellName.split('#')[0],editibleCellName.split('#')[1],event.target.value ) })
+        setIsEditingCell(false);
+        setEditibleCellName('');
 
-        setIsEditingCell(false)
-        setEditibleCellName('')
+        const objIndex = modifyData.findIndex(obj => obj[keyColumn] === editibleCellName.split('#')[0])
+        const objIndexInitial = data.findIndex(obj => obj[keyColumn] === editibleCellName.split('#')[0])
 
-    }
+        const newValue = event.target.value
+        const propName = editibleCellName.split('#')[1]
 
-    const editCellHandler = (event) => {
-        setCurrCellValue(event.target.value)
+        if (objIndex > -1) {
+           setModifyData(prevModifyData => {
+                                                  let newData = prevModifyData;
+                                                  newData[objIndex][propName] = newValue;
+
+                                                  if (objIndexInitial > -1){
+                                                      newData[objIndex]['change'] = (newData[objIndex][propName] === data[objIndexInitial][propName]) ?  '' : 'edit';
+                                                  }
+
+                                                  return newData; })
+        }
     }
 
     /*const options = (props.options === null || props.options === undefined) ? {
         isShowRowCounter: true
     } : props.options*/
-    const options = {};
+    // const options = {};
 
     let rowCounter = 0
 
@@ -146,16 +129,20 @@ const Table = ({data: {header, data}, keyColumn}) => {
                     <th key='_rwCnt'>№</th>
 
                     {
-                        header.map((col) => (
+                        header.length>0 && header.map((col) => (
                             <th key={col.key}>
-                                {col.name}
 
-                                <Button key={'sort_' + col.key}
-                                        accessKey={'btnSort_' + col.key}
-                                        onClick={sortColumnHandler}
-                                        className={col.key === sortColumn ? ('btn btn-primary ' + (sortOrder === 'asc' ? 'bi bi-sort-alpha-down' : 'bi bi-sort-alpha-down-alt')) : 'btn btn-secondary bi bi-arrow-down-up'}
-                                        size="sm"
-                                />
+                               <div className="d-flex justify-content-between align-items-center">
+                                   {col.name}
+
+                                   <Button key={'sort_' + col.key}
+                                           accessKey={'btnSort_' + col.key}
+                                           onClick={sortColumnHandler}
+                                           className={col.key === sortColumn ? ('btn btn-primary ' + (sortOrder === 'asc' ? 'bi bi-sort-alpha-down' : 'bi bi-sort-alpha-down-alt')) : 'btn btn-secondary bi bi-arrow-down-up'}
+                                           size="sm"
+                                   />
+                               </div>
+
                             </th>
                         ))
                     }
@@ -167,7 +154,7 @@ const Table = ({data: {header, data}, keyColumn}) => {
                     <th key='_rwCntFilter'></th>
 
                     {
-                        header.map((col) => (
+                        header.length>0 && header.map((col) => (
                             <th key={'filter_' + col.key}>
                                 <input key={'filter_' + col.key} accessKey={'filter_' + col.key}
                                        onInput={filterColumnHandler}></input>
@@ -179,22 +166,25 @@ const Table = ({data: {header, data}, keyColumn}) => {
 
                 <tbody>
                 {
-
-                    customizedData.map((row)=>(
-                        <tr key={'rw_' + row[keyColumn]}>
+                    customizedData.length>0 && customizedData.map((row)=>(
+                        <tr key={'rw_' + row[keyColumn]}
+                        className={row['change'] === 'edit' ? 'table-warning' : ''}
+                        >
                             {/* счетчик порядкового номера строк */}
                             {/*<th key={'rwCnt_' + row[keyColumn]} hidden={!options.isShowRowCounter}> {rowCounter+=1} </th>*/}
                             <th key={'rwCnt_' + row[keyColumn]}> {rowCounter += 1} </th>
 
                             {
-                                header.map((cell) => (
+                                header.length>0 && header.map((cell) => (
                                     <td key={'td_' + row[keyColumn] + '_' + cell.key}
                                         accessKey={row[keyColumn] + '#' + cell.key}
                                         onDoubleClick={(event) => startEditCellHandler(row[cell.key], event)}>
                                         {(isEditingCell &&
                                             editibleCellName === row[keyColumn] + '#' + cell.key) ?
-                                            <input onBlur={editCellFinishedHandler} onInput={editCellHandler}
-                                                   value={currCellValue}/>
+                                            <textarea onBlur={editCellFinishedHandler}  //onInput={editCellHandler}
+                                                   defaultValue={currCellValue}
+                                                      rows="auto"
+                                            />
                                             : row[cell.key]}
                                     </td>
                                 ))
@@ -209,4 +199,4 @@ const Table = ({data: {header, data}, keyColumn}) => {
     )
 }
 
-export {Table}
+export {TableView}
