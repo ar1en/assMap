@@ -1,0 +1,11 @@
+.textEdit {
+    min-height:40px;
+    height:auto;
+    overflow:hidden;
+    width: 100%;
+}
+
+.filterBox {
+    width: 100%;
+}
+

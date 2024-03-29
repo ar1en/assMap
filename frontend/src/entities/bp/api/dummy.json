@@ -3,18 +3,6 @@
     { "key": "id",
       "name": "ID" },
 
-    { "key": "parentProcess",
-      "name": "родительский процесс" },
-
-    { "key": "path",
-      "name": "Путь" },
-
-    { "key": "level",
-      "name": "Уровень" },
-
-    { "key": "type",
-      "name": "Тип" },
-
     { "key": "sasId",
       "name": "ID в SAS" },
 
