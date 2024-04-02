@@ -10,14 +10,16 @@ const TableViewContext = React.createContext(
         isEditing: false,
         editCellName: "",
         currCellValue: "",
-        filters: [],
+        filters: {},
         sortedColumn: "",
-        sortOrder: "asc",
+        sortOrder: "",
+        error: false,
 
-        onSortColumn: (event) => {},
+        onSortColumn: (event, columnName) => {},
         onFilterColumn: (event) => {},
-        onStartEdit: (initData,event) => {},
-        onFinishEdit: (event) => {}
+        onStartEdit: (event, initData) => {},
+        onFinishEdit: (event) => {},
+        onError: (event) => {},
     }
 )
 
@@ -34,12 +36,29 @@ function dynamicSort(property) {
     }
 }
 
+function objectEquals(objectType, obj1, obj2){
+    let result = false
+
+    obj1 = (obj1 ===null || obj1 ===undefined)? '' : obj1
+    obj2 = (obj2 ===null || obj2 ===undefined)? '' : obj2
+
+    switch (objectType){
+        case "date":
+
+            result = obj1.toString().split(' ')[0] === obj2.toString().split(' ')[0]
+            break;
+        default:
+            result = obj1 === obj2
+    }
+
+    return result;
+}
+
 export const TableViewContextProvider = (props) => {
     const [sortColumn, setSortColumn] = useState('');
     const [sortOrder, setSortOrder] = useState('asc');
 
-    const [filterColumn, setFilterColumn] = useState('');
-    const [filterValue, setFilterValue] = useState('');
+    const [filters, setFilters] = useState({});
 
     const [isEditingCell, setIsEditingCell] = useState(false);
     const [editibleCellName, setEditibleCellName] = useState('');
@@ -47,43 +66,64 @@ export const TableViewContextProvider = (props) => {
 
     const [modifiedData, setModifiedData] = useState(props.data.length > 0 ? props.data.map((_arrayElement) => Object.assign({}, _arrayElement)) : [])
 
+    const [error, setError] = useState(false);
 
     useEffect(() => {
         setModifiedData(props.data.length > 0 ? props.data.map((_arrayElement) => Object.assign({}, _arrayElement)) : [])
     }, [props.data])
 
-    const sortColumnHandler = (event) => {
-        const field = event.target.accessKey==='' ? '' : event.target.accessKey.replace('btnSort_','')
-
+    const sortColumnHandler = (event, columnName) => {
         setEditibleCellName('')
         setIsEditingCell(false)
 
-        if (field=== sortColumn) {
-            if (sortOrder==='asc') {
-                setSortOrder('desc')
-            } else {
-                setSortOrder('asc')
+        if (columnName === sortColumn) {
+            switch (sortOrder){
+                case '':
+                    setSortOrder('asc'); break;
+                case 'asc':
+                    setSortOrder('desc'); break;
+                case 'desc':
+                    setSortOrder('')
+                    setSortColumn('')
+                    break;
             }
         } else {
-            setSortColumn(field)
+            setSortColumn(columnName)
             setSortOrder('asc')
         }
     }
 
-    const filterColumnHandler = (event) => {
-        setFilterColumn(event.target.accessKey.replace('filter_',''))
-        setFilterValue(event.target.value)
+    const filterColumnHandler = (event, columnName) => {
+        setFilters( prevFilters => {
+                let newFilters =  Object.assign({}, prevFilters)
+
+                if (Object.keys(newFilters).find(k => k === columnName)){
+                    if (event.target.value === ''){
+                        delete newFilters[columnName];
+                    }else {
+                        newFilters[columnName] = event.target.value;
+                    }
+                } else{
+                    newFilters[columnName] = event.target.value;
+                }
+
+                return newFilters
+            }
+        )
 
         setEditibleCellName('')
         setIsEditingCell(false)
     }
 
-    const startEditCellHandler = (initData,event) => {
-        if ( event.target.accessKey.split('#')[1] === props.keyColumn) {
-            alert ("Ключевой столбец нельзя редактировать!")
+    const startEditCellHandler = (event, initData, rowId, columnName) => {
+        if ( columnName === props.keyColumn) {
+           setError({
+              title: "Предупреждение",
+              message: "Данный столбец нельзя редактировать!"
+           });
         }  else {
             setIsEditingCell(true);
-            setEditibleCellName(event.target.accessKey);
+            setEditibleCellName(rowId + "#" + columnName);
             setCurrCellValue(initData);
         }
     }
@@ -94,6 +134,7 @@ export const TableViewContextProvider = (props) => {
 
         const objIndex = modifiedData.findIndex(obj => obj[props.keyColumn] === editibleCellName.split('#')[0])
         const objIndexInitial = props.data.findIndex(obj => obj[props.keyColumn] === editibleCellName.split('#')[0])
+        const headerIndex = props.header.findIndex(obj => obj['key'] === editibleCellName.split('#')[1])
 
         const newValue = event.target.value
         const propName = editibleCellName.split('#')[1]
@@ -103,8 +144,9 @@ export const TableViewContextProvider = (props) => {
                 let newData = prevModifiedData;
                 newData[objIndex][propName] = newValue;
 
-                if (objIndexInitial > -1){
-                    if (newData[objIndex][propName] === props.data[objIndexInitial][propName]){
+                if (objIndexInitial > -1) {
+
+                    if (objectEquals(props.header[headerIndex]["type"], newData[objIndex][propName], props.data[objIndexInitial][propName])){
                         delete newData[objIndex]['change_' + propName];
                         if (!Object.keys(newData[objIndex]).find(k => k.includes('change_'))){
                             delete newData[objIndex]['change'];
@@ -121,9 +163,20 @@ export const TableViewContextProvider = (props) => {
         }
     }
 
+    const errorHandler = (event) => {
+        setError(false);
+    }
 
-    let customizedData = (filterColumn === '' || filterValue === '') ? modifiedData : modifiedData.filter((dataRow) => dataRow[filterColumn].includes(filterValue));
+    let customizedData= modifiedData.map((_arrayElement) => Object.assign({}, _arrayElement))
+
+    Object.keys(filters).map(fColumn => {
+        customizedData = customizedData.filter((dataRow) => dataRow[fColumn].includes(filters[fColumn]))
+    })
+
+    // customizedData   = (filterColumn === '' || filterValue === '') ? customizedData : customizedData.filter((dataRow) => dataRow[filterColumn].includes(filterValue));
+
     customizedData = (sortColumn ==='' ? customizedData : customizedData.sort(dynamicSort(sortOrder==='desc' ? '-' + sortColumn : sortColumn)));
+
 
     return (
 
@@ -137,13 +190,15 @@ export const TableViewContextProvider = (props) => {
                    isEditing: isEditingCell,
                    editCellName: editibleCellName,
                    currCellValue: currCellValue,
-                   filters: [],
+                   filters: filters,
                    sortColumn: sortColumn,
                    sortOrder: sortOrder,
+                   error: error,
                    onSortColumn: sortColumnHandler,
                    onFilterColumn: filterColumnHandler,
                    onStartEdit: startEditCellHandler,
-                   onFinishEdit: editCellFinishedHandler
+                   onFinishEdit: editCellFinishedHandler,
+                   onError: errorHandler
                }
            }>
                {props.children}

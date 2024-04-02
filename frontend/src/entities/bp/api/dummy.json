@@ -1,28 +1,36 @@
 {
   "header": [
     { "key": "id",
-      "name": "ID" },
+      "name": "ID",
+      "type": "unchangeable"},
 
     { "key": "sasId",
-      "name": "ID в SAS" },
+      "name": "ID в SAS",
+      "type": "text"},
 
     { "key": "bpmId",
-      "name": "Код БП" },
+      "name": "Код БП",
+      "type": "text" },
 
     { "key": "name",
-      "name": "Имя" },
+      "name": "Имя",
+      "type": "text" },
 
     { "key": "code",
-      "name": "Код" },
+      "name": "Код",
+      "type": "dictionary" },
 
     { "key": "validFrom",
-      "name": "Действительно с" },
+      "name": "Действительно с",
+      "type": "date" },
 
     { "key": "validUntil",
-      "name": "Действительно до" },
+      "name": "Действительно до",
+      "type": "date" },
 
     { "key": "author",
-      "name": "Автор" }
+      "name": "Автор",
+      "type": "dictionary" }
   ],
   "data": [
     {

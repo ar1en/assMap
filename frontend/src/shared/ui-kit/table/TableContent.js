@@ -1,12 +1,11 @@
 import styles from "./table.module.css";
-import React, {useContext, useEffect, useState} from "react";
+import React, {Fragment, useContext, useEffect, useState} from "react";
 import TableViewContext from "./table-context";
+import ErrorModal from "../alert";
 
 const TableContent = (props) => {
 
     const ctx = useContext(TableViewContext)
-
-    const [edt, setEdt] = useState(ctx.isEditing)
 
     let rowCounter = 0
     const editCellHandler = (event) => {
@@ -14,33 +13,59 @@ const TableContent = (props) => {
     }
 
     return (
+        <>
+            { ctx.error && <ErrorModal title={ctx.error.title} message={ctx.error.message} onCloseModal={ctx.onError}/>}
+
         <tbody>
         {
             ctx.customizedData.length>0 && ctx.customizedData.map((row)=>(
 
                 <tr key={'rw_' + row[ctx.keyColumn]}
-                    className={(row['change'] === "edit") ? "table table-warning" : ""}
-                >
-                     {/* счетчик порядкового номера строк */}
-                    {/*<th key={'rwCnt_' + row[keyColumn]} hidden={!options.isShowRowCounter}> {rowCounter+=1} </th>*/}
-                    <th key={'rwCnt_' + row[ctx.keyColumn]}> {rowCounter += 1} </th>
+                    className={(row['change'] === "edit") ? "table table-warning" : ""}>
+
+                    <th key={'rwCnt_' + row[ctx.keyColumn]}
+                        className="p-0">
+                              {rowCounter += 1}
+                    </th>
 
                     {
                         ctx.header.length>0 && ctx.header.map((cell) => (
                             <td key={'td_' + row[ctx.keyColumn] + '_' + cell.key}
-                                accessKey={row[ctx.keyColumn] + '#' + cell.key}
-                                onDoubleClick={(event) => ctx.onStartEdit(row[cell.key], event)}
-                                className={(row['change_'+cell.key] === "edit") ? "text-bg-warning" : ""}>
+                                onDoubleClick={(event) => ctx.onStartEdit(event, row[cell.key], row[ctx.keyColumn],cell.key)}
+                                className={(row['change_'+cell.key] === "edit") ? "text-bg-warning p-0" : "p-0"}>
 
-                                    {(ctx.isEditing &&
-                                        ctx.editCellName === row[ctx.keyColumn] + '#' + cell.key) ?
-                                        <textarea onBlur={ctx.onFinishEdit}
-                                                  defaultValue={ctx.currCellValue}
-                                                  className={styles.textEdit}
-                                                  onMouseOver={editCellHandler}
-                                                  onInput={editCellHandler}
-                                        />
-                                        : row[cell.key]}
+                                {/*для редактирования текста*/}
+                                {(ctx.isEditing &&
+                                  ctx.editCellName === row[ctx.keyColumn] + '#' + cell.key) &&
+                                  cell.type === 'text' &&
+
+                                    <textarea onBlur={ctx.onFinishEdit}
+                                              defaultValue={ctx.currCellValue}
+                                              className={styles.textEdit}
+                                              onMouseOver={editCellHandler}
+                                              onInput={editCellHandler}
+                                    />}
+
+                                {/*для редактирования дат*/}
+                                {(ctx.isEditing &&
+                                        ctx.editCellName === row[ctx.keyColumn] + '#' + cell.key) &&
+                                    cell.type === 'date' &&
+
+                                    <input  type="date"
+                                            onBlur={ctx.onFinishEdit}
+                                            defaultValue={(ctx.currCellValue === null || ctx.currCellValue === undefined || ctx.currCellValue === '') ? '' : ctx.currCellValue.toString().split(' ')[0]}
+
+                                    />}
+
+                                {/*отображение в режиме просмотра*/}
+                                {(!ctx.isEditing ||
+                                  ctx.editCellName !== row[ctx.keyColumn] + '#' + cell.key) &&
+
+                                    (cell.type === "date" ?
+                                    ((row[cell.key] === '' || row[cell.key] === null || row[cell.key] === undefined)  ? '' : row[cell.key].toString().split(' ')[0].slice(0,10).split('-').reverse().join('.'))
+                                    :
+                                    row[cell.key])
+                                }
 
                             </td>
                         ))
@@ -50,6 +75,7 @@ const TableContent = (props) => {
         }
 
         </tbody>
+        </>
 
     )
 
