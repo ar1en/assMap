@@ -191,7 +191,7 @@ export const TableViewContextProvider = (props) => {
                    editCellName: editibleCellName,
                    currCellValue: currCellValue,
                    filters: filters,
-                   sortColumn: sortColumn,
+                   sortedColumn: sortColumn,
                    sortOrder: sortOrder,
                    error: error,
                    onSortColumn: sortColumnHandler,

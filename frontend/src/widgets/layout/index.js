@@ -16,7 +16,7 @@ const Layout = observer( ({children}) => {
             <Side/>
 
             {/*Content*/}
-            <div className={`${isSideMenuCollapsed ? style.content : style.contentCollapsed} p-2`}>
+            <div className={`${isSideMenuCollapsed ? style.content : style.contentCollapsed} p-0`}>
                 {children}
             </div>
         </div>
