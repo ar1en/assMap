@@ -12,17 +12,18 @@
 // options: {
 //            isShowRowCounter: display row counter or not
 // }
-import React from "react";
+import React, {useContext, useEffect} from "react";
 import TableContent from "./TableContent";
-import {TableViewContextProvider} from "./table-context";
+import TableViewContext, {TableViewContextProvider} from "./table-context";
 import TableHead from "./TableHead";
+import ErrorModal from "../alert";
 
 
 const TableView = ({data: {header, data}, keyColumn}) => {
 
     return (
             <TableViewContextProvider data={data} header={header} keyColumn={keyColumn}>
-                <table className='table table-hover'>
+                <table className='table'>
                     <TableHead/>
                     <TableContent/>
                 </table>

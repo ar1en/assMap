@@ -10,6 +10,7 @@ const TableViewContext = React.createContext(
         isEditing: false,
         editCellName: "",
         currCellValue: "",
+        currCellWidth:"",
         filters: {},
         sortedColumn: "",
         sortOrder: "",
@@ -63,6 +64,7 @@ export const TableViewContextProvider = (props) => {
     const [isEditingCell, setIsEditingCell] = useState(false);
     const [editibleCellName, setEditibleCellName] = useState('');
     const [currCellValue, setCurrCellValue] = useState('');
+    const [currCellWidth, setCurrCellWidth] = useState('');
 
     const [modifiedData, setModifiedData] = useState(props.data.length > 0 ? props.data.map((_arrayElement) => Object.assign({}, _arrayElement)) : [])
 
@@ -125,6 +127,7 @@ export const TableViewContextProvider = (props) => {
             setIsEditingCell(true);
             setEditibleCellName(rowId + "#" + columnName);
             setCurrCellValue(initData);
+            setCurrCellWidth(event.target.offsetWidth);
         }
     }
 
@@ -136,7 +139,8 @@ export const TableViewContextProvider = (props) => {
         const objIndexInitial = props.data.findIndex(obj => obj[props.keyColumn] === editibleCellName.split('#')[0])
         const headerIndex = props.header.findIndex(obj => obj['key'] === editibleCellName.split('#')[1])
 
-        const newValue = event.target.value
+        const newValue = event.target.innerText || event.target.textContent
+
         const propName = editibleCellName.split('#')[1]
 
         if (objIndex > -1) {
@@ -190,6 +194,7 @@ export const TableViewContextProvider = (props) => {
                    isEditing: isEditingCell,
                    editCellName: editibleCellName,
                    currCellValue: currCellValue,
+                   currCellWidth: currCellWidth,
                    filters: filters,
                    sortedColumn: sortColumn,
                    sortOrder: sortOrder,

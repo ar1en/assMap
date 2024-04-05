@@ -1,12 +1,13 @@
-import {Navbar, Nav, Breadcrumb, BreadcrumbItem, Dropdown} from "react-bootstrap";
+import {Navbar, Nav, Dropdown} from "react-bootstrap";
 import {useStore} from "../../shared/store"
+import styles from "./header.module.css"
 
 function Header (props) {
 
     const {logout} = useStore().auth
 
     return (
-        <Navbar className="sticky-top p-0" bg="light">
+        <Navbar className={styles.headerSize + " sticky-top p-0"} bg="light">
             <div className="container-fluid">
                 <Navbar.Brand className="d-flex flex-row align-items-center p-0" href="">
                     <i className="bi bi-box-fill fs-1 text-primary ms-2 me-2"></i>

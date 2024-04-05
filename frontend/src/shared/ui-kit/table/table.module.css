@@ -5,10 +5,12 @@
 /*}*/
 
 .textEdit {
-    min-height:40px;
-    height:auto;
-    overflow:hidden;
+    /*min-height:40px;*/
+    /*height:auto;*/
+    /*min-height: 5em;*/
+    overflow: auto;
     width: 100%;
+    overflow-wrap: break-word;
 }
 
 .filterBox {
@@ -26,7 +28,7 @@
 
 .fixedHead {
     position: sticky;
-    top: 62px;
+    top: 60px;
     z-index: 2;
 }
 .smallIcon {

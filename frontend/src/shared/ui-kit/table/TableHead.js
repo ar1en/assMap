@@ -1,3 +1,4 @@
+
 import React, {useCallback, useContext, useEffect, useRef, useState} from "react";
 import {Button} from "react-bootstrap";
 import TableViewContext from "./table-context";
@@ -21,30 +22,32 @@ const TableHead = (props) => {
             </th>
 
             {
-                  ctx.header.length>0 && ctx.header.map((col) => (
+                ctx.header.length>0 && ctx.header.map((col) => (
                     <th className="p-0 fs-6 text-center align-middle"
                         key={col.key}
                         align='center'>
-                             <div className={styles.headCaption}
-                                  key={'sort_' + col.key}
-                                  onClick={event => ctx.onSortColumn(event,col.key)}>
+                        <div className={styles.headCaption}
+                             key={'sort_' + col.key}
+                             onClick={event => ctx.onSortColumn(event,col.key)}>
 
-                                  {col.name}
+                            {col.name}
 
-                                  {
-                                    (ctx.sortedColumn === col.key && ctx.sortOrder !== '') &&
-                                        <i className={styles.smallIcon + " p-0" +  (ctx.sortOrder === "asc" ? " bi bi-arrow-down" : " bi bi-arrow-up")}/>
-                                  }
-                             </div>
+                            {
+                                (ctx.sortedColumn === col.key && ctx.sortOrder !== '') &&
+                                <i className={styles.smallIcon + " p-0" +  (ctx.sortOrder === "asc" ? " bi bi-arrow-down" : " bi bi-arrow-up")}/>
+                            }
+                        </div>
                     </th>
                 ))
             }
         </tr>
 
-        <tr>
+        <tr className="table-primary">
             {/* столбец для порядкового номера строк */}
             {/*<th key='_rwCntFilter' hidden={!options.isShowRowCounter}></th>*/}
-            <th key='_rwCntFilter' className="p-0"></th>
+            <th key='_rwCntFilter' className="p-0">
+                <Button className="btn btn-sm bi-plus-square"/>
+            </th>
 
             {
                 ctx.header.length>0 && ctx.header.map((col) => (
