@@ -1,6 +1,0 @@
-export {ProtectedPage} from "./protected-page"
-export {MainPage} from "./main"
-export {Login} from "./login"
-export {References} from "./references"
-export {BP} from "./references/bp"
-export {BP2} from "./references/bp2"
