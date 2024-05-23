@@ -4,3 +4,6 @@
 [submodule "backend"]
 	path = backend
 	url = https://github.com/ar1en/am_backend.git
+[submodule "docker"]
+	path = docker
+	url = https://github.com/ar1en/am_docker.git
