@@ -16,3 +16,6 @@ LARAVEL/BACKEND:
 php artisan cache:clear     - очистить весь кеш
 php artisan make:dbModels {table_prefix}        -  (bpm helper) сгенерировать модели на основании БД
 composer update     - обновить/скачать заново все зависимости laravel-проекта (необходимо делать если клонировал проект с репозитория)
+
+GIT:
+git submodule update --init     - инициировать связанные репозитории
