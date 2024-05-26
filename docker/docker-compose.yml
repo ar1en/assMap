@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  nginx:
+    container_name: nginx
+    image: nginx:latest
+    volumes:
+      - ../backend:/var/www/backend
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+    ports:
+      - "8876:80"
+    depends_on:
+      - backend
+
+  backend:
+    container_name: backend
+    build:
+      context: ..
+      dockerfile: docker/backend/Dockerfile
+    volumes:
+      - ../:/var/www
+    depends_on:
+      - db
+
+  frontend:
+    container_name: frontend
+    image: node:latest
+    volumes:
+      - ../frontend:/app
+    ports:
+      - "3000:3000"
+    working_dir: /app
+    command: sh -c "npm install && npm start"
+    #command: sh -c "npx create-react-app myapp --template typescript"
+
+
+  db:
+    container_name: db
+    image: postgres:15.2-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=assuranceMap
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+    restart: always
+    volumes:
+      - ./db/data:/var/lib/postgresql/data
